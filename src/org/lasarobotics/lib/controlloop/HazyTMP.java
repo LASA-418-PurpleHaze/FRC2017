@@ -1,6 +1,7 @@
-package org.lasarobotics.hazylib.controls;
+package org.lasarobotics.lib.controlloop;
 
 public class HazyTMP {
+
     //Current value
     private double currentPosition;
     private double currentVelocity;
