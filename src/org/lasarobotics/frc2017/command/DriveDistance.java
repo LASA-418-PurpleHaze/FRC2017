@@ -1,31 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.lasarobotics.frc2017.command;
 
-/**
- *
- * @author airpendragon
- */
-public class DriveDistance extends Command{
+public class DriveDistance extends Command {
+
     private final double distance;
-    
+
     public DriveDistance(String name, double t, double distance) {
         super(name, t);
-        this.distance=distance;
+        this.distance = distance;
     }
-    
+
+    @Override
     public boolean isDone() {
+        /*
+        Not ready for this yet
         return drivetrain.isDistanceDone() && drivetrain.getStraightSetpoint() == distance;
+         */
+        return false;
     }
-    
-    public void start()
-    {
-        super.start();
+
+    @Override
+    public void start() {
+        /*
+        Also not ready for this yet
         drivetrain.setStraightSetpoint(distance);
+         */
     }
-    
-    
+
+    @Override
+    public void run() {
+    }
+
+    @Override
+    public void stop() {
+    }
+
 }
