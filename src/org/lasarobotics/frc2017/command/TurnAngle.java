@@ -11,11 +11,13 @@ public class TurnAngle extends Command {
 
     @Override
     public void start() {
+        drivetrain.setTurnSetpoint(angle);
+        
     }
 
     @Override
     public boolean isDone() {
-        return false;
+        return (drivetrain.isLeftPIDDone() && drivetrain.isRightPIDDone());
     }
 
     @Override
@@ -24,6 +26,7 @@ public class TurnAngle extends Command {
 
     @Override
     public void stop() {
+        drivetrain.setTurnSetpoint(hardware.getRobotAngle());
     }
 
 }
