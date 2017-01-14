@@ -1,6 +1,7 @@
 package org.lasarobotics.frc2017.hardware;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
 import org.lasarobotics.frc2017.statics.Ports;
@@ -12,7 +13,10 @@ public class Hardware implements Runnable {
     private final VictorSP leftDriveMotorA, leftDriveMotorB;
     private final VictorSP rightDriveMotorA, rightDriveMotorB;
 
-    private AHRS navX;
+    private Encoder leftDriveEncoder, rightDriveEncoder;
+    private double leftDriveEncoderPosition, leftDriveEncoderVelocity;
+    private double rightDriveEncoderPosition, rightDriveEncoderVelocity;
+    private final AHRS navX;
 
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
@@ -31,6 +35,11 @@ public class Hardware implements Runnable {
 
         rightDriveMotorA.setInverted(true);
         rightDriveMotorB.setInverted(true);
+
+        leftDriveEncoderPosition = leftDriveEncoder.get();
+        rightDriveEncoderPosition = rightDriveEncoder.get();
+        leftDriveEncoderVelocity = leftDriveEncoder.getRate();
+        rightDriveEncoderVelocity = rightDriveEncoder.getRate();
     }
 
     @Override
@@ -63,9 +72,25 @@ public class Hardware implements Runnable {
     public double getNavXAngle() {
         return navXAngle;
     }
-    
+
     public double getRobotAngle() {
         return robotAngle;
+    }
+
+    public double getLeftDriveDistance() {
+        return -(leftDriveEncoderPosition / 250) * 8 * Math.PI;
+    }
+
+    public double getRightDriveDistance() {
+        return (rightDriveEncoderPosition / 250) * 8 * Math.PI;
+    }
+
+    public double getLeftDriveVelocity() {
+        return -(leftDriveEncoderVelocity / 250) * 8 * Math.PI;
+    }
+
+    public double getRightDriveVelocity() {
+        return rightDriveEncoderVelocity / 250 * 8 * Math.PI;
     }
 
 }
