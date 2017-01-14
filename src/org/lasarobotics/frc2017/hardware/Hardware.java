@@ -14,7 +14,8 @@ public class Hardware implements Runnable {
 
     private AHRS navX;
 
-    private volatile double navXAngle;
+    private volatile double navXAngle, robotAngle;
+    private volatile int rotations;
 
     public static Hardware getInstance() {
         return (instance == null) ? instance = new Hardware() : instance;
@@ -34,7 +35,18 @@ public class Hardware implements Runnable {
 
     @Override
     public void run() {
+        double newAngle = navX.getFusedHeading();
+
+        if (Math.abs(navXAngle - newAngle) > 180.0) {
+            if (newAngle < 180.0) {
+                rotations++;
+            } else {
+                rotations--;
+            }
+        }
+
         navXAngle = navX.getAngle();
+        robotAngle = navXAngle + rotations * 360.0;
     }
 
     public void start() {
@@ -50,6 +62,10 @@ public class Hardware implements Runnable {
 
     public double getNavXAngle() {
         return navXAngle;
+    }
+    
+    public double getRobotAngle() {
+        return robotAngle;
     }
 
 }
