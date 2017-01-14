@@ -1,20 +1,25 @@
 package org.lasarobotics.frc2017.subsystem;
 
-import org.lasarobotics.lib.controlloop.HazyPID;
 import edu.wpi.first.wpilibj.Timer;
 import org.lasarobotics.frc2017.statics.Constants;
+import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
 
 public class Drivetrain extends HazySubsystem {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private HazyPID leftPID, rightPID;
+    private HazyPVIff leftPVIff, rightPVIff;
     private HazyTMP motionProfiler;
+    private double targetPosition, targetAngle;
 
     public Drivetrain() {
-        leftPID = new HazyPID();
-        rightPID = new HazyPID();
+        leftPVIff = new HazyPVIff(Constants.kP, Constants.kI,
+                Constants.kV, Constants.kFFV,
+                Constants.kFFA);
+        rightPVIff = new HazyPVIff(Constants.kP, Constants.kI,
+                Constants.kV, Constants.kFFV,
+                Constants.kFFA);
         motionProfiler = new HazyTMP(Constants.maxV, Constants.maxA);
     }
 
@@ -38,8 +43,12 @@ public class Drivetrain extends HazySubsystem {
     public void run() {
         dt = Timer.getFPGATimestamp() - prevTime;
         if (mode != Mode.OVERRIDE) {
-            leftSpeed = leftPID.calculate(/* not ready yet apparently hardware.getLeftLinearVelocity() */, dt);
-            rightSpeed = rightPID.calculate(/* not ready yet apparently hardware.getRightLinearVelocity() */, dt);
+            leftSpeed = leftPVIff.calculate(hardware.getLeftDriveDistance(),
+                    hardware.getLeftDriveVelocity(), motionProfiler.getCurrentPosition(),
+                    motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
+            rightSpeed = rightPVIff.calculate(hardware.getRightDriveDistance(),
+                    hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
+                    motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
             motionProfiler.calculateNextSituation(dt);
         }
         prevTime = Timer.getFPGATimestamp();
@@ -49,6 +58,35 @@ public class Drivetrain extends HazySubsystem {
     public void setDriveSpeeds(double l, double r) {
         leftSpeed = l;
         rightSpeed = r;
+    }
+
+    public void setStraightSetpoint(double d) {
+        targetPosition = d;
+        motionProfiler.generateTrapezoid(targetPosition,
+                (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance() * 0.5),
+                (Math.abs(hardware.getLeftDriveVelocity()) + Math.abs(hardware.getRightDriveVelocity())) * 0.5);
+    }
+
+    public void setTurnSetpoint(double a) {
+        targetAngle = a;
+        motionProfiler.generateTrapezoid(targetAngle, hardware.getRobotAngle(),
+                (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()) * 0.5);
+    }
+
+    public double getStraightSetpoint() {
+        return targetPosition;
+    }
+
+    public double getTurnSetpoint() {
+        return targetAngle;
+    }
+
+    public boolean isLeftPIDDone() {
+        return leftPVIff.onTarget();
+    }
+
+    public boolean isRightPIDDone() {
+        return rightPVIff.onTarget();
     }
 
     @Override
