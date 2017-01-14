@@ -1,6 +1,7 @@
 package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.statics.Constants;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
@@ -9,8 +10,8 @@ public class Drivetrain extends HazySubsystem {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private HazyPVIff leftPVIff, rightPVIff;
-    private HazyTMP motionProfiler;
+    private final HazyPVIff leftPVIff, rightPVIff;
+    private final HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
     public Drivetrain() {
@@ -95,6 +96,11 @@ public class Drivetrain extends HazySubsystem {
 
     @Override
     public void pushToDashboard() {
+        SmartDashboard.putNumber("leftspeed", leftSpeed);
+        SmartDashboard.putNumber("rightspeed", rightSpeed);
+        SmartDashboard.putNumber("distancetarget", targetPosition);
+        SmartDashboard.putNumber("angletarget", targetAngle);
+        SmartDashboard.putString("mode", mode.toString());
     }
 
 }

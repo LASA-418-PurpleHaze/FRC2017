@@ -14,8 +14,9 @@ public class Hardware implements Runnable {
     private final VictorSP rightDriveMotorA, rightDriveMotorB;
 
     private Encoder leftDriveEncoder, rightDriveEncoder;
-    private double leftDriveEncoderPosition, leftDriveEncoderVelocity;
-    private double rightDriveEncoderPosition, rightDriveEncoderVelocity;
+    private final double leftDriveEncoderPosition, leftDriveEncoderVelocity;
+    private final double rightDriveEncoderPosition, rightDriveEncoderVelocity;
+    
     private final AHRS navX;
 
     private volatile double navXAngle, robotAngle;
