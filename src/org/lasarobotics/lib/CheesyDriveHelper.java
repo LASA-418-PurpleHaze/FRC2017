@@ -33,7 +33,7 @@ public class CheesyDriveHelper {
         double negInertiaAccumulator = 0.0;
         double negInertiaScalar;
         negInertiaScalar = 4.0;
-        sensitivity = /*Constants.DRIVE_SENSITIVITY.getDouble(); */;
+        sensitivity = Constants.DRIVE_SENSITIVITY;
 
         double negInertiaPower = negInertia * negInertiaScalar;
         negInertiaAccumulator += negInertiaPower;
