@@ -9,4 +9,5 @@ public class Constants {
     public static final double kV = 0.0;
     public static final double kFFV = 0.0;
     public static final double kFFA = 0.0;
+    public static final double DRIVE_SENSITIVITY = 0.0;
 }
