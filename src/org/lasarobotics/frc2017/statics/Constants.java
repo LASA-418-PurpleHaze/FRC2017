@@ -12,7 +12,7 @@ public class Constants {
     private static File constantsFile;
 
     public static void init() {
-        constantsFile = new File("/home/admin/params.txt");
+        constantsFile = new File("/LasaRobotics/constants.txt");
 
         try {
             constantsFile.createNewFile();
