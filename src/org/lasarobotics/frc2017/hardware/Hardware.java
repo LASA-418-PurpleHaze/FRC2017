@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.statics.Ports;
 
 public class Hardware implements Runnable {
@@ -92,6 +93,18 @@ public class Hardware implements Runnable {
 
     public double getRightDriveVelocity() {
         return rightDriveEncoderVelocity / 250 * 8 * Math.PI;
+    }
+    /*
+    public double getTime(){
+        return time;
+    }*/
+    
+    public void pushToDashboard() {
+        SmartDashboard.putNumber("NavX Angle", navXAngle);
+        SmartDashboard.putNumber("Robot Angle", robotAngle);
+        SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveVelocity());
+        SmartDashboard.putNumber("Right Drive Velocity", getRightDriveVelocity());
+        //SmartDashboard.putNumber("Time", getTime());
     }
 
 }
