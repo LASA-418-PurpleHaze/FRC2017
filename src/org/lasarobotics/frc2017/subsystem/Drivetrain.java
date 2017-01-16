@@ -14,14 +14,30 @@ public class Drivetrain extends HazySubsystem {
     private final HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
+    Constants.Constant kP, kI, kV, kFFV, kFFA;
+    Constants.Constant maxV, maxA;
+
     public Drivetrain() {
-        leftPVIff = new HazyPVIff(Constants.kP, Constants.kI,
-                Constants.kV, Constants.kFFV,
-                Constants.kFFA);
-        rightPVIff = new HazyPVIff(Constants.kP, Constants.kI,
-                Constants.kV, Constants.kFFV,
-                Constants.kFFA);
-        motionProfiler = new HazyTMP(Constants.maxV, Constants.maxA);
+        kP = new Constants.Constant("kP", 0.0);
+        kI = new Constants.Constant("kI", 0.0);
+        kV = new Constants.Constant("kV", 0.0);
+        kFFV = new Constants.Constant("kFFV", 0.0);
+        kFFA = new Constants.Constant("kFFA", 0.0);
+        maxV = new Constants.Constant("maxV", 0.0);
+        maxA = new Constants.Constant("maxA", 0.0);
+
+        Constants.init();
+        Constants.load();
+
+        leftPVIff = new HazyPVIff(kP.getValue(), kI.getValue(),
+                kV.getValue(), kFFV.getValue(),
+                kFFA.getValue());
+        rightPVIff = new HazyPVIff(kP.getValue(), kI.getValue(),
+                kV.getValue(), kFFV.getValue(),
+                kFFA.getValue());
+        motionProfiler = new HazyTMP(maxV.getValue(), maxA.getValue());
+
+        this.setMode(Mode.OVERRIDE);
     }
 
     private static Drivetrain instance;

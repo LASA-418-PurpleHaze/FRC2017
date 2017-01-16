@@ -6,6 +6,7 @@ public class CheesyDriveHelper {
 
     double oldWheel, quickStopAccumulator;
     private double leftPwm, rightPwm;
+    Constants.Constant driveSense;
 
     public void cheesyDrive(double throttle, double wheel, boolean isQuickTurn) {
 
@@ -13,6 +14,11 @@ public class CheesyDriveHelper {
 
         double negInertia = wheel - oldWheel;
         oldWheel = wheel;
+
+        driveSense = new Constants.Constant("drive_sensitivity", 0.0);
+
+        Constants.init();
+        Constants.load();
 
         wheelNonLinearity = 0.6;
         // Apply a sin function that's scaled to make it feel better.
@@ -33,7 +39,7 @@ public class CheesyDriveHelper {
         double negInertiaAccumulator = 0.0;
         double negInertiaScalar;
         negInertiaScalar = 4.0;
-        sensitivity = Constants.DRIVE_SENSITIVITY;
+        sensitivity = driveSense.getValue();
 
         double negInertiaPower = negInertia * negInertiaScalar;
         negInertiaAccumulator += negInertiaPower;
