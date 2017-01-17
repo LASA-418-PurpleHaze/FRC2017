@@ -22,6 +22,7 @@ public class Hardware implements Runnable {
     private final AHRS navX;
 
     private final Talon shooterFlywheel;
+    private final Talon intakeMotor;
     
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
@@ -47,6 +48,7 @@ public class Hardware implements Runnable {
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
         
         shooterFlywheel = new Talon(Ports.SHOOTER_MOTOR);
+        intakeMotor = new Talon(Ports.INTAKE_MOTOR);
     }
 
     @Override
@@ -80,6 +82,10 @@ public class Hardware implements Runnable {
         //temp. pid needs to be used
         shooterFlywheel.set(speed);
     }
+    
+    public void setIntakeSpeed(double speed){
+        intakeMotor.set(speed);
+    }
 
     public double getNavXAngle() {
         return navXAngle;
@@ -108,6 +114,8 @@ public class Hardware implements Runnable {
     public double getTime(){
         return time;
     }*/
+    
+    
     
     public void pushToDashboard() {
         SmartDashboard.putNumber("NavX Angle", navXAngle);
