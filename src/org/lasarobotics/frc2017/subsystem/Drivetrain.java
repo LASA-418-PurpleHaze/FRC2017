@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.statics.Constants;
+import org.lasarobotics.frc2017.statics.ConstantsList;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
 
@@ -14,28 +15,15 @@ public class Drivetrain extends HazySubsystem {
     private final HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
-    Constants.Constant kP, kI, kV, kFFV, kFFA;
-    Constants.Constant maxV, maxA;
-
     public Drivetrain() {
-        kP = new Constants.Constant("kP", 0.0);
-        kI = new Constants.Constant("kI", 0.0);
-        kV = new Constants.Constant("kV", 0.0);
-        kFFV = new Constants.Constant("kFFV", 0.0);
-        kFFA = new Constants.Constant("kFFA", 0.0);
-        maxV = new Constants.Constant("maxV", 0.0);
-        maxA = new Constants.Constant("maxA", 0.0);
 
-        Constants.init();
-        Constants.load();
-
-        leftPVIff = new HazyPVIff(kP.getValue(), kI.getValue(),
-                kV.getValue(), kFFV.getValue(),
-                kFFA.getValue());
-        rightPVIff = new HazyPVIff(kP.getValue(), kI.getValue(),
-                kV.getValue(), kFFV.getValue(),
-                kFFA.getValue());
-        motionProfiler = new HazyTMP(maxV.getValue(), maxA.getValue());
+        leftPVIff = new HazyPVIff(ConstantsList.getConstant("kP"), ConstantsList.getConstant("kI"),
+                ConstantsList.getConstant("kV"), ConstantsList.getConstant("kFFV"),
+                ConstantsList.getConstant("kFFA"));
+        rightPVIff = new HazyPVIff(ConstantsList.getConstant("kP"), ConstantsList.getConstant("kI"),
+                ConstantsList.getConstant("kV"), ConstantsList.getConstant("kFFV"),
+                ConstantsList.getConstant("kFFA"));
+        motionProfiler = new HazyTMP(ConstantsList.getConstant("maxV"), ConstantsList.getConstant("maxA"));
 
         this.setMode(Mode.OVERRIDE);
     }

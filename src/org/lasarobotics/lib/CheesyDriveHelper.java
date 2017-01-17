@@ -1,6 +1,7 @@
 package org.lasarobotics.lib;
 
 import org.lasarobotics.frc2017.statics.Constants;
+import org.lasarobotics.frc2017.statics.ConstantsList;
 
 public class CheesyDriveHelper {
 
@@ -14,11 +15,6 @@ public class CheesyDriveHelper {
 
         double negInertia = wheel - oldWheel;
         oldWheel = wheel;
-
-        driveSense = new Constants.Constant("drive_sensitivity", 0.0);
-
-        Constants.init();
-        Constants.load();
 
         wheelNonLinearity = 0.6;
         // Apply a sin function that's scaled to make it feel better.
@@ -39,7 +35,7 @@ public class CheesyDriveHelper {
         double negInertiaAccumulator = 0.0;
         double negInertiaScalar;
         negInertiaScalar = 4.0;
-        sensitivity = driveSense.getValue();
+        sensitivity = ConstantsList.getConstant("drive_sensitivity");
 
         double negInertiaPower = negInertia * negInertiaScalar;
         negInertiaAccumulator += negInertiaPower;

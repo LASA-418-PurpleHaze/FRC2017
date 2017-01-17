@@ -21,10 +21,10 @@ public class Shooter extends HazySubsystem{
     @Override
     public void run() {
         if(this.mode == Mode.OVERRIDE){
-            
+            //fill in later
         }
         else{
-            
+            //fill in later
         }
     }
 
