@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.hardware;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.statics.Ports;
@@ -20,6 +21,8 @@ public class Hardware implements Runnable {
     
     private final AHRS navX;
 
+    private final Talon shooterFlywheel;
+    
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
 
@@ -42,6 +45,8 @@ public class Hardware implements Runnable {
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
+        
+        shooterFlywheel = new Talon(Ports.SHOOTER_MOTOR);
     }
 
     @Override
@@ -69,6 +74,11 @@ public class Hardware implements Runnable {
         leftDriveMotorB.set(left);
         rightDriveMotorA.set(right);
         rightDriveMotorB.set(right);
+    }
+    
+    public void setShooterSpeed(double speed){
+        //temp. pid needs to be used
+        shooterFlywheel.set(speed);
     }
 
     public double getNavXAngle() {
