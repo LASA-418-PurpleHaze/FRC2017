@@ -2,7 +2,6 @@ package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.lasarobotics.frc2017.statics.Constants;
 import org.lasarobotics.frc2017.statics.ConstantsList;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
@@ -17,13 +16,13 @@ public class Drivetrain extends HazySubsystem {
 
     public Drivetrain() {
 
-        leftPVIff = new HazyPVIff(ConstantsList.getConstant("kP"), ConstantsList.getConstant("kI"),
-                ConstantsList.getConstant("kV"), ConstantsList.getConstant("kFFV"),
-                ConstantsList.getConstant("kFFA"));
-        rightPVIff = new HazyPVIff(ConstantsList.getConstant("kP"), ConstantsList.getConstant("kI"),
-                ConstantsList.getConstant("kV"), ConstantsList.getConstant("kFFV"),
-                ConstantsList.getConstant("kFFA"));
-        motionProfiler = new HazyTMP(ConstantsList.getConstant("maxV"), ConstantsList.getConstant("maxA"));
+        leftPVIff = new HazyPVIff(ConstantsList.kP.getValue(), ConstantsList.kI.getValue(),
+                ConstantsList.kV.getValue(), ConstantsList.kFFV.getValue(),
+                ConstantsList.kFFA.getValue());
+        rightPVIff = new HazyPVIff(ConstantsList.kP.getValue(), ConstantsList.kI.getValue(),
+                ConstantsList.kV.getValue(), ConstantsList.kFFV.getValue(),
+                ConstantsList.kFFA.getValue());
+        motionProfiler = new HazyTMP(ConstantsList.maxV.getValue(), ConstantsList.maxA.getValue());
 
         this.setMode(Mode.OVERRIDE);
     }
