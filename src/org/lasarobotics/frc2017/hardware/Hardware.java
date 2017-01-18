@@ -95,20 +95,21 @@ public class Hardware implements Runnable {
         return robotAngle;
     }
 
+    //wheel measurements based on Lowrider
     public double getLeftDriveDistance() {
-        return -(leftDriveEncoderPosition / 250) * 8 * Math.PI;
+        return -(leftDriveEncoderPosition / 250) * 3.5 * Math.PI;
     }
 
     public double getRightDriveDistance() {
-        return (rightDriveEncoderPosition / 250) * 8 * Math.PI;
+        return (rightDriveEncoderPosition / 250) * 3.5 * Math.PI;
     }
 
     public double getLeftDriveVelocity() {
-        return -(leftDriveEncoderVelocity / 250) * 8 * Math.PI;
+        return -(leftDriveEncoderVelocity / 250) * 3.5 * Math.PI;
     }
 
     public double getRightDriveVelocity() {
-        return rightDriveEncoderVelocity / 250 * 8 * Math.PI;
+        return rightDriveEncoderVelocity / 250 * 3.5 * Math.PI;
     }
     /*
     public double getTime(){

@@ -61,7 +61,7 @@ public class Intake extends HazySubsystem {
 
     @Override
     public void initSubsystem() {
-        operatingSpeed = Constants.INTAKE_SPEED.getValue();
+        operatingSpeed = ConstantsList.intake_speed.getValue();
     }
 
     @Override
