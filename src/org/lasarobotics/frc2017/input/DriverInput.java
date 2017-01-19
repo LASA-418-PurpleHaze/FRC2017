@@ -1,5 +1,6 @@
 package org.lasarobotics.frc2017.input;
 
+import org.lasarobotics.frc2017.statics.ConstantsList;
 import org.lasarobotics.lib.HazyJoystick;
 import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
@@ -9,8 +10,8 @@ public class DriverInput implements Runnable{
     private static DriverInput instance;
     private Drivetrain drivetrain;
     
-    private HazyJoystick driverLeft = new HazyJoystick(0, 0.15);
-    private HazyJoystick driverRight = new HazyJoystick(1, 0.15);
+    private HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
+    private HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
     
     private CheesyDriveHelper cheesyDrive;
     
