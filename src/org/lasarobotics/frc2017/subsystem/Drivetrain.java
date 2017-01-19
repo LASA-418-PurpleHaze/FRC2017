@@ -16,12 +16,12 @@ public class Drivetrain extends HazySubsystem {
 
     public Drivetrain() {
 
-        leftPVIff = new HazyPVIff(ConstantsList.D_pviff_kP.getValue(), ConstantsList.D_pviff_kI.getValue(),
-                ConstantsList.D_pviff_kV.getValue(), ConstantsList.D_pviff_kFFV.getValue(),
-                ConstantsList.D_pviff_kFFA.getValue());
-        rightPVIff = new HazyPVIff(ConstantsList.D_pviff_kP.getValue(), ConstantsList.D_pviff_kI.getValue(),
-                ConstantsList.D_pviff_kV.getValue(), ConstantsList.D_pviff_kFFV.getValue(),
-                ConstantsList.D_pviff_kFFA.getValue());
+        leftPVIff = new HazyPVIff(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
+                ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
+                ConstantsList.D_left_kFFA.getValue());
+        rightPVIff = new HazyPVIff(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
+                ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
+                ConstantsList.D_right_kFFA.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         this.setMode(Mode.OVERRIDE);
