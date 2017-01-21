@@ -9,6 +9,8 @@ package org.lasarobotics.lib;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.hal.FRCNetComm;
+import edu.wpi.first.wpilibj.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -66,14 +68,15 @@ public class HazyIterative extends RobotBase {
      */
     final double continuousPeriod = 0.01;
 
+    @Override
     public void startCompetition() {
-        UsageReporting.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
+        HAL.report(FRCNetComm.tResourceType.kResourceType_Framework,
+                                   FRCNetComm.tInstances.kFramework_Iterative);
 
         robotInit();
 
         // Tell the DS that the robot is ready to be enabled
-        FRCNetworkCommunicationsLibrary.FRCNetworkCommunicationObserveUserProgramStarting();
-
+        HAL.observeUserProgramStarting();
         Notifier notifier = new Notifier(new ContinuousRunner());
         notifier.startPeriodic(continuousPeriod);
 
@@ -92,10 +95,9 @@ public class HazyIterative extends RobotBase {
                     m_autonomousInitialized = false;
                     m_disabledInitialized = true;
                 }
-                if (nextPeriodReady()) {
-                    FRCNetworkCommunicationsLibrary.FRCNetworkCommunicationObserveUserProgramDisabled();
-                    disabledPeriodic();
-                }
+                HAL.observeUserProgramDisabled();
+                disabledPeriodic();
+                
             } else if (isTest()) {
                 // call TestInit() if we are now just entering test mode from either
                 // a different mode or from power-on
@@ -107,10 +109,10 @@ public class HazyIterative extends RobotBase {
                     m_teleopInitialized = false;
                     m_disabledInitialized = false;
                 }
-                if (nextPeriodReady()) {
-                    FRCNetworkCommunicationsLibrary.FRCNetworkCommunicationObserveUserProgramTest();
-                    testPeriodic();
-                }
+                
+                HAL.observeUserProgramTest();
+                testPeriodic();
+                
             } else if (isAutonomous()) {
                 // call Autonomous_Init() if this is the first time
                 // we've entered autonomous_mode
@@ -125,10 +127,11 @@ public class HazyIterative extends RobotBase {
                     m_teleopInitialized = false;
                     m_disabledInitialized = false;
                 }
-                if (nextPeriodReady()) {
-                    FRCNetworkCommunicationsLibrary.FRCNetworkCommunicationObserveUserProgramAutonomous();
-                    autonomousPeriodic();
-                }
+                
+            
+                HAL.observeUserProgramAutonomous();
+                autonomousPeriodic();
+                
             } else {
                 // call Teleop_Init() if this is the first time
                 // we've entered teleop_mode
@@ -141,10 +144,10 @@ public class HazyIterative extends RobotBase {
                     m_teleopInitialized = true;
                     m_testInitialized = false;
                 }
-                if (nextPeriodReady()) {
-                    FRCNetworkCommunicationsLibrary.FRCNetworkCommunicationObserveUserProgramTeleop();
-                    teleopPeriodic();
-                }
+                
+                HAL.observeUserProgramTeleop();
+                teleopPeriodic();
+                
             }
             m_ds.waitForData();
         }
@@ -173,13 +176,13 @@ public class HazyIterative extends RobotBase {
     }
 
     boolean disabledContinuousFirstRun = true;
-
+    double runnableDelay = 0.001;
     public void disabledContinuous() {
         if (disabledContinuousFirstRun) {
             System.out.println("Default LasaIterative.disabledContinuous() method... Overload me!");
             disabledContinuousFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     boolean autonomousContinuousFirstRun = true;
@@ -189,7 +192,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default LasaIterative.autonomousContinuous() method... Overload me!");
             autonomousContinuousFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     boolean teleopContinuousFirstRun = true;
@@ -199,7 +202,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default LasaIterative.teleopContinuous() method... Overload me!");
             teleopContinuousFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     boolean testContinuousFirstRun = true;
@@ -209,7 +212,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default LasaIterative.testContinuous() method... Overload me!");
             testContinuousFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     /**
@@ -292,7 +295,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default IterativeRobot.disabledPeriodic() method... Overload me!");
             dpFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     private boolean apFirstRun = true;
@@ -308,7 +311,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default IterativeRobot.autonomousPeriodic() method... Overload me!");
             apFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     private boolean tpFirstRun = true;
@@ -324,7 +327,7 @@ public class HazyIterative extends RobotBase {
             System.out.println("Default IterativeRobot.teleopPeriodic() method... Overload me!");
             tpFirstRun = false;
         }
-        Timer.delay(0.001);
+        Timer.delay(runnableDelay);
     }
 
     private boolean tmpFirstRun = true;

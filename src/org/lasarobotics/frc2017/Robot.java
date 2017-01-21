@@ -1,6 +1,5 @@
 package org.lasarobotics.frc2017;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.hardware.Hardware;
@@ -9,7 +8,8 @@ import org.lasarobotics.frc2017.statics.Constants;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
-public class Robot extends IterativeRobot {
+import org.lasarobotics.lib.HazyIterative;
+public class Robot extends HazyIterative {
     Drivetrain drivetrain;
     DriverInput driverInput;
     
