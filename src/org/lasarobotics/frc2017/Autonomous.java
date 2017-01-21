@@ -3,22 +3,21 @@ package org.lasarobotics.frc2017;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.command.CloseShot;
 import org.lasarobotics.frc2017.command.CommandManager;
+import org.lasarobotics.frc2017.command.FarShot;
 import org.lasarobotics.frc2017.command.SetHoodPosition;
-import static org.lasarobotics.frc2017.statics.Constants.ConstantsList;
+import org.lasarobotics.frc2017.statics.ConstantsList;
 
 class Autonomous implements Runnable {
 
     public final int DO_NOTHING = 0;
-    public final int SINGLE_CLOSE_SHOT = 1;
-    public final int CONSTANT_CLOSE_SHOT = 2;
-    public final int SINGLE_FAR_SHOT = 3;
-    public final int CONSTANT_FAR_SHOT = 4;
-    public final int PLACE_GEAR = 5;
-    public final int PLACE_GEAR_THEN_FAR_SHOT = 6;
-    public final int PLACE_GEAR_THEN_CLOSE_SHOT = 7;
-    public final int DRIVER_TO_HOPPER = 8;
-    public final int FAR_SHOT_AND_DRIVE_TO_HOPPER = 9;
-    public final int CLOSE_SHOT_AND_DRIVE_TO_HOPPER = 10;
+    public final int CLOSE_SHOT = 1;
+    public final int FAR_SHOT = 2;
+    public final int PLACE_GEAR = 3;
+    public final int PLACE_GEAR_THEN_FAR_SHOT = 4;
+    public final int PLACE_GEAR_THEN_CLOSE_SHOT = 5;
+    public final int DRIVE_TO_HOPPER = 6;
+    public final int FAR_SHOT_AND_DRIVE_TO_HOPPER = 7;
+    public final int CLOSE_SHOT_AND_DRIVE_TO_HOPPER = 8;
 
     private int mode = DO_NOTHING;
 
@@ -38,24 +37,67 @@ class Autonomous implements Runnable {
         switch (mode) {
             case DO_NOTHING:
                 break;
-            case SINGLE_CLOSE_SHOT:
+            case CLOSE_SHOT:
+                //drive & turn some
                 prepCloseShot();
                 closeShot();
                 break;
-            case CONSTANT_CLOSE_SHOT:
+            case FAR_SHOT:
+                //drive & turn some
+                prepFarShot();
+                farShot();
+                break;
+            case PLACE_GEAR:
+                //drive & turn some
+                //place the gear
+                break;
+            case PLACE_GEAR_THEN_FAR_SHOT:
+                //drive & turn some
+                //place the gear
+                //drive & turn some more
+                prepFarShot();
+                farShot();
+                break;
+            case PLACE_GEAR_THEN_CLOSE_SHOT:
+                //drive & turn some
+                //place the gear
+                //drive & turn some more
                 prepCloseShot();
                 closeShot();
+                break;
+            case DRIVE_TO_HOPPER:
+                //drive & turn some
+                break;
+            case CLOSE_SHOT_AND_DRIVE_TO_HOPPER:
+                //drive & turn some
+                prepCloseShot();
+                closeShot();
+                //drive & turn some more
+                break;
+            case FAR_SHOT_AND_DRIVE_TO_HOPPER:
+                //drive & turn some
+                prepFarShot();
+                farShot();
+                //drive and turn some more
                 break;
         }
 
     }
 
     private void prepCloseShot() {
-        CommandManager.addCommand(new SetHoodPosition("Close Shot Hood Prep", 1.0, ConstantsList.S_far_angle.getValue()));
+        CommandManager.addCommand(new SetHoodPosition("Close Shot Hood Prep", 1.0, ConstantsList.S_close_angle.getValue()));
     }
 
     private void closeShot() {
         CommandManager.addCommand(new CloseShot("Close Shot", 1.0));
+    }
+    
+    private void prepFarShot() {
+        CommandManager.addCommand(new SetHoodPosition("Far Shot Hood Prep", 1.0, ConstantsList.S_far_angle.getValue()));
+    }
+
+    private void farShot() {
+        CommandManager.addCommand(new FarShot("Far Shot", 1.0));
     }
 
     public void start() {
