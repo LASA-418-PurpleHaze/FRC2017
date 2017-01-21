@@ -12,6 +12,11 @@ public class ConstantsList {
     public static final Constants.Constant D_right_kV = new Constants.Constant("D_r_kV", 0.0);
     public static final Constants.Constant D_right_kFFV = new Constants.Constant("D_r_kFFV", 0.0);
     public static final Constants.Constant D_right_kFFA = new Constants.Constant("D_r_kFFA", 0.0);
+    public static final Constants.Constant D_turn_kP = new Constants.Constant("D_t_kP", 0.0);
+    public static final Constants.Constant D_turn_kI = new Constants.Constant("D_t_kI", 0.0);
+    public static final Constants.Constant D_turn_kV = new Constants.Constant("D_t_kV", 0.0);
+    public static final Constants.Constant D_turn_kFFV = new Constants.Constant("D_t_kFFV", 0.0);
+    public static final Constants.Constant D_turn_kFFA = new Constants.Constant("D_t_kFFA", 0.0);
     public static final Constants.Constant D_tmp_maxV = new Constants.Constant("D_maxV", 0.0);
     public static final Constants.Constant D_tmp_maxA = new Constants.Constant("D_maxA", 0.0);
     public static final Constants.Constant D_drive_sense = new Constants.Constant("D_drive_sensitivity", 0.0);

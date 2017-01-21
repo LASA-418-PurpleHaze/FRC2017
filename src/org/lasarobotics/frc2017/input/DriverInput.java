@@ -8,12 +8,12 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 public class DriverInput implements Runnable{
     
     private static DriverInput instance;
-    private Drivetrain drivetrain;
+    private final Drivetrain drivetrain;
     
-    private HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
-    private HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
+    private final HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
+    private final HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
     
-    private CheesyDriveHelper cheesyDrive;
+    private final CheesyDriveHelper cheesyDrive;
     
     private double throttle, wheel;
     private boolean quickTurn;

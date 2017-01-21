@@ -10,7 +10,7 @@ public class Drivetrain extends HazySubsystem {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private final HazyPVIff leftPVIff, rightPVIff;
+    private final HazyPVIff leftPVIff, rightPVIff, turnPVIff;
     private final HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
@@ -22,6 +22,9 @@ public class Drivetrain extends HazySubsystem {
         rightPVIff = new HazyPVIff(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue());
+        turnPVIff = new HazyPVIff(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
+                ConstantsList.D_turn_kV.getValue(), ConstantsList.D_turn_kFFV.getValue(),
+                ConstantsList.D_turn_kFFA.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         this.setMode(Mode.OVERRIDE);
@@ -46,15 +49,24 @@ public class Drivetrain extends HazySubsystem {
     @Override
     public void run() {
         dt = Timer.getFPGATimestamp() - prevTime;
-        if (mode != Mode.OVERRIDE) {
-            leftSpeed = leftPVIff.calculate(hardware.getLeftDriveDistance(),
-                    hardware.getLeftDriveVelocity(), motionProfiler.getCurrentPosition(),
-                    motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-            rightSpeed = rightPVIff.calculate(hardware.getRightDriveDistance(),
-                    hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
-                    motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-            motionProfiler.calculateNextSituation(dt);
+        if (null != mode) {
+            switch (mode) {
+                case OVERRIDE:
+                    break;
+                case STRAIGHT:
+                    leftSpeed = leftPVIff.calculate(hardware.getLeftDriveDistance(),
+                            hardware.getLeftDriveVelocity(), motionProfiler.getCurrentPosition(),
+                            motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
+                    rightSpeed = rightPVIff.calculate(hardware.getRightDriveDistance(),
+                            hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
+                            motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
+                    motionProfiler.calculateNextSituation(dt);
+                    break;
+                case TURN:
+                    break;
+            }
         }
+
         prevTime = Timer.getFPGATimestamp();
         hardware.setDriveSpeeds(leftSpeed, rightSpeed);
     }
