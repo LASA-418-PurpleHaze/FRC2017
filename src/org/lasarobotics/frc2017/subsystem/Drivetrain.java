@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.statics.ConstantsList;
+import org.lasarobotics.lib.controlloop.HazyPID;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
 
@@ -10,7 +11,8 @@ public class Drivetrain extends HazySubsystem {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private final HazyPVIff leftPVIff, rightPVIff, turnPVIff;
+    private final HazyPVIff leftPVIff, rightPVIff;
+    private final HazyPID turnPID;
     private final HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
@@ -22,9 +24,8 @@ public class Drivetrain extends HazySubsystem {
         rightPVIff = new HazyPVIff(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue());
-        turnPVIff = new HazyPVIff(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
-                ConstantsList.D_turn_kV.getValue(), ConstantsList.D_turn_kFFV.getValue(),
-                ConstantsList.D_turn_kFFA.getValue());
+        turnPID = new HazyPID();
+        
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         this.setMode(Mode.OVERRIDE);
@@ -63,6 +64,9 @@ public class Drivetrain extends HazySubsystem {
                     motionProfiler.calculateNextSituation(dt);
                     break;
                 case TURN:
+                    double turn = turnPID.calculate(hardware.getRobotAngle(), dt);
+                    leftSpeed = -turn;
+                    rightSpeed = turn;
                     break;
             }
         }
@@ -85,8 +89,7 @@ public class Drivetrain extends HazySubsystem {
 
     public void setTurnSetpoint(double a) {
         targetAngle = a;
-        motionProfiler.generateTrapezoid(targetAngle, hardware.getRobotAngle(),
-                (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()) * 0.5);
+        turnPID.setTarget(targetAngle);
     }
 
     public double getStraightSetpoint() {
@@ -107,6 +110,9 @@ public class Drivetrain extends HazySubsystem {
 
     @Override
     public void initSubsystem() {
+        turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
+                ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(), 
+                ConstantsList.D_turn_kD.getValue());
     }
 
     @Override
