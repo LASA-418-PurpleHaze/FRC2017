@@ -2,6 +2,7 @@ package org.lasarobotics.frc2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.command.CloseShot;
+import org.lasarobotics.frc2017.command.CommandGroup;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.command.FarShot;
 import org.lasarobotics.frc2017.command.SetHoodPosition;
@@ -38,18 +39,18 @@ class Autonomous implements Runnable {
             case DO_NOTHING:
                 break;
             case CLOSE_SHOT:
-                //drive & turn some
+                //start out in close position
                 prepCloseShot();
                 closeShot();
                 break;
             case FAR_SHOT:
-                //drive & turn some
+                //start in far position
                 prepFarShot();
                 farShot();
                 break;
             case PLACE_GEAR:
                 //drive & turn some
-                //place the gear
+                //wait while human player lifts gear
                 break;
             case PLACE_GEAR_THEN_FAR_SHOT:
                 //drive & turn some
@@ -60,7 +61,7 @@ class Autonomous implements Runnable {
                 break;
             case PLACE_GEAR_THEN_CLOSE_SHOT:
                 //drive & turn some
-                //place the gear
+                //wait while human player lifts gear
                 //drive & turn some more
                 prepCloseShot();
                 closeShot();
@@ -88,8 +89,10 @@ class Autonomous implements Runnable {
         CommandManager.addCommand(new SetHoodPosition("Close Shot Hood Prep", 1.0, ConstantsList.S_close_angle.getValue()));
     }
 
-    private void closeShot() {
-        CommandManager.addCommand(new CloseShot("Close Shot", 1.0));
+    private void closeShot() {   
+        for(int i=0; i<ConstantsList.S_num_shots.getValue(); i++){
+            CommandManager.addCommand(new CloseShot("Close Shot", 1.0));
+        }
     }
     
     private void prepFarShot() {
@@ -97,7 +100,10 @@ class Autonomous implements Runnable {
     }
 
     private void farShot() {
-        CommandManager.addCommand(new FarShot("Far Shot", 1.0));
+        for(int i=0; i<ConstantsList.S_num_shots.getValue(); i++){
+            CommandManager.addCommand(new FarShot("Far Shot", 1.0));
+        }
+        
     }
 
     public void start() {

@@ -31,6 +31,7 @@ public class ConstantsList {
     public static final Constants.Constant J_deadband = new Constants.Constant("deadband", 0);
     public static final Constants.Constant S_close_angle = new Constants.Constant("S_close_angle", 0.0);
     public static final Constants.Constant S_far_angle = new Constants.Constant("S_far_angle", 0.0);
+    public static final Constants.Constant S_num_shots = new Constants.Constant("S_num_shots", 0.0);
 
     public static void init() {
         Constants.init();
