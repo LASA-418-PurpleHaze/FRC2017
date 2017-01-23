@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.hardware;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +21,8 @@ public class Hardware implements Runnable {
     private final double rightDriveEncoderPosition, rightDriveEncoderVelocity;
     
     private final AHRS navX;
+    
+    private final Solenoid shooterSolenoid;
 
     private final Talon shooterFlywheel;
     private final Talon intakeMotor;
@@ -49,6 +52,8 @@ public class Hardware implements Runnable {
         
         shooterFlywheel = new Talon(Ports.SHOOTER_MOTOR);
         intakeMotor = new Talon(Ports.INTAKE_MOTOR);
+        
+        shooterSolenoid = new Solenoid(Ports.SHOOTERSOLENOID);
     }
 
     @Override
@@ -86,7 +91,11 @@ public class Hardware implements Runnable {
     public void setIntakeSpeed(double speed){
         intakeMotor.set(speed);
     }
-
+    
+    public void setShooterFar(boolean far){
+        shooterSolenoid.set(far);
+    }
+    
     public double getNavXAngle() {
         return navXAngle;
     }

@@ -1,15 +1,22 @@
 package org.lasarobotics.frc2017.subsystem;
 
+//import org.lasarobotics.frc2017.hardware.Hardware;
+
 public class Shooter extends HazySubsystem{
 
     private static Shooter instance;
+    private boolean shooterFar;
 
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
     }
+    
+    public Shooter(){
+        setMode(Mode.OVERRIDE);
+    }
 
     public static enum Mode {
-        OVERRIDE, IN, OUT;
+        OVERRIDE, IN, CLOSE, FAR;
     }
 
     static Mode mode;
@@ -18,14 +25,36 @@ public class Shooter extends HazySubsystem{
         mode = m;
     }
     
+    public Mode newMode;
+    
     @Override
     public void run() {
-        if(this.mode == Mode.OVERRIDE){
-            //fill in later
+        newMode = mode;
+        if (null != mode) {
+            //WARNING : So far I'm only accounting for the Pneumatics of the shooter,
+            //other things(such as setting shooterSpeed) will have to be later
+            switch (mode) {
+                case OVERRIDE:
+                    //Fill out later
+                    break;
+                case IN:
+                    //Fill out later
+                    break;
+                case CLOSE:
+                    shooterFar = false;
+                    break;
+                case FAR:
+                    shooterFar = true;
+                    break;
+            }
         }
-        else{
-            //fill in later
+
+        if (newMode != mode) {
+            mode = newMode;
+            this.run();
         }
+
+        hardware.setShooterFar(shooterFar);
     }
 
     @Override
