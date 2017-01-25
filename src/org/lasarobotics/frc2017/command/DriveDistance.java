@@ -11,19 +11,12 @@ public class DriveDistance extends Command {
 
     @Override
     public boolean isDone() {
-        /*
-        Not ready for this yet
         return drivetrain.isDistanceDone() && drivetrain.getStraightSetpoint() == distance;
-         */
-        return false;
     }
 
     @Override
     public void start() {
-        /*
-        Also not ready for this yet
-        drivetrain.setStraightSetpoint(distance);
-         */
+        drivetrain.setStraightSetpoint(distance);    
     }
 
     @Override
@@ -32,6 +25,7 @@ public class DriveDistance extends Command {
 
     @Override
     public void stop() {
+        drivetrain.setDriveSpeeds(0.0, 0.0);
     }
 
 }

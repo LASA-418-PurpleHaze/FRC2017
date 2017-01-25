@@ -17,7 +17,7 @@ public class TurnAngle extends Command {
 
     @Override
     public boolean isDone() {
-        return (drivetrain.isLeftPIDDone() && drivetrain.isRightPIDDone());
+        return (drivetrain.isTurnPIDDone());
     }
 
     @Override

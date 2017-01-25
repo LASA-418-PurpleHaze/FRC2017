@@ -107,6 +107,14 @@ public class Drivetrain extends HazySubsystem {
     public boolean isRightPIDDone() {
         return rightPVIff.onTarget();
     }
+    
+    public boolean isTurnPIDDone() {
+        return turnPID.onTarget();
+    }
+    
+    public boolean isDistanceDone() {
+        return isLeftPIDDone() && isRightPIDDone();
+    }
 
     @Override
     public void initSubsystem() {
