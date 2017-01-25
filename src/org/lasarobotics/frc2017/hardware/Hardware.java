@@ -16,7 +16,7 @@ public class Hardware implements Runnable {
     private final VictorSP leftDriveMotorA, leftDriveMotorB;
     private final VictorSP rightDriveMotorA, rightDriveMotorB;
 
-    private Encoder leftDriveEncoder, rightDriveEncoder;
+    private final Encoder leftDriveEncoder, rightDriveEncoder;
     private final double leftDriveEncoderPosition, leftDriveEncoderVelocity;
     private final double rightDriveEncoderPosition, rightDriveEncoderVelocity;
     
@@ -44,6 +44,11 @@ public class Hardware implements Runnable {
 
         rightDriveMotorA.setInverted(true);
         rightDriveMotorB.setInverted(true);
+        
+        leftDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_L_A, Ports.DRIVE_ENCODER_L_B);
+        rightDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_R_A, Ports.DRIVE_ENCODER_R_B);
+        
+        leftDriveEncoder.setReverseDirection(true);
 
         leftDriveEncoderPosition = leftDriveEncoder.get();
         rightDriveEncoderPosition = rightDriveEncoder.get();
@@ -106,15 +111,15 @@ public class Hardware implements Runnable {
 
     //wheel measurements based on Lowrider
     public double getLeftDriveDistance() {
-        return -(leftDriveEncoderPosition / 250) * 3.5 * Math.PI;
+        return leftDriveEncoderPosition / 250 * 3.5 * Math.PI;
     }
 
     public double getRightDriveDistance() {
-        return (rightDriveEncoderPosition / 250) * 3.5 * Math.PI;
+        return rightDriveEncoderPosition / 250 * 3.5 * Math.PI;
     }
 
     public double getLeftDriveVelocity() {
-        return -(leftDriveEncoderVelocity / 250) * 3.5 * Math.PI;
+        return leftDriveEncoderVelocity / 250 * 3.5 * Math.PI;
     }
 
     public double getRightDriveVelocity() {
