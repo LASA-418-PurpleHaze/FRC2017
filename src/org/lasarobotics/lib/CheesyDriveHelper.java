@@ -19,6 +19,10 @@ public class CheesyDriveHelper {
         wheelNonLinearity = 0.6;
         // Apply a sin function that's scaled to make it feel better.
         wheel = Math.sin(Math.PI / 2.0 * wheelNonLinearity * wheel)
+                / Math.sin(Math.PI / 2.0 * wheelNonLinearity);       
+        wheel = Math.sin(Math.PI / 2.0 * wheelNonLinearity * wheel)
+                / Math.sin(Math.PI / 2.0 * wheelNonLinearity);
+        wheel = Math.sin(Math.PI / 2.0 * wheelNonLinearity * wheel)
                 / Math.sin(Math.PI / 2.0 * wheelNonLinearity);
 
         double overPower;
