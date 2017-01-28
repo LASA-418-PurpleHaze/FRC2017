@@ -21,6 +21,7 @@ public class ConstantsList {
     public static final Constants.Constant D_turn_kI = new Constants.Constant("D_t_kI", 0.0);
     public static final Constants.Constant D_turn_kD = new Constants.Constant("D_t_kD", 0.0);
     public static final Constants.Constant D_turn_kFF = new Constants.Constant("D_t_kFF", 0.0);
+    public static final Constants.Constant D_turn_doneBound = new Constants.Constant("D_t_doneBound", 0);
 
     //TMP
     public static final Constants.Constant D_tmp_maxV = new Constants.Constant("D_maxV", 0.0);

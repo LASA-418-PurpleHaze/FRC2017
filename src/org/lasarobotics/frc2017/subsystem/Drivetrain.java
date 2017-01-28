@@ -25,7 +25,7 @@ public class Drivetrain extends HazySubsystem {
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue());
         turnPID = new HazyPID();
-        
+
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         this.setMode(Mode.OVERRIDE);
@@ -107,11 +107,11 @@ public class Drivetrain extends HazySubsystem {
     public boolean isRightPIDDone() {
         return rightPVIff.onTarget();
     }
-    
+
     public boolean isTurnPIDDone() {
         return turnPID.onTarget();
     }
-    
+
     public boolean isDistanceDone() {
         return isLeftPIDDone() && isRightPIDDone();
     }
@@ -119,8 +119,8 @@ public class Drivetrain extends HazySubsystem {
     @Override
     public void initSubsystem() {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
-                ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(), 
-                ConstantsList.D_turn_kD.getValue());
+                ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
+                ConstantsList.D_turn_doneBound.getValue());
     }
 
     @Override
