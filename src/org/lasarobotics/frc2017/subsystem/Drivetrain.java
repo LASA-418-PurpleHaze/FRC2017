@@ -70,7 +70,6 @@ public class Drivetrain extends HazySubsystem {
                     break;
             }
         }
-
         prevTime = Timer.getFPGATimestamp();
         hardware.setDriveSpeeds(leftSpeed, rightSpeed);
     }

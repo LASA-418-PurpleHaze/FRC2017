@@ -29,7 +29,6 @@ public class Shooter extends HazySubsystem{
     
     @Override
     public void run() {
-        newMode = mode;
         if (null != mode) {
             //WARNING : So far I'm only accounting for the Pneumatics of the shooter,
             //other things(such as setting shooterSpeed) will have to be later
@@ -47,11 +46,6 @@ public class Shooter extends HazySubsystem{
                     shooterFar = true;
                     break;
             }
-        }
-
-        if (newMode != mode) {
-            mode = newMode;
-            this.run();
         }
 
         hardware.setShooterFar(shooterFar);

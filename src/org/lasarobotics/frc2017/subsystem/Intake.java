@@ -28,12 +28,9 @@ public class Intake extends HazySubsystem {
         return (instance == null) ? instance = new Intake() : instance;
     }
 
-    Mode newMode;
 
     @Override
     public void run() {
-
-        newMode = mode;
 
         if (null != mode) {
             switch (mode) {
@@ -49,11 +46,6 @@ public class Intake extends HazySubsystem {
                     intakeSpeed = -operatingSpeed;
                     break;
             }
-        }
-
-        if (newMode != mode) {
-            mode = newMode;
-            this.run();
         }
 
         hardware.setIntakeSpeed(intakeSpeed);
