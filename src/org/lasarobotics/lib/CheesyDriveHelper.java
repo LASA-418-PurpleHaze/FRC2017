@@ -35,7 +35,7 @@ public class CheesyDriveHelper {
         double negInertiaAccumulator = 0.0;
         double negInertiaScalar;
         negInertiaScalar = 4.0;
-        sensitivity = ConstantsList.D_drive_sense.getValue();
+        sensitivity = ConstantsList.D_drive_sensitivity.getValue();
 
         double negInertiaPower = negInertia * negInertiaScalar;
         negInertiaAccumulator += negInertiaPower;

@@ -122,6 +122,15 @@ public class Drivetrain extends HazySubsystem {
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(), 
                 ConstantsList.D_turn_kD.getValue());
     }
+    
+    public void updatePVILoops(){
+        leftPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
+                ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
+                ConstantsList.D_left_kFFA.getValue(), ConstantsList.D_left_doneBound.getValue());
+        rightPVIff.setPID(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
+                ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
+                ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
+    }
 
     @Override
     public void pushToDashboard() {
