@@ -1,8 +1,8 @@
 package org.lasarobotics.frc2017.command;
 
-public class FarShot extends Command{
+public class Shoot extends Command{
 
-    public FarShot(String name, double timeOut) {
+    public Shoot(String name, double timeOut) {
         super(name, timeOut);
     }
 
@@ -17,7 +17,7 @@ public class FarShot extends Command{
 
     @Override
     public void run() {
-        //peeeeeeeew peeeeeeeeeew
+        //pew pew
     }
 
     @Override
