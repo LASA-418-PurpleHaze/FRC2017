@@ -13,28 +13,21 @@ public class Drivetrain extends HazySubsystem {
     private double dt, prevTime;
     private final HazyPVIff leftPVIff, rightPVIff;
     private final HazyPID turnPID;
-    private final HazyTMP motionProfiler;
+    private HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
-    public Drivetrain() {
-
-        leftPVIff = new HazyPVIff(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
-                ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
-                ConstantsList.D_left_kFFA.getValue());
-        rightPVIff = new HazyPVIff(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
-                ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
-                ConstantsList.D_right_kFFA.getValue());
-        turnPID = new HazyPID();
-
-        motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
-
-        this.setMode(Mode.OVERRIDE);
-    }
-
     private static Drivetrain instance;
-
+    
     public static Drivetrain getInstance() {
         return (instance == null) ? instance = new Drivetrain() : instance;
+    }
+    
+    private Drivetrain() {
+        leftPVIff = new HazyPVIff();
+        rightPVIff = new HazyPVIff();
+        turnPID = new HazyPID();
+
+        this.setMode(Mode.OVERRIDE);
     }
 
     public static enum Mode {
@@ -50,6 +43,7 @@ public class Drivetrain extends HazySubsystem {
     @Override
     public void run() {
         dt = Timer.getFPGATimestamp() - prevTime;
+        
         if (null != mode) {
             switch (mode) {
                 case OVERRIDE:
@@ -120,15 +114,13 @@ public class Drivetrain extends HazySubsystem {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
                 ConstantsList.D_turn_doneBound.getValue());
-    }
-
-    public void updatePVILoops() {
         leftPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
                 ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
                 ConstantsList.D_left_kFFA.getValue(), ConstantsList.D_left_doneBound.getValue());
         rightPVIff.setPID(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
+        motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
     }
 
     @Override

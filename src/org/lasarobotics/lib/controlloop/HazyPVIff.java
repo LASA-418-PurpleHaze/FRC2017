@@ -5,12 +5,7 @@ public class HazyPVIff extends ControlLoop {
     private double kP, kI, kV, kFFV, kFFA;
     private double positionError, postitionErrorSum;
 
-    public HazyPVIff(double kP, double kI, double kV, double kFFV, double kFFA) {
-        this.kP = kP;
-        this.kV = kV;
-        this.kI = kI;
-        this.kFFV = kFFV;
-        this.kFFA = kFFA;
+    public HazyPVIff() {
     }
 
     /**

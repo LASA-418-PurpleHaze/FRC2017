@@ -1,5 +1,7 @@
 package org.lasarobotics.frc2017.command;
 
+import org.lasarobotics.frc2017.subsystem.Drivetrain;
+
 public class DriveDistance extends Command {
 
     private final double distance;
@@ -10,13 +12,14 @@ public class DriveDistance extends Command {
     }
 
     @Override
+    public void start() {
+        drivetrain.setStraightSetpoint(distance);   
+        drivetrain.setMode(Drivetrain.Mode.STRAIGHT);
+    }
+    
+    @Override
     public boolean isDone() {
         return drivetrain.isDistanceDone() && drivetrain.getStraightSetpoint() == distance;
-    }
-
-    @Override
-    public void start() {
-        drivetrain.setStraightSetpoint(distance);    
     }
 
     @Override
@@ -25,6 +28,8 @@ public class DriveDistance extends Command {
 
     @Override
     public void stop() {
+        drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
+        drivetrain.setStraightSetpoint(0.0);
         drivetrain.setDriveSpeeds(0.0, 0.0);
     }
 

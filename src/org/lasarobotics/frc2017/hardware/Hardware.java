@@ -76,6 +76,11 @@ public class Hardware implements Runnable {
         robotAngle = navXAngle + rotations * 360.0;
     }
 
+    public void resetRobotAngle()
+    {
+        navX.reset();
+    }
+    
     public void start() {
         navX.reset();
     }
