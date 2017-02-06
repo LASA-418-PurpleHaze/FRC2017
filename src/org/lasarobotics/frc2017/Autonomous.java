@@ -6,7 +6,6 @@ import org.lasarobotics.frc2017.command.CommandGroup;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.command.FarShot;
 import org.lasarobotics.frc2017.command.SetHoodPosition;
-import org.lasarobotics.frc2017.statics.ConstantsList;
 
 class Autonomous implements Runnable {
 

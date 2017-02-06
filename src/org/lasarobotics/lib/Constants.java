@@ -1,4 +1,4 @@
-package org.lasarobotics.frc2017.statics;
+package org.lasarobotics.lib;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.io.BufferedReader;

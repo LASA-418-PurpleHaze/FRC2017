@@ -2,7 +2,7 @@ package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.lasarobotics.frc2017.statics.ConstantsList;
+import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.lib.controlloop.HazyPID;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;

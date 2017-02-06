@@ -1,6 +1,6 @@
 package org.lasarobotics.frc2017.input;
 
-import org.lasarobotics.frc2017.statics.ConstantsList;
+import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.lib.HazyJoystick;
 import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;

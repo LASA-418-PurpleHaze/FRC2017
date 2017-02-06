@@ -1,4 +1,6 @@
-package org.lasarobotics.frc2017.statics;
+package org.lasarobotics.frc2017;
+
+import org.lasarobotics.lib.Constants;
 
 public class ConstantsList {
 

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.input.DriverInput;
-import org.lasarobotics.frc2017.statics.Constants;
+import org.lasarobotics.lib.Constants;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
