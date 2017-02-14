@@ -21,7 +21,7 @@ public class Hardware implements Runnable {
     
     private final AHRS navX;
     
-    private final Solenoid shooterSolenoid;
+    private final Solenoid gearSolenoid;
 
     private final Talon shooterFlywheel;
     private final Talon intakeMotorL;
@@ -61,7 +61,7 @@ public class Hardware implements Runnable {
         
         intakeMotorR.setInverted(true);
         
-        shooterSolenoid = new Solenoid(Ports.SHOOTERSOLENOID);
+        gearSolenoid = new Solenoid(Ports.GEARSOLENOID);
     }
 
     @Override
@@ -106,8 +106,8 @@ public class Hardware implements Runnable {
         intakeMotorR.set(speed);
     }
     
-    public void setShooterFar(boolean far){
-        shooterSolenoid.set(far);
+    public void actuateGear(boolean out){
+        gearSolenoid.set(out);
     }
     
     public double getNavXAngle() {

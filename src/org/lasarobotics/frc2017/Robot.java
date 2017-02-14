@@ -43,6 +43,8 @@ public class Robot extends HazyIterative {
         intake.initSubsystem();
         shooter.initSubsystem();
         hardware.start();
+        
+        hardware.actuateGear(true);
     }
 
     @Override

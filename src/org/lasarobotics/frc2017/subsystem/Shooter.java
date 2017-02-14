@@ -48,7 +48,7 @@ public class Shooter extends HazySubsystem{
             }
         }
 
-        hardware.setShooterFar(shooterFar);
+        hardware.actuateGear(shooterFar);
     }
 
     @Override
