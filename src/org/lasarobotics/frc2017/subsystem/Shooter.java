@@ -1,22 +1,29 @@
 package org.lasarobotics.frc2017.subsystem;
 
 //import org.lasarobotics.frc2017.hardware.Hardware;
+import edu.wpi.first.wpilibj.Timer;
+import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.lib.controlloop.HazyPID;
 
-public class Shooter extends HazySubsystem{
+public class Shooter extends HazySubsystem {
 
     private static Shooter instance;
-    private boolean shooterFar;
+    private final HazyPID shooterPID;
+    private static double targetRPM;
+    private static double dt, prevTime;
 
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
     }
-    
-    public Shooter(){
+
+    public Shooter() {
+        shooterPID = new HazyPID();
+
         setMode(Mode.OVERRIDE);
     }
 
     public static enum Mode {
-        OVERRIDE, IN, CLOSE, FAR;
+        OVERRIDE, LOADING, SHOOTING;
     }
 
     static Mode mode;
@@ -24,39 +31,49 @@ public class Shooter extends HazySubsystem{
     public void setMode(Mode m) {
         mode = m;
     }
-    
+
     public Mode newMode;
-    
+
     @Override
     public void run() {
+        
+        dt = Timer.getFPGATimestamp() - prevTime;
+        
         if (null != mode) {
-            //WARNING : So far I'm only accounting for the Pneumatics of the shooter,
-            //other things(such as setting shooterSpeed) will have to be later
             switch (mode) {
                 case OVERRIDE:
+                    break;
+                case LOADING:
                     //Fill out later
                     break;
-                case IN:
-                    //Fill out later
-                    break;
-                case CLOSE:
-                    shooterFar = false;
-                    break;
-                case FAR:
-                    shooterFar = true;
+                case SHOOTING:
+                    speed = shooterPID.calculate(/*current RPM */, dt);
                     break;
             }
         }
 
-        hardware.actuateGear(shooterFar);
+        prevTime = Timer.getFPGATimestamp();
+        hardware.setShooterSpeed(speed);
+    }
+
+    public void setTargetRPM(double target) {
+        targetRPM = target;
+        shooterPID.setTarget(targetRPM);
+    }
+    
+    public boolean isUpToRPM(){
+        return shooterPID.onTarget();
     }
 
     @Override
     public void initSubsystem() {
+        shooterPID.setPID(ConstantsList.S_kP.getValue(), ConstantsList.S_kI.getValue(),
+                ConstantsList.S_kD.getValue(), ConstantsList.S_kFF.getValue(),
+                ConstantsList.S_doneBound.getValue());
     }
 
     @Override
     public void pushToDashboard() {
     }
-    
+
 }

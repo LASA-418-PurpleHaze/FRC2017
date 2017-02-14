@@ -24,6 +24,12 @@ public class ConstantsList {
     public static final Constants.Constant D_turn_kD = new Constants.Constant("D_t_kD", 0.0);
     public static final Constants.Constant D_turn_kFF = new Constants.Constant("D_t_kFF", 0.0);
     public static final Constants.Constant D_turn_doneBound = new Constants.Constant("D_t_doneBound", 0);
+    //shooterPID
+    public static final Constants.Constant S_kP = new Constants.Constant("S_kP", 0.0);
+    public static final Constants.Constant S_kI = new Constants.Constant("S_kI", 0.0);
+    public static final Constants.Constant S_kD = new Constants.Constant("S_kD", 0.0);
+    public static final Constants.Constant S_kFF = new Constants.Constant("S_kFF", 0.0);
+    public static final Constants.Constant S_doneBound = new Constants.Constant("S_doneBound", 0);
 
     //TMP
     public static final Constants.Constant D_tmp_maxV = new Constants.Constant("D_maxV", 0.0);
