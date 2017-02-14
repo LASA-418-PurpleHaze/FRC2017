@@ -24,7 +24,8 @@ public class Hardware implements Runnable {
     private final Solenoid shooterSolenoid;
 
     private final Talon shooterFlywheel;
-    private final Talon intakeMotor;
+    private final Talon intakeMotorL;
+    private final Talon intakeMotorR;
     
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
@@ -55,7 +56,10 @@ public class Hardware implements Runnable {
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
         
         shooterFlywheel = new Talon(Ports.SHOOTER_MOTOR);
-        intakeMotor = new Talon(Ports.INTAKE_MOTOR);
+        intakeMotorL = new Talon(Ports.INTAKE_MOTOR_L);
+        intakeMotorR = new Talon(Ports.INTAKE_MOTOR_R);
+        
+        intakeMotorR.setInverted(true);
         
         shooterSolenoid = new Solenoid(Ports.SHOOTERSOLENOID);
     }
@@ -98,7 +102,8 @@ public class Hardware implements Runnable {
     }
     
     public void setIntakeSpeed(double speed){
-        intakeMotor.set(speed);
+        intakeMotorL.set(speed);
+        intakeMotorR.set(speed);
     }
     
     public void setShooterFar(boolean far){

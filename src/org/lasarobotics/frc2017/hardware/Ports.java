@@ -14,7 +14,8 @@ public class Ports {
     public static final int DRIVE_ENCODER_R_B = 0;
 
     public static final int SHOOTER_MOTOR = -1;
-    public static final int INTAKE_MOTOR = -1;
+    public static final int INTAKE_MOTOR_L = -1;
+    public static final int INTAKE_MOTOR_R = -1;
     public static final int SHOOTERSOLENOID = -1;
 
 }
