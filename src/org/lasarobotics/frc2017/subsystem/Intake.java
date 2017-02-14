@@ -24,10 +24,13 @@ public class Intake extends HazySubsystem {
         mode = m;
     }
 
+    public Mode getMode() {
+        return mode;
+    }
+
     public static Intake getInstance() {
         return (instance == null) ? instance = new Intake() : instance;
     }
-
 
     @Override
     public void run() {
