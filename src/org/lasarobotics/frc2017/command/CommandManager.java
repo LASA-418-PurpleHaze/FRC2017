@@ -8,6 +8,7 @@ public class CommandManager {
     private static LinkedList<Command> list = new LinkedList<>();
 
     public static void addCommand(Command c) {
+        System.out.println("Add command to list: " + c.name);
         list.add(c);
     }
 
@@ -19,7 +20,9 @@ public class CommandManager {
                 command.startTime = Timer.getFPGATimestamp();
                 command.start();
                 command.run();
+                System.out.println("Starting command: " + command.name);
             } else if (command.isDone() || command.isTimedOut()) {
+                System.out.println("Stopping command: " + command.name);
                 command.stop();
                 list.remove(command);
             } else {
@@ -29,6 +32,7 @@ public class CommandManager {
     }
 
     public static void cancelAll() {
+        System.out.println("Clearing out command list.");
         list.clear();
     }
 }

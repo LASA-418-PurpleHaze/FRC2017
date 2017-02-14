@@ -1,7 +1,6 @@
 package org.lasarobotics.lib;
 
-import org.lasarobotics.frc2017.statics.Constants;
-import org.lasarobotics.frc2017.statics.ConstantsList;
+import org.lasarobotics.frc2017.ConstantsList;
 
 public class CheesyDriveHelper {
 

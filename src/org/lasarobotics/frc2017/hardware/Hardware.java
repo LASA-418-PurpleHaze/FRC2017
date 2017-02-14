@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.lasarobotics.frc2017.statics.Ports;
 
 public class Hardware implements Runnable {
 
@@ -77,6 +76,11 @@ public class Hardware implements Runnable {
         robotAngle = navXAngle + rotations * 360.0;
     }
 
+    public void resetRobotAngle()
+    {
+        navX.reset();
+    }
+    
     public void start() {
         navX.reset();
     }
