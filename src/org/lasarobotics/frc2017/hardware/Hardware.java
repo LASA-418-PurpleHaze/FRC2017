@@ -1,5 +1,6 @@
 package org.lasarobotics.frc2017.hardware;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
@@ -7,6 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.lasarobotics.frc2017.ConstantsList;
 
 public class Hardware implements Runnable {
 
@@ -18,15 +20,16 @@ public class Hardware implements Runnable {
     private final Encoder leftDriveEncoder, rightDriveEncoder;
     private final double leftDriveEncoderPosition, leftDriveEncoderVelocity;
     private final double rightDriveEncoderPosition, rightDriveEncoderVelocity;
-    
+    private double targetRPM;
+
     private final AHRS navX;
-    
+
     private final Solenoid gearSolenoid;
 
-    private final Talon shooterFlywheel;
+    private final CANTalon shooterFlywheel;
     private final Talon intakeMotorL;
     private final Talon intakeMotorR;
-    
+
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
 
@@ -44,23 +47,25 @@ public class Hardware implements Runnable {
 
         rightDriveMotorA.setInverted(true);
         rightDriveMotorB.setInverted(true);
-        
+
         leftDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_L_A, Ports.DRIVE_ENCODER_L_B);
         rightDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_R_A, Ports.DRIVE_ENCODER_R_B);
-        
+
         leftDriveEncoder.setReverseDirection(true);
 
         leftDriveEncoderPosition = leftDriveEncoder.get();
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
-        
-        shooterFlywheel = new Talon(Ports.SHOOTER_MOTOR);
+
+        shooterFlywheel = new CANTalon(Ports.SHOOTER_MOTOR);
         intakeMotorL = new Talon(Ports.INTAKE_MOTOR_L);
         intakeMotorR = new Talon(Ports.INTAKE_MOTOR_R);
-        
         intakeMotorR.setInverted(true);
-        
+
+        shooterFlywheel.setPID(ConstantsList.S_kP.getValue(), ConstantsList.S_kI.getValue(),
+                ConstantsList.S_kD.getValue());
+
         gearSolenoid = new Solenoid(Ports.GEARSOLENOID);
     }
 
@@ -80,11 +85,10 @@ public class Hardware implements Runnable {
         robotAngle = navXAngle + rotations * 360.0;
     }
 
-    public void resetRobotAngle()
-    {
+    public void resetRobotAngle() {
         navX.reset();
     }
-    
+
     public void start() {
         navX.reset();
     }
@@ -95,21 +99,25 @@ public class Hardware implements Runnable {
         rightDriveMotorA.set(right);
         rightDriveMotorB.set(right);
     }
-    
-    public void setShooterSpeed(double speed){
-        //temp. pid needs to be used
-        shooterFlywheel.set(speed);
+
+    public void setShooterRPM(double rpm) {
+        targetRPM = rpm;
+        shooterFlywheel.set(rpm);
     }
-    
-    public void setIntakeSpeed(double speed){
+
+    public boolean isShooterRPMDone() {
+        return (shooterFlywheel.pidGet() == targetRPM);
+    }
+
+    public void setIntakeSpeed(double speed) {
         intakeMotorL.set(speed);
         intakeMotorR.set(speed);
     }
-    
-    public void actuateGear(boolean out){
+
+    public void actuateGear(boolean out) {
         gearSolenoid.set(out);
     }
-    
+
     public double getNavXAngle() {
         return navXAngle;
     }
@@ -120,27 +128,25 @@ public class Hardware implements Runnable {
 
     //wheel measurements based on Lowrider
     public double getLeftDriveDistance() {
-        return leftDriveEncoderPosition / 250 * 3.5 * Math.PI * (36/48);
+        return leftDriveEncoderPosition / 250 * 3.5 * Math.PI * (36 / 48);
     }
 
     public double getRightDriveDistance() {
-        return rightDriveEncoderPosition / 250 * 3.5 * Math.PI * (36/48);
+        return rightDriveEncoderPosition / 250 * 3.5 * Math.PI * (36 / 48);
     }
 
     public double getLeftDriveVelocity() {
-        return leftDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36/48);
+        return leftDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36 / 48);
     }
 
     public double getRightDriveVelocity() {
-        return rightDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36/48);
+        return rightDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36 / 48);
     }
+
     /*
     public double getTime(){
         return time;
     }*/
-    
-    
-    
     public void pushToDashboard() {
         SmartDashboard.putNumber("NavX Angle", navXAngle);
         SmartDashboard.putNumber("Robot Angle", robotAngle);

@@ -30,6 +30,7 @@ public class ConstantsList {
     public static final Constants.Constant S_kD = new Constants.Constant("S_kD", 0.0);
     public static final Constants.Constant S_kFF = new Constants.Constant("S_kFF", 0.0);
     public static final Constants.Constant S_doneBound = new Constants.Constant("S_doneBound", 0);
+    public static final Constants.Constant S_RPM = new Constants.Constant("S_RPM", 0);
 
     //TMP
     public static final Constants.Constant D_tmp_maxV = new Constants.Constant("D_maxV", 0.0);
