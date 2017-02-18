@@ -37,7 +37,7 @@ public class ConstantsList {
     public static final Constants.Constant D_tmp_maxA = new Constants.Constant("D_maxA", 0.0);
 
     public static final Constants.Constant D_drive_sensitivity = new Constants.Constant("D_drive_sensitivity", 0.0);
-    public static final Constants.Constant I_intake_speed = new Constants.Constant("I_intake_speed", 0.0);
+    public static final Constants.Constant I_intake_speed = new Constants.Constant("I_intake_speed", 0.0); 
     public static final Constants.Constant J_deadband = new Constants.Constant("deadband", 0);
     public static final Constants.Constant S_close_angle = new Constants.Constant("S_close_angle", 0.0);
     public static final Constants.Constant S_far_angle = new Constants.Constant("S_far_angle", 0.0);

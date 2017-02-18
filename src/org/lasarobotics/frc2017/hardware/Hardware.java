@@ -18,8 +18,8 @@ public class Hardware implements Runnable {
     private final VictorSP rightDriveMotorA, rightDriveMotorB;
 
     private final Encoder leftDriveEncoder, rightDriveEncoder;
-    private double leftDriveEncoderPosition, leftDriveEncoderVelocity;
-    private double rightDriveEncoderPosition, rightDriveEncoderVelocity;
+    private volatile double leftDriveEncoderPosition, leftDriveEncoderVelocity;
+    private volatile double rightDriveEncoderPosition, rightDriveEncoderVelocity;
     
     //private final AHRS navX;
     private volatile double navXAngle, robotAngle;
@@ -56,18 +56,18 @@ public class Hardware implements Runnable {
         leftDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_L_A, Ports.DRIVE_ENCODER_L_B);
         rightDriveEncoder = new Encoder(Ports.DRIVE_ENCODER_R_A, Ports.DRIVE_ENCODER_R_B);
 
-        leftDriveEncoder.setReverseDirection(true);
+        rightDriveEncoder.setReverseDirection(true);
 
         // Left Shooter Controller
         leftShooterMotor = new CANTalon(Ports.SHOOTER_MOTOR_L);
         leftShooterMotor.reverseOutput(true);
-        leftShooterMotor.reverseSensor(true);
+        leftShooterMotor.reverseSensor(false);
         leftShooterMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
         leftShooterMotor.SetVelocityMeasurementPeriod(CANTalon.VelocityMeasurementPeriod.Period_10Ms);
         leftShooterMotor.SetVelocityMeasurementWindow(20);
         leftShooterMotor.configEncoderCodesPerRev(100);
         leftShooterMotor.configNominalOutputVoltage(0, 0);
-        leftShooterMotor.configPeakOutputVoltage(12, -2);
+        leftShooterMotor.configPeakOutputVoltage(1, -12);
         leftShooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
         leftShooterMotor.set(0);
 
@@ -123,6 +123,8 @@ public class Hardware implements Runnable {
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
+        gearSolenoid.set(true);
+        intakeSolenoid.set(true);
     }
 
     /** 
@@ -198,7 +200,7 @@ public class Hardware implements Runnable {
      */
     public void setShooterRPM(double rpm) {
         leftShooterMotor.set(rpm);
-        rightShooterMotor.set(rpm);
+        //rightShooterMotor.set(rpm);
     }
 
     /**
@@ -233,14 +235,14 @@ public class Hardware implements Runnable {
      * @return The position of the right side of the drivetrain in inches.
      */
     public double getRightDriveDistance() {
-        return rightDriveEncoderPosition / 250 * 3.5 * Math.PI * (36 / 48);
+        return rightDriveEncoderPosition / 250.0 * 3.5 * Math.PI * (36 / 48);
     }
 
     /**
      * @return The velocity of the left side of the drivetrain in inches/sec.
      */
     public double getLeftDriveVelocity() {
-        return leftDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36 / 48);
+        return leftDriveEncoderVelocity / 250.0 * 3.5 * Math.PI * (36 / 48);
     }
 
     /**
@@ -280,6 +282,7 @@ public class Hardware implements Runnable {
         SmartDashboard.putNumber("Right Drive Velocity", getRightDriveVelocity());
         SmartDashboard.putNumber("Left Shooter RPM", leftShooterMotor.getSpeed());
         SmartDashboard.putNumber("Right Shooter RPM", rightShooterMotor.getSpeed());
+        SmartDashboard.putNumber("Left Shooter Motor Output",leftShooterMotor.getOutputVoltage());
     }
 
 }

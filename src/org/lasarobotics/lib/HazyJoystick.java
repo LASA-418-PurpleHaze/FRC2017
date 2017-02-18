@@ -84,6 +84,10 @@ public class HazyJoystick {
     public boolean getRightFrontButton(){
         return controller.getRawButton(11);
     }
+
+    public boolean getRawButton(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

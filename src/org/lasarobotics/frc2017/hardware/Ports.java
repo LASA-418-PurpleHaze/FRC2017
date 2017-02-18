@@ -17,7 +17,7 @@ public class Ports {
     public static final int SHOOTER_MOTOR_R = 1;
     public static final int INTAKE_MOTOR_L = 2;
     public static final int INTAKE_MOTOR_R = 3;
-    public static final int GEARSOLENOID = 0;
-    public static final int INTAKE_SOLENOID = 1;
+    public static final int GEARSOLENOID = 3;
+    public static final int INTAKE_SOLENOID = 7;
 
 }
