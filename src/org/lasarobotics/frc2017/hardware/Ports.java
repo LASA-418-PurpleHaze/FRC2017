@@ -17,5 +17,6 @@ public class Ports {
     public static final int INTAKE_MOTOR_L = -1;
     public static final int INTAKE_MOTOR_R = -1;
     public static final int GEARSOLENOID = -1;
+    public static final int INTAKE_SOLENOID = 2;
 
 }
