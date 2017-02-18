@@ -21,7 +21,7 @@ public class Hardware implements Runnable {
     private double leftDriveEncoderPosition, leftDriveEncoderVelocity;
     private double rightDriveEncoderPosition, rightDriveEncoderVelocity;
     
-    private final AHRS navX;
+    //private final AHRS navX;
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
 
@@ -43,7 +43,7 @@ public class Hardware implements Runnable {
 
     public Hardware() {
         // Drivetrain
-        navX = new AHRS(SPI.Port.kMXP);
+//        navX = new AHRS(SPI.Port.kMXP);
 
         leftDriveMotorA = new VictorSP(Ports.LEFT_DRIVE_MOTOR_A);
         leftDriveMotorB = new VictorSP(Ports.LEFT_DRIVE_MOTOR_B);
@@ -59,7 +59,7 @@ public class Hardware implements Runnable {
         leftDriveEncoder.setReverseDirection(true);
 
         // Left Shooter Controller
-        leftShooterMotor = new CANTalon(Ports.SHOOTER_MOTOR);
+        leftShooterMotor = new CANTalon(Ports.SHOOTER_MOTOR_L);
         leftShooterMotor.reverseOutput(true);
         leftShooterMotor.reverseSensor(true);
         leftShooterMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -72,7 +72,7 @@ public class Hardware implements Runnable {
         leftShooterMotor.set(0);
 
         // Right Shooter Controller
-        rightShooterMotor = new CANTalon(Ports.SHOOTER_MOTOR);
+        rightShooterMotor = new CANTalon(Ports.SHOOTER_MOTOR_R);
         rightShooterMotor.reverseOutput(false);
         rightShooterMotor.reverseSensor(false);
         rightShooterMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -106,7 +106,7 @@ public class Hardware implements Runnable {
 
     @Override
     public void run() {
-        double newAngle = navX.getFusedHeading();
+/*        double newAngle = navX.getFusedHeading();
 
         if (Math.abs(navXAngle - newAngle) > 180.0) {
             if (newAngle < 180.0) {
@@ -118,7 +118,7 @@ public class Hardware implements Runnable {
 
         navXAngle = navX.getAngle();
         robotAngle = navXAngle + rotations * 360.0;
-
+*/
         leftDriveEncoderPosition = leftDriveEncoder.get();
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
@@ -129,7 +129,7 @@ public class Hardware implements Runnable {
      * Reset all sensor values to 0 and reload the PID gains from the file.
      */
     public void reset() {
-        navX.reset();
+//        navX.reset();
         navXAngle = 0;
         robotAngle = 0;
         rotations = 0;
