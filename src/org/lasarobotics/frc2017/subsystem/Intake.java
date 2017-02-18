@@ -51,7 +51,7 @@ public class Intake extends HazySubsystem {
             }
         }
 
-        hardware.setIntakeSpeed(intakeSpeed);
+        hardware.setIntakeOutput(intakeSpeed);
     }
 
     @Override

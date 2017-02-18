@@ -265,6 +265,7 @@ public class Hardware implements Runnable {
     public double getRobotAngle() {
         return robotAngle;
     }
+   
 
     public void actuateGear(boolean out) {
         gearSolenoid.set(out);

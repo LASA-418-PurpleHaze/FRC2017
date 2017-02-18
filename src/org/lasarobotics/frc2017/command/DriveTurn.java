@@ -13,7 +13,7 @@ public class DriveTurn extends Command {
 
     @Override
     public void start() {
-        hardware.resetRobotAngle();
+        hardware.reset();
         drivetrain.setTurnSetpoint(angle);
         drivetrain.setMode(Drivetrain.Mode.TURN);
     }

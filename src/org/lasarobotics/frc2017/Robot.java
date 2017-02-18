@@ -42,8 +42,7 @@ public class Robot extends HazyIterative {
         drivetrain.initSubsystem();
         intake.initSubsystem();
         shooter.initSubsystem();
-        hardware.start();
-        
+        hardware.reset();
         hardware.actuateGear(true);
     }
 
