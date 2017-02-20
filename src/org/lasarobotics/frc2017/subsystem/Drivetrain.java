@@ -3,11 +3,12 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.dataLogging.Loggable;
 import org.lasarobotics.lib.controlloop.HazyPID;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
 import org.lasarobotics.lib.controlloop.HazyTMP;
 
-public class Drivetrain extends HazySubsystem {
+public class Drivetrain extends HazySubsystem implements Loggable {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
@@ -29,6 +30,16 @@ public class Drivetrain extends HazySubsystem {
         
         this.setMode(Mode.OVERRIDE);
         initSubsystem();
+    }
+
+    @Override
+    public String getNames() {
+        return "leftSpeed, rightSpeed";
+    }
+
+    @Override
+    public String getValues() {
+        return leftSpeed + ", " + rightSpeed;
     }
 
     public static enum Mode {

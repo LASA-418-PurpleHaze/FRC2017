@@ -2,8 +2,9 @@ package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.dataLogging.Loggable;
 
-public class Climber extends HazySubsystem {
+public class Climber extends HazySubsystem implements Loggable{
 
     private static Climber instance;
 
@@ -14,6 +15,16 @@ public class Climber extends HazySubsystem {
     }
 
     private Mode mode;
+
+    @Override
+    public String getNames() {
+        return "climberSpeed";
+    }
+
+    @Override
+    public String getValues() {
+        return climberSpeed + "";
+    }
 
     public static enum Mode {
         OFF, CLIMB;

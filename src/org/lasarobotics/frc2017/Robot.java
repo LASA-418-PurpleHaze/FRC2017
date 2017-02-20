@@ -10,6 +10,7 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.HazyIterative;
+import org.lasarobotics.frc2017.dataLogging.Logger;
 
 public class Robot extends HazyIterative {
 
@@ -37,6 +38,12 @@ public class Robot extends HazyIterative {
         autonomous = Autonomous.getInstance();
         autonomous.start();
         Constants.init();
+        
+        Logger.addLog(intake);
+        Logger.addLog(shooter);
+        Logger.addLog(drivetrain);
+        Logger.addLog(climber);
+        Logger.addLog(driverInput);
     }
 
     private void initSubsystems() {
@@ -47,6 +54,7 @@ public class Robot extends HazyIterative {
         shooter.initSubsystem();
         climber.initSubsystem();
         hardware.reset();
+        Logger.makeFile();
     }
 
     @Override
@@ -63,6 +71,8 @@ public class Robot extends HazyIterative {
         driverInput.run();
         drivetrain.run();
         pushToDashboard();
+        
+        Logger.writeToFile();
     }
 
     @Override
@@ -71,6 +81,8 @@ public class Robot extends HazyIterative {
         shooter.run();
         intake.run();
         climber.run();
+        
+        Logger.log();
     }
 
     @Override
@@ -85,17 +97,20 @@ public class Robot extends HazyIterative {
     @Override
     public void autonomousPeriodic() {
         pushToDashboard();
+        Logger.writeToFile();
     }
 
     @Override
     public void autonomousContinuous() {
         CommandManager.run();
         hardware.run();
-
         drivetrain.run();
         shooter.run();
         intake.run();
         climber.run();
+        
+        Logger.log();
+        
     }
 
     @Override
@@ -111,6 +126,7 @@ public class Robot extends HazyIterative {
 
     public void disableContinuous() {
         hardware.run();
+        Logger.closeFile();
     }
 
     private void pushToDashboard() {
