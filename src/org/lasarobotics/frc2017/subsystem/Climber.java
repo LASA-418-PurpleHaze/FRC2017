@@ -18,12 +18,12 @@ public class Climber extends HazySubsystem implements Loggable{
 
     @Override
     public String getNames() {
-        return "climberSpeed";
+        return "climberSpeed, climberCurrent";
     }
 
     @Override
     public String getValues() {
-        return climberSpeed + "";
+        return climberSpeed + ", " + hardware.getClimberCurrent() + ", ";
     }
 
     public static enum Mode {

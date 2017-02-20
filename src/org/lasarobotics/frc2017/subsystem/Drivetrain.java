@@ -34,12 +34,13 @@ public class Drivetrain extends HazySubsystem implements Loggable {
 
     @Override
     public String getNames() {
-        return "leftSpeed, rightSpeed";
+        return "D_l_pos, D_l_velocity, D_r_pos, D_r_velocity, D_l_pviff_speed, D_r_pviff_speed, D_target_pos, D_target_angle, D_tmp_velocity, D_tmp_pos, D_tmp_accelS";
     }
 
     @Override
     public String getValues() {
-        return leftSpeed + ", " + rightSpeed;
+        return hardware.getLeftDriveDistance() + ", " + hardware.getLeftDriveVelocity()+ ", " + hardware.getRightDriveDistance() + ", " + hardware.getRightDriveVelocity() + ", " + leftSpeed + ", " + rightSpeed + ", " 
+                + targetPosition + ", " + targetAngle + ", " + motionProfiler.getCurrentVelocity() + ", " + motionProfiler.getCurrentPosition() + ", " + motionProfiler.getCurrentAcceleration();
     }
 
     public static enum Mode {
@@ -153,7 +154,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
         SmartDashboard.putNumber("D_tmp_pos", motionProfiler.getCurrentPosition());
         SmartDashboard.putNumber("D_tmp_accel", motionProfiler.getCurrentAcceleration());
         SmartDashboard.putBoolean("D_dist_done", isDistanceDone());
-        SmartDashboard.putBoolean("D_turn_done", isTurnPIDDone());
+        SmartDashboard.putBoolean("D_tur_mode\"n_done", isTurnPIDDone());
         SmartDashboard.putString("D_mode", mode.toString());
         SmartDashboard.putNumber("D_avg_v", 0.5* (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()));
         SmartDashboard.putNumber("D_avg_p", 0.5 * (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance()));
