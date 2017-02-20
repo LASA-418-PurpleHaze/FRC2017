@@ -57,11 +57,6 @@ public class DriverInput implements Runnable {
         gearToggle.calc(driverRight.getTopFrontButton());
         hardware.actuateGear(!gearToggle.get());
 
-        /*if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
-            hardware.actuateGear(false);
-        } else {
-            hardware.actuateGear(true);
-        }*/
     }
 
     private void drivetrainControl() {

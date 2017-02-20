@@ -2,10 +2,10 @@ package org.lasarobotics.frc2017.hardware;
 
 public class Ports {
 
-    public static final int LEFT_DRIVE_MOTOR_A = 9;
-    public static final int LEFT_DRIVE_MOTOR_B = 8;
-    public static final int RIGHT_DRIVE_MOTOR_A = 7;
-    public static final int RIGHT_DRIVE_MOTOR_B = 6;
+    public static final int LEFT_DRIVE_MOTOR_A = 0;
+    public static final int LEFT_DRIVE_MOTOR_B = 1;
+    public static final int RIGHT_DRIVE_MOTOR_A = 3;
+    public static final int RIGHT_DRIVE_MOTOR_B = 2;
 
     //Encoder ports
     public static final int DRIVE_ENCODER_L_A = 6;
@@ -21,10 +21,10 @@ public class Ports {
     public static final int INTAKE_SOLENOID = 7;
 
     public static final int CONVEYOR_ROLLER = 5;
-    public static final int CLIMBER_MOTOR_A = 3;
+    public static final int CLIMBER_MOTOR_A = 6;
     public static final int CLIMBER_MOTOR_B = 4;
     
-    public static final int CLIMBER_POWER_A = 6;
-    public static final int CLIMBER_POWER_B = 7;
+    public static final int CLIMBER_POWER_A = 7;
+    public static final int CLIMBER_POWER_B = 8;
 
 }

@@ -30,7 +30,7 @@ class Autonomous implements Runnable {
 
     @Override
     public void run() {
-        mode = (int) SmartDashboard.getNumber("AutoMode", DO_NOTHING);
+        mode = (int) SmartDashboard.getNumber("Auto Mode", DO_NOTHING);
 
         CommandManager.addCommand(new StartAutoCommand());
 
@@ -64,7 +64,7 @@ class Autonomous implements Runnable {
             case TEST:
                 //CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(), 
                 //        -ConstantsList.A_gear_angle.getValue()));
-                CommandManager.addCommand(new DriveDistance("Drive test", 10, 96.0));
+                CommandManager.addCommand(new DriveDistance("test", 10, 50));
                 break;
         }
 

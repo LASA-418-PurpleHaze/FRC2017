@@ -117,7 +117,7 @@ public class Hardware implements Runnable {
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
         climberMotorB = new VictorSP(Ports.CLIMBER_MOTOR_B);
-        //climberMotorB.setInverted(true);
+        climberMotorB.setInverted(true);
 
     }
 
@@ -315,6 +315,7 @@ public class Hardware implements Runnable {
         SmartDashboard.putNumber("S_l_voltage", -leftShooterMotor.getOutputVoltage());
         SmartDashboard.putNumber("S_r_voltage", rightShooterMotor.getOutputVoltage());
         SmartDashboard.putNumber("I_current", leftIntakeMotor.getOutputCurrent());
+        SmartDashboard.putNumber("D_test", leftDriveEncoderPosition);
     }
 
 }

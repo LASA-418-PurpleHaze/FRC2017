@@ -12,7 +12,7 @@ public class Drivetrain extends HazySubsystem {
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
     private final HazyPVIff straightPVIff;
-    private final HazyPID turnPID;
+    private final HazyPID turnPID, steerPID;
     private HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
 
@@ -25,7 +25,8 @@ public class Drivetrain extends HazySubsystem {
     private Drivetrain() {
         straightPVIff = new HazyPVIff();
         turnPID = new HazyPID();
-
+        steerPID = new HazyPID();
+        
         this.setMode(Mode.OVERRIDE);
         initSubsystem();
     }
@@ -49,10 +50,11 @@ public class Drivetrain extends HazySubsystem {
                 case OVERRIDE:
                     break;
                 case STRAIGHT:
+                    motionProfiler.calculateNextSituation(dt);
                     leftSpeed = rightSpeed = straightPVIff.calculate((hardware.getLeftDriveDistance() + hardware.getRightDriveDistance())*0.5,
                             (hardware.getRightDriveVelocity() + hardware.getLeftDriveVelocity()) * 0.5, motionProfiler.getCurrentPosition(),
                             motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-                    turn = turnPID.calculate(hardware.getRobotAngle(), dt);
+                    turn = steerPID.calculate(hardware.getRobotAngle(), dt);
                     leftSpeed += turn;
                     rightSpeed -= turn;
                     break;
@@ -78,6 +80,8 @@ public class Drivetrain extends HazySubsystem {
         motionProfiler.generateTrapezoid(targetPosition,
                 (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance() * 0.5),
                 (Math.abs(hardware.getLeftDriveVelocity()) + Math.abs(hardware.getRightDriveVelocity())) * 0.5);
+        straightPVIff.reset();
+        straightPVIff.setTarget((targetPosition));
     }
 
     public void setTurnSetpoint(double a) {
@@ -106,12 +110,15 @@ public class Drivetrain extends HazySubsystem {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
                 ConstantsList.D_turn_doneBound.getValue());
-        straightPVIff.setPID((ConstantsList.D_left_kP.getValue() + ConstantsList.D_right_kP.getValue()) * 0.5,
-                (ConstantsList.D_left_kI.getValue() + ConstantsList.D_right_kI.getValue()) * 0.5,
-                (ConstantsList.D_left_kV.getValue() + ConstantsList.D_right_kV.getValue()) * 0.5,
-                (ConstantsList.D_left_kFFV.getValue() + ConstantsList.D_right_kFFV.getValue()) * 0.5,
-                (ConstantsList.D_left_kFFA.getValue() + ConstantsList.D_right_kFFA.getValue()) * 0.5, 
-                (ConstantsList.D_left_doneBound.getValue() + ConstantsList.D_right_doneBound.getValue()) * 0.5);
+        straightPVIff.setPID(ConstantsList.D_left_kP.getValue(),
+                ConstantsList.D_left_kI.getValue(),
+                ConstantsList.D_left_kV.getValue(),
+                ConstantsList.D_left_kFFV.getValue(),
+                ConstantsList.D_left_kFFA.getValue(), 
+                ConstantsList.D_left_doneBound.getValue());
+        steerPID.setPID(ConstantsList.D_steer_kP.getValue(), ConstantsList.D_steer_kI.getValue(),
+                ConstantsList.D_steer_kD.getValue(), ConstantsList.D_steer_kFF.getValue(),
+                ConstantsList.D_steer_doneBound.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         straightPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
@@ -137,6 +144,10 @@ public class Drivetrain extends HazySubsystem {
         SmartDashboard.putBoolean("D_dist_done", isDistanceDone());
         SmartDashboard.putBoolean("D_turn_done", isTurnPIDDone());
         SmartDashboard.putString("D_mode", mode.toString());
+        SmartDashboard.putNumber("D_avg_v", 0.5* (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()));
+        SmartDashboard.putNumber("D_avg_p", 0.5 * (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance()));
+        SmartDashboard.putNumber("D_avg_pviff_speed", 0.5*(leftSpeed + rightSpeed));
+        
     }
 
 }

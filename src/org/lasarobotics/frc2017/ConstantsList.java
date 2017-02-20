@@ -31,6 +31,14 @@ public class ConstantsList {
     public static final Constant D_turn_doneBound = new Constant("D_t_doneBound", 0.0);
     public static final Constant D_done_cycles = new Constant("D_done_cycles", 50);
     
+    //steerPID
+    public static final Constant D_steer_kP = new Constant("D_s_kP", 0.0);
+    public static final Constant D_steer_kI = new Constant("D_s_kI", 0.0);
+    public static final Constant D_steer_kD = new Constant("D_s_kD", 0.0);
+    public static final Constant D_steer_kFF = new Constant("D_s_kFF", 0.0);
+    public static final Constant D_steer_doneBound = new Constant("D_s_doneBound", 0.0);
+    public static final Constant D_steer_done_cycles = new Constant("D_s_done_cycles", 50);
+    
     //shooterPID
     public static final Constant S_kP = new Constant("S_kP", 0.0);
     public static final Constant S_kI = new Constant("S_kI", 0.0);
