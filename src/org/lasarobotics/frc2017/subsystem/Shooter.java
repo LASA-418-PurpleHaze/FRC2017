@@ -1,14 +1,11 @@
 package org.lasarobotics.frc2017.subsystem;
 
-//import org.lasarobotics.frc2017.hardware.Hardware;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 
 public class Shooter extends HazySubsystem {
 
     private static Shooter instance;
-    private static double targetRPM;
-    private static double dt, prevTime;
 
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
@@ -19,7 +16,7 @@ public class Shooter extends HazySubsystem {
     }
 
     public static enum Mode {
-        OVERRIDE, LOADING, SHOOTING;
+        OVERRIDE, LOADING, SHOOTING, OFF;
     }
 
     static Mode mode;
@@ -33,22 +30,21 @@ public class Shooter extends HazySubsystem {
     @Override
     public void run() {
 
-        dt = Timer.getFPGATimestamp() - prevTime;
-
         if (null != mode) {
             switch (mode) {
                 case OVERRIDE:
                     break;
                 case LOADING:
-                    //Fill out later
+                    hardware.setShooterRPM(ConstantsList.S_loading_speed.getValue());
                     break;
                 case SHOOTING:
                     hardware.setShooterRPM(ConstantsList.S_RPM.getValue());
                     break;
+                case OFF:
+                    hardware.setShooterRPM(0.0);
             }
         }
 
-        prevTime = Timer.getFPGATimestamp();
     }
 
     public boolean isUpToRPM() {
@@ -61,6 +57,7 @@ public class Shooter extends HazySubsystem {
 
     @Override
     public void pushToDashboard() {
+        SmartDashboard.putString("shooter_mode", mode.toString());
     }
 
 }

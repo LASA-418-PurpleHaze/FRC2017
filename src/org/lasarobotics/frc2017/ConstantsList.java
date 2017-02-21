@@ -1,51 +1,58 @@
 package org.lasarobotics.frc2017;
 
 import org.lasarobotics.lib.Constants;
+import org.lasarobotics.lib.Constants.Constant;
 
 public class ConstantsList {
 
     //leftPVIff
-    public static final Constants.Constant D_left_kP = new Constants.Constant("D_l_kP", 0.0);
-    public static final Constants.Constant D_left_kI = new Constants.Constant("D_l_kI", 0.0);
-    public static final Constants.Constant D_left_kV = new Constants.Constant("D_l_kV", 0.0);
-    public static final Constants.Constant D_left_kFFV = new Constants.Constant("D_l_kFFV", 0.0);
-    public static final Constants.Constant D_left_kFFA = new Constants.Constant("D_l_kFFA", 0.0);
-    public static final Constants.Constant D_left_doneBound = new Constants.Constant("D_l_doneBound", 0.0);
+    public static final Constant D_left_kP = new Constant("D_l_kP", 0.0);
+    public static final Constant D_left_kI = new Constant("D_l_kI", 0.0);
+    public static final Constant D_left_kV = new Constant("D_l_kV", 0.0);
+    public static final Constant D_left_kFFV = new Constant("D_l_kFFV", 0.0);
+    public static final Constant D_left_kFFA = new Constant("D_l_kFFA", 0.0);
+    public static final Constant D_left_doneBound = new Constant("D_l_doneBound", 0.0);
     //rightPVIff
-    public static final Constants.Constant D_right_kP = new Constants.Constant("D_r_kP", 0.0);
-    public static final Constants.Constant D_right_kI = new Constants.Constant("D_r_kI", 0.0);
-    public static final Constants.Constant D_right_kV = new Constants.Constant("D_r_kV", 0.0);
-    public static final Constants.Constant D_right_kFFV = new Constants.Constant("D_r_kFFV", 0.0);
-    public static final Constants.Constant D_right_kFFA = new Constants.Constant("D_r_kFFA", 0.0);
-    public static final Constants.Constant D_right_doneBound = new Constants.Constant("D_r_doneBound", 0.0);
+    public static final Constant D_right_kP = new Constant("D_r_kP", 0.0);
+    public static final Constant D_right_kI = new Constant("D_r_kI", 0.0);
+    public static final Constant D_right_kV = new Constant("D_r_kV", 0.0);
+    public static final Constant D_right_kFFV = new Constant("D_r_kFFV", 0.0);
+    public static final Constant D_right_kFFA = new Constant("D_r_kFFA", 0.0);
+    public static final Constant D_right_doneBound = new Constant("D_r_doneBound", 0.0);
     //turnPID
-    public static final Constants.Constant D_turn_kP = new Constants.Constant("D_t_kP", 0.0);
-    public static final Constants.Constant D_turn_kI = new Constants.Constant("D_t_kI", 0.0);
-    public static final Constants.Constant D_turn_kD = new Constants.Constant("D_t_kD", 0.0);
-    public static final Constants.Constant D_turn_kFF = new Constants.Constant("D_t_kFF", 0.0);
-    public static final Constants.Constant D_turn_doneBound = new Constants.Constant("D_t_doneBound", 0);
+    public static final Constant D_turn_kP = new Constant("D_t_kP", 0.0);
+    public static final Constant D_turn_kI = new Constant("D_t_kI", 0.0);
+    public static final Constant D_turn_kD = new Constant("D_t_kD", 0.0);
+    public static final Constant D_turn_kFF = new Constant("D_t_kFF", 0.0);
+    public static final Constant D_turn_doneBound = new Constant("D_t_doneBound", 0);
     //shooterPID
-    public static final Constants.Constant S_kP = new Constants.Constant("S_kP", 0.0);
-    public static final Constants.Constant S_kI = new Constants.Constant("S_kI", 0.0);
-    public static final Constants.Constant S_kD = new Constants.Constant("S_kD", 0.0);
-    public static final Constants.Constant S_kFF = new Constants.Constant("S_kFF", 0.0);
-    public static final Constants.Constant S_doneBound = new Constants.Constant("S_doneBound", 0);
-    public static final Constants.Constant S_RPM = new Constants.Constant("S_RPM", 0);
+    public static final Constant S_kP = new Constant("S_kP", 0.0);
+    public static final Constant S_kI = new Constant("S_kI", 0.0);
+    public static final Constant S_kD = new Constant("S_kD", 0.0);
+    public static final Constant S_kFF = new Constant("S_kFF", 0.0);
+    public static final Constant S_doneBound = new Constant("S_doneBound", 0);
+    public static final Constant S_RPM = new Constant("S_RPM", 0);
+    public static final Constant S_loading_speed = new Constant("S_loading_speed", 0);
 
     //TMP
-    public static final Constants.Constant D_tmp_maxV = new Constants.Constant("D_maxV", 0.0);
-    public static final Constants.Constant D_tmp_maxA = new Constants.Constant("D_maxA", 0.0);
+    public static final Constant D_tmp_maxV = new Constant("D_maxV", 0.0);
+    public static final Constant D_tmp_maxA = new Constant("D_maxA", 0.0);
 
-    public static final Constants.Constant D_drive_sensitivity = new Constants.Constant("D_drive_sensitivity", 0.0);
-    public static final Constants.Constant I_intake_speed = new Constants.Constant("I_intake_speed", 0.0); 
-    public static final Constants.Constant J_deadband = new Constants.Constant("deadband", 0);
-    public static final Constants.Constant S_close_angle = new Constants.Constant("S_close_angle", 0.0);
-    public static final Constants.Constant S_far_angle = new Constants.Constant("S_far_angle", 0.0);
-    public static final Constants.Constant S_num_shots = new Constants.Constant("S_num_shots", 0.0);
-    
+    public static final Constant D_drive_sensitivity = new Constant("D_drive_sensitivity", 0.0);
+
+    public static final Constant J_deadband = new Constant("deadband", 0);
+    public static final Constant S_close_angle = new Constant("S_close_angle", 0.0);
+    public static final Constant S_far_angle = new Constant("S_far_angle", 0.0);
+    public static final Constant S_num_shots = new Constant("S_num_shots", 0.0);
+
+    //Intake
+    public static final Constant I_intake_current = new Constant("I_intake_current", 0.0);
+    public static final Constant I_outtake_current = new Constant("I_outtake_current", 0.0);
+    public static final Constant I_shooting_voltage = new Constant("I_shooting_voltage", 12);
+    public static final Constant I_conveyor_speed = new Constant("I_conveyor_speed", 0.0);
 
     public static void init() {
-        Constants.init();
+        init();
         Constants.load();
     }
 }

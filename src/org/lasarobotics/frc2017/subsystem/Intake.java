@@ -2,13 +2,13 @@ package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class Intake extends HazySubsystem {
 
     private static Intake instance;
 
     private double intakeSpeed;
-    private double operatingSpeed;
 
     private Mode mode;
 
@@ -17,7 +17,7 @@ public class Intake extends HazySubsystem {
     }
 
     public static enum Mode {
-        OFF, INTAKING, OUTTAKING
+        OFF, INTAKING, OUTTAKING, SHOOTING
     }
 
     public final void setMode(Mode m) {
@@ -39,14 +39,28 @@ public class Intake extends HazySubsystem {
             switch (mode) {
                 case OFF:
                     intakeSpeed = 0.0;
+                    hardware.setConveyorRollerSpeed(0);
+                    hardware.setIntakeSolenoid(false);
                     break;
 
                 case INTAKING:
-                    intakeSpeed = operatingSpeed;
+                    hardware.setIntakeMode(Hardware.IntakeMode.intaking);
+                    hardware.setIntakeSolenoid(true);
+                    intakeSpeed = ConstantsList.I_intake_current.getValue();
+                    hardware.setConveyorRollerSpeed(0);
                     break;
 
                 case OUTTAKING:
-                    intakeSpeed = -operatingSpeed;
+                    hardware.setIntakeMode(Hardware.IntakeMode.intaking);
+                    hardware.setIntakeSolenoid(false);
+                    intakeSpeed = ConstantsList.I_outtake_current.getValue();
+                    break;
+                    
+                case SHOOTING:
+                    hardware.setIntakeMode(Hardware.IntakeMode.shooting);
+                    hardware.setIntakeSolenoid(false);
+                    intakeSpeed = ConstantsList.I_shooting_voltage.getValue();
+                    hardware.setConveyorRollerSpeed(ConstantsList.I_conveyor_speed.getValue());
                     break;
             }
         }
@@ -56,12 +70,11 @@ public class Intake extends HazySubsystem {
 
     @Override
     public void initSubsystem() {
-        operatingSpeed = ConstantsList.I_intake_speed.getValue();
     }
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.getString("inputState", mode.toString());
+        SmartDashboard.putString("inputState", mode.toString());
     }
 
 }
