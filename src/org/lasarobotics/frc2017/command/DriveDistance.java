@@ -29,6 +29,7 @@ public class DriveDistance extends Command {
     @Override
     public void stop() {
         drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
+        hardware.reset();
         drivetrain.setStraightSetpoint(0.0);
         drivetrain.setDriveSpeeds(0.0, 0.0);
     }

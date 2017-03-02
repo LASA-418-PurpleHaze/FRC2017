@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.input.DriverInput;
+import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.Constants;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
@@ -21,12 +22,14 @@ public class Robot extends HazyIterative {
     private Drivetrain drivetrain;
     private Shooter shooter;
     private Intake intake;
+    private Climber climber;
 
     @Override
     public void robotInit() {
         drivetrain = Drivetrain.getInstance();
         shooter = Shooter.getInstance();
         intake = Intake.getInstance();
+        climber = Climber.getInstance();
 
         driverInput = DriverInput.getInstance();
         hardware = Hardware.getInstance();
@@ -42,6 +45,7 @@ public class Robot extends HazyIterative {
         drivetrain.initSubsystem();
         intake.initSubsystem();
         shooter.initSubsystem();
+        climber.initSubsystem();
         hardware.reset();
         hardware.actuateGear(true);
     }
@@ -65,13 +69,14 @@ public class Robot extends HazyIterative {
         hardware.run();
         shooter.run();
         intake.run();
+        climber.run();
     }
 
     @Override
     public void autonomousInit() {
         initSubsystems();
         CommandManager.cancelAll();
-        autonomous.start();
+        autonomous.run();
     }
 
     @Override
@@ -87,6 +92,7 @@ public class Robot extends HazyIterative {
         drivetrain.run();
         shooter.run();
         intake.run();
+        climber.run();
     }
 
     @Override
@@ -110,6 +116,7 @@ public class Robot extends HazyIterative {
         drivetrain.pushToDashboard();
         shooter.pushToDashboard();
         intake.pushToDashboard();
+        climber.pushToDashboard();
     }
 
 }

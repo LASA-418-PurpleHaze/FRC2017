@@ -12,6 +12,8 @@ public class ConstantsList {
     public static final Constant D_left_kFFV = new Constant("D_l_kFFV", 0.0);
     public static final Constant D_left_kFFA = new Constant("D_l_kFFA", 0.0);
     public static final Constant D_left_doneBound = new Constant("D_l_doneBound", 0.0);
+    public static final Constant D_left_maxU = new Constant("D_l_maxU", 0.0);
+    
     //rightPVIff
     public static final Constant D_right_kP = new Constant("D_r_kP", 0.0);
     public static final Constant D_right_kI = new Constant("D_r_kI", 0.0);
@@ -19,12 +21,15 @@ public class ConstantsList {
     public static final Constant D_right_kFFV = new Constant("D_r_kFFV", 0.0);
     public static final Constant D_right_kFFA = new Constant("D_r_kFFA", 0.0);
     public static final Constant D_right_doneBound = new Constant("D_r_doneBound", 0.0);
+    public static final Constant D_right_maxU = new Constant("D_r_maxU", 0.0);
+
     //turnPID
     public static final Constant D_turn_kP = new Constant("D_t_kP", 0.0);
     public static final Constant D_turn_kI = new Constant("D_t_kI", 0.0);
     public static final Constant D_turn_kD = new Constant("D_t_kD", 0.0);
     public static final Constant D_turn_kFF = new Constant("D_t_kFF", 0.0);
     public static final Constant D_turn_doneBound = new Constant("D_t_doneBound", 0);
+    
     //shooterPID
     public static final Constant S_kP = new Constant("S_kP", 0.0);
     public static final Constant S_kI = new Constant("S_kI", 0.0);
@@ -51,6 +56,18 @@ public class ConstantsList {
     public static final Constant I_shooting_voltage = new Constant("I_shooting_voltage", 12);
     public static final Constant I_conveyor_speed = new Constant("I_conveyor_speed", 0.0);
 
+    public static final Constant C_climber_speed = new Constant("C_climber_speed", 1.0);
+    public static final Constant C_climber_max_current = new Constant("C_climber_max_current", 0.0);
+    
+    public static final Constant A_long_gear_distance = new Constant("A_long_gear_distance", 0.0);
+    public static final Constant A_short_gear_distance = new Constant("A_short_gear_distance", 0.0);
+    public static final Constant A_center_gear_distance = new Constant("A_center_gear_distance", 0.0);
+    public static final Constant A_gear_angle = new Constant("A_gear_angle", 0.0);
+    public static final Constant A_long_gear_timeout = new Constant("A_long_gear_timeout", 0.0);
+    public static final Constant A_short_gear_timeout = new Constant("A_short_gear_timeout", 0.0);
+    public static final Constant A_center_gear_timeout = new Constant("A_center_gear_timeout", 0.0);
+    public static final Constant A_gear_angle_timeout = new Constant("A_gear_angle_timeout", 0.0);
+    
     public static void init() {
         init();
         Constants.load();

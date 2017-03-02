@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.hardware;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -23,6 +24,8 @@ public class Hardware implements Runnable {
     private volatile double leftDriveEncoderPosition, leftDriveEncoderVelocity;
     private volatile double rightDriveEncoderPosition, rightDriveEncoderVelocity;
 
+    private PowerDistributionPanel pdp;
+    
     private final AHRS navX;
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
@@ -47,6 +50,8 @@ public class Hardware implements Runnable {
         // Drivetrain
         navX = new AHRS(SPI.Port.kMXP);
 
+        pdp = new PowerDistributionPanel();
+        
         leftDriveMotorA = new VictorSP(Ports.LEFT_DRIVE_MOTOR_A);
         leftDriveMotorB = new VictorSP(Ports.LEFT_DRIVE_MOTOR_B);
         rightDriveMotorA = new VictorSP(Ports.RIGHT_DRIVE_MOTOR_A);
@@ -251,30 +256,31 @@ public class Hardware implements Runnable {
 
     /**
      * @return The position of the left side of the drivetrain in inches.
+     * encoderpos / 250 * 3.5 * pi * (36/48)
      */
     public double getLeftDriveDistance() {
-        return leftDriveEncoderPosition / 250 * 3.5 * Math.PI * (36 / 48);
+        return leftDriveEncoderPosition * 0.032987;
     }
 
     /**
      * @return The position of the right side of the drivetrain in inches.
      */
     public double getRightDriveDistance() {
-        return rightDriveEncoderPosition / 250.0 * 3.5 * Math.PI * (36 / 48);
+        return rightDriveEncoderPosition * 0.032987;
     }
 
     /**
      * @return The velocity of the left side of the drivetrain in inches/sec.
      */
     public double getLeftDriveVelocity() {
-        return leftDriveEncoderVelocity / 250.0 * 3.5 * Math.PI * (36 / 48);
+        return leftDriveEncoderVelocity * 0.032987;
     }
 
     /**
      * @return The velocity of the right side of the drivetrain in inches/sec.
      */
     public double getRightDriveVelocity() {
-        return rightDriveEncoderVelocity / 250 * 3.5 * Math.PI * (36 / 48);
+        return rightDriveEncoderVelocity * 0.032987;
     }
 
     /**
@@ -297,6 +303,10 @@ public class Hardware implements Runnable {
     public void actuateGear(boolean out) {
         gearSolenoid.set(out);
     }
+    
+    public double getClimberCurrent(){
+        return (pdp.getCurrent(Ports.CLIMBER_POWER_A) + pdp.getCurrent(Ports.CLIMBER_POWER_B)) * 0.5;
+    }
 
     public void pushToDashboard() {
         SmartDashboard.putNumber("NavX Angle", navXAngle);
@@ -307,8 +317,10 @@ public class Hardware implements Runnable {
         SmartDashboard.putNumber("Right Drive Velocity", getRightDriveVelocity());
         SmartDashboard.putNumber("Left Shooter RPM", leftShooterMotor.getSpeed());
         SmartDashboard.putNumber("Right Shooter RPM", rightShooterMotor.getSpeed());
-        SmartDashboard.putNumber("Left Shooter Motor Output", leftShooterMotor.getOutputVoltage());
+        SmartDashboard.putNumber("Left Shooter Motor Voltage", -leftShooterMotor.getOutputVoltage());
+        SmartDashboard.putNumber("Right Shooter Motor Voltage", rightShooterMotor.getOutputVoltage());
         SmartDashboard.putNumber("Intake Current", leftIntakeMotor.getOutputCurrent());
+        SmartDashboard.putNumber("Climber Current", getClimberCurrent());
     }
 
 }

@@ -9,7 +9,9 @@ public class Intake extends HazySubsystem {
     private static Intake instance;
 
     private double intakeSpeed;
-
+    private boolean intakeDown;
+    private double conveyorSpeed;
+    
     private Mode mode;
 
     private Intake() {
@@ -39,32 +41,34 @@ public class Intake extends HazySubsystem {
             switch (mode) {
                 case OFF:
                     intakeSpeed = 0.0;
-                    hardware.setConveyorRollerSpeed(0);
-                    hardware.setIntakeSolenoid(false);
+                    conveyorSpeed = 0.0;
+                    intakeDown = false;
                     break;
 
                 case INTAKING:
                     hardware.setIntakeMode(Hardware.IntakeMode.intaking);
-                    hardware.setIntakeSolenoid(true);
+                    intakeDown = true;
+                    conveyorSpeed = 0.0;
                     intakeSpeed = ConstantsList.I_intake_current.getValue();
-                    hardware.setConveyorRollerSpeed(0);
                     break;
 
                 case OUTTAKING:
                     hardware.setIntakeMode(Hardware.IntakeMode.intaking);
-                    hardware.setIntakeSolenoid(false);
+                    intakeDown = false;
+                    conveyorSpeed = 0.0;
                     intakeSpeed = ConstantsList.I_outtake_current.getValue();
                     break;
                     
                 case SHOOTING:
                     hardware.setIntakeMode(Hardware.IntakeMode.shooting);
-                    hardware.setIntakeSolenoid(false);
+                    intakeDown = false;
+                    conveyorSpeed = ConstantsList.I_conveyor_speed.getValue();
                     intakeSpeed = ConstantsList.I_shooting_voltage.getValue();
-                    hardware.setConveyorRollerSpeed(ConstantsList.I_conveyor_speed.getValue());
                     break;
             }
         }
-
+        hardware.setConveyorRollerSpeed(conveyorSpeed);
+        hardware.setIntakeSolenoid(intakeDown);
         hardware.setIntakeOutput(intakeSpeed);
     }
 
@@ -75,6 +79,9 @@ public class Intake extends HazySubsystem {
     @Override
     public void pushToDashboard() {
         SmartDashboard.putString("inputState", mode.toString());
+        SmartDashboard.putBoolean("intakeDown", intakeDown);
+        SmartDashboard.putNumber("conveyorRollerSpeed", conveyorSpeed);
+        
     }
 
 }

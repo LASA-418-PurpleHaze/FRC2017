@@ -121,6 +121,11 @@ public class Drivetrain extends HazySubsystem {
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
+        
+        leftPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
+        rightPVIff.setMaxMin(ConstantsList.D_right_maxU.getValue(), -ConstantsList.D_right_maxU.getValue());
+        
+        prevTime = Timer.getFPGATimestamp();
     }
 
     @Override
@@ -129,6 +134,11 @@ public class Drivetrain extends HazySubsystem {
         SmartDashboard.putNumber("rightspeed", rightSpeed);
         SmartDashboard.putNumber("distancetarget", targetPosition);
         SmartDashboard.putNumber("angletarget", targetAngle);
+        SmartDashboard.putNumber("currentVelocity", motionProfiler.getCurrentVelocity());
+        SmartDashboard.putNumber("currentPosition", motionProfiler.getCurrentPosition());
+        SmartDashboard.putNumber("currentAcceleration", motionProfiler.getCurrentAcceleration());
+        SmartDashboard.putBoolean("isDistanceDone", isDistanceDone());
+        SmartDashboard.putBoolean("isTurnPID", isTurnPIDDone());
         SmartDashboard.putString("mode", mode.toString());
     }
 

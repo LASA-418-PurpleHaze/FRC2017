@@ -47,7 +47,7 @@ public class HazyPVIff extends ControlLoop {
 
         //Update error and errorSum. If statements ensure the following:
         //minU <= errorSum * kI <= maxU
-        positionError = targetValue - currentPosition;
+        positionError = targetPosition - currentPosition;
         if (maxU >= kI * (postitionErrorSum + positionError * dt) && minU <= kI * (postitionErrorSum + positionError * dt)) {
             postitionErrorSum += positionError * dt;
         } else if (postitionErrorSum > 0) {
