@@ -3,19 +3,14 @@ package org.lasarobotics.frc2017.dataLogging;
 import edu.wpi.first.wpilibj.Timer;
 import java.util.ArrayList;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.logging.Level;
 
 public class Logger{
-    
-    private static File logFile;
     private static String fileName;
     private static FileWriter writer;
     private static double startTime;
@@ -63,8 +58,13 @@ public class Logger{
         date = new Date();
         startTime = Double.MAX_VALUE;
         
-        fileName = "LOG_" + dateFormat.format(date); 
-        logFile = new File(fileName);
+        fileName = "/LasaRobotics/poopy.csv";
+        File logFile = new File(fileName);
+        try {
+            logFile.createNewFile();
+        } catch (IOException ex) {
+            System.out.println("Didn't create new file successfully");
+        }
         
         String line ="Time";
        
@@ -72,7 +72,6 @@ public class Logger{
             writer = new FileWriter(logFile);
             System.out.println("Writer made");
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         for(Loggable o : loggedSystems){
@@ -80,7 +79,9 @@ public class Logger{
             line = line.concat(o.getNames());
         }        
         
-        
+        synchronized(lock){
+            lines.addLast(line);
+        }
     }
     
     public static void closeFile(){
@@ -90,16 +91,17 @@ public class Logger{
             System.out.println("Botched closing log file.");
         }
     }
-    
-    
-    
+
     public static void writeToFile(){ 
-        String lineToWrite;
+        String lineToWrite = null;
+        
         synchronized(lock){
-            lineToWrite = lines.removeFirst();
+            if (lines.size() > 0)
+                lineToWrite = lines.removeFirst();
         }
         
         try {
+            if (lineToWrite != null)
             writer.write(lineToWrite);
         } catch (IOException ex) {
             System.out.println("Botched writing to log file.");

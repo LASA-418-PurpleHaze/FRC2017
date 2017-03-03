@@ -72,6 +72,7 @@ public class Robot extends HazyIterative {
         drivetrain.run();
         pushToDashboard();
         
+        Logger.log();
         Logger.writeToFile();
     }
 
@@ -82,7 +83,7 @@ public class Robot extends HazyIterative {
         intake.run();
         climber.run();
         
-        Logger.log();
+
     }
 
     @Override
