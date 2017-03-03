@@ -1,5 +1,7 @@
 package org.lasarobotics.lib.controlloop;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class HazyPID extends ControlLoop {
 
     double kP, kI, kD, kFF;

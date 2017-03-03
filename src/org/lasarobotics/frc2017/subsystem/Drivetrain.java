@@ -17,17 +17,18 @@ public class Drivetrain extends HazySubsystem {
     private double targetPosition, targetAngle;
 
     private static Drivetrain instance;
-    
+
     public static Drivetrain getInstance() {
         return (instance == null) ? instance = new Drivetrain() : instance;
     }
-    
+
     private Drivetrain() {
         leftPVIff = new HazyPVIff();
         rightPVIff = new HazyPVIff();
         turnPID = new HazyPID();
 
         this.setMode(Mode.OVERRIDE);
+        initSubsystem();
     }
 
     public static enum Mode {
@@ -43,7 +44,7 @@ public class Drivetrain extends HazySubsystem {
     @Override
     public void run() {
         dt = Timer.getFPGATimestamp() - prevTime;
-        
+        double turn;
         if (null != mode) {
             switch (mode) {
                 case OVERRIDE:
@@ -56,11 +57,14 @@ public class Drivetrain extends HazySubsystem {
                             hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
                             motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
                     motionProfiler.calculateNextSituation(dt);
+                    turn = turnPID.calculate(hardware.getRobotAngle(), dt);
+                    leftSpeed += turn;
+                    rightSpeed -= turn;
                     break;
                 case TURN:
-                    double turn = turnPID.calculate(hardware.getRobotAngle(), dt);
-                    leftSpeed = -turn;
-                    rightSpeed = turn;
+                    turn = turnPID.calculate(hardware.getRobotAngle(), dt);
+                    leftSpeed = turn;
+                    rightSpeed = -turn;
                     break;
             }
         }
@@ -75,6 +79,7 @@ public class Drivetrain extends HazySubsystem {
 
     public void setStraightSetpoint(double d) {
         targetPosition = d;
+        turnPID.setTarget(0.0);
         motionProfiler.generateTrapezoid(targetPosition,
                 (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance() * 0.5),
                 (Math.abs(hardware.getLeftDriveVelocity()) + Math.abs(hardware.getRightDriveVelocity())) * 0.5);
@@ -121,10 +126,10 @@ public class Drivetrain extends HazySubsystem {
                 ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
                 ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
-        
+
         leftPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
         rightPVIff.setMaxMin(ConstantsList.D_right_maxU.getValue(), -ConstantsList.D_right_maxU.getValue());
-        
+
         prevTime = Timer.getFPGATimestamp();
     }
 

@@ -35,7 +35,7 @@ public class Robot extends HazyIterative {
         hardware = Hardware.getInstance();
 
         autonomous = Autonomous.getInstance();
-
+        autonomous.start();
         Constants.init();
     }
 
@@ -58,6 +58,7 @@ public class Robot extends HazyIterative {
 
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("bla", 4);
         CommandManager.run();
         driverInput.run();
         drivetrain.run();
@@ -77,6 +78,7 @@ public class Robot extends HazyIterative {
         initSubsystems();
         CommandManager.cancelAll();
         autonomous.run();
+        time = 0;
     }
 
     @Override
@@ -103,7 +105,7 @@ public class Robot extends HazyIterative {
 
     @Override
     public void disabledPeriodic() {
-        pushToDashboard();
+        //pushToDashboard();
     }
 
     public void disableContinuous() {

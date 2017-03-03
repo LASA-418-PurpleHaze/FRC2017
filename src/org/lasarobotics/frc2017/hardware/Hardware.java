@@ -117,6 +117,7 @@ public class Hardware implements Runnable {
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
         climberMotorB = new VictorSP(Ports.CLIMBER_MOTOR_B);
+        climberMotorB.setInverted(true);
 
     }
 
@@ -132,7 +133,7 @@ public class Hardware implements Runnable {
             }
         }
 
-        navXAngle = navX.getAngle();
+        navXAngle = navX.getFusedHeading();
         robotAngle = navXAngle + rotations * 360.0;
 
         leftDriveEncoderPosition = leftDriveEncoder.get();

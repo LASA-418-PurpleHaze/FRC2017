@@ -43,7 +43,7 @@ public class HazyPVIff extends ControlLoop {
             double targetPosition, double targetVelocity, double targetAcceleration, double dt) {
 
         //Update count to decide if done or not.
-        doneCount = (Math.abs(targetValue - previousValue) < targetRange) ? doneCount + 1 : 0;
+        doneCount = (Math.abs(targetPosition - previousValue) < targetRange) ? doneCount + 1 : 0;
 
         //Update error and errorSum. If statements ensure the following:
         //minU <= errorSum * kI <= maxU

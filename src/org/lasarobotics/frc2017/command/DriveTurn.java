@@ -30,6 +30,7 @@ public class DriveTurn extends Command {
     @Override
     public void stop() {
         drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
+        hardware.reset();
         drivetrain.setTurnSetpoint(0.0);
         drivetrain.setDriveSpeeds(0, 0);
     }

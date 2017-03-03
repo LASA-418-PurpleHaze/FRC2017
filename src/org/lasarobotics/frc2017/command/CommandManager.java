@@ -23,6 +23,8 @@ public class CommandManager {
                 System.out.println("Starting command: " + command.name);
             } else if (command.isDone() || command.isTimedOut()) {
                 System.out.println("Stopping command: " + command.name);
+                double dt = Timer.getFPGATimestamp() - command.startTime;
+                System.out.println("dt: " + dt);
                 command.stop();
                 list.remove(command);
             } else {

@@ -14,6 +14,7 @@ class Autonomous implements Runnable {
     public final int STRAIGHT_GEAR = 1;
     public final int TURN_RIGHT_GEAR = 2;
     public final int TURN_LEFT_GEAR = 3;
+    public final int TEST = 100;
 
     private int mode = DO_NOTHING;
 
@@ -55,6 +56,11 @@ class Autonomous implements Runnable {
                 CommandManager.addCommand(new DriveDistance("Drive Short Gear Distance", ConstantsList.A_short_gear_timeout.getValue(),
                         ConstantsList.A_short_gear_distance.getValue()));
                 break;
+            case TEST:
+                //CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(), 
+                //        -ConstantsList.A_gear_angle.getValue()));
+                CommandManager.addCommand(new DriveDistance("Drive test", 10, 96.0));
+                break;
         }
         
         CommandManager.addCommand(new EndAutoCommand());
@@ -67,7 +73,7 @@ class Autonomous implements Runnable {
     }
 
     public void start() {
-        SmartDashboard.putNumber("AutoMode", DO_NOTHING);
+        SmartDashboard.putNumber("AutoMode", mode);
     }
 
 }
