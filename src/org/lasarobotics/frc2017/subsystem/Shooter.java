@@ -10,7 +10,7 @@ public class Shooter extends HazySubsystem {
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
     }
-
+    
     public Shooter() {
         setMode(Mode.OVERRIDE);
     }
