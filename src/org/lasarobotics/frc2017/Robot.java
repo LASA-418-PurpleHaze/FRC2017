@@ -10,6 +10,7 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.HazyIterative;
+import org.lasarobotics.frc2017.dataLogging.Logger;
 
 public class Robot extends HazyIterative {
 
@@ -37,6 +38,8 @@ public class Robot extends HazyIterative {
         autonomous = Autonomous.getInstance();
         autonomous.start();
         Constants.init();
+        
+        Logger.addLog(intake);
     }
 
     private void initSubsystems() {

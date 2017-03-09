@@ -3,8 +3,9 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.frc2017.hardware.Hardware;
+import org.lasarobotics.frc2017.dataLogging.Loggable;
 
-public class Intake extends HazySubsystem {
+public class Intake extends HazySubsystem implements Loggable {
 
     private static Intake instance;
 
@@ -16,6 +17,16 @@ public class Intake extends HazySubsystem {
 
     private Intake() {
         setMode(Mode.OFF);
+    }
+
+    @Override
+    public String getNames() {
+        return "intakeDown, intakeSpeed";
+    }
+
+    @Override
+    public String getValues() {
+        return intakeDown + "," + intakeSpeed;
     }
 
     public static enum Mode {
