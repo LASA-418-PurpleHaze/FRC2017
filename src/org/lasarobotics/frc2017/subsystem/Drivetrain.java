@@ -129,7 +129,10 @@ public class Drivetrain extends HazySubsystem {
 
         leftPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
         rightPVIff.setMaxMin(ConstantsList.D_right_maxU.getValue(), -ConstantsList.D_right_maxU.getValue());
-
+        leftPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
+        rightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
+        turnPID.setMinCount((int) ConstantsList.D_done_cycles.getValue());
+        
         prevTime = Timer.getFPGATimestamp();
     }
 

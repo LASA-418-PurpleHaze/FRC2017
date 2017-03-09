@@ -28,7 +28,8 @@ public class ConstantsList {
     public static final Constant D_turn_kI = new Constant("D_t_kI", 0.0);
     public static final Constant D_turn_kD = new Constant("D_t_kD", 0.0);
     public static final Constant D_turn_kFF = new Constant("D_t_kFF", 0.0);
-    public static final Constant D_turn_doneBound = new Constant("D_t_doneBound", 0);
+    public static final Constant D_turn_doneBound = new Constant("D_t_doneBound", 0.0);
+    public static final Constant D_done_cycles = new Constant("D_done_cycles", 50);
     
     //shooterPID
     public static final Constant S_kP = new Constant("S_kP", 0.0);
@@ -67,6 +68,7 @@ public class ConstantsList {
     public static final Constant A_short_gear_timeout = new Constant("A_short_gear_timeout", 0.0);
     public static final Constant A_center_gear_timeout = new Constant("A_center_gear_timeout", 0.0);
     public static final Constant A_gear_angle_timeout = new Constant("A_gear_angle_timeout", 0.0);
+    public static final Constant A_wait = new Constant("A_wait", 0.0);
     
     public static void init() {
         init();

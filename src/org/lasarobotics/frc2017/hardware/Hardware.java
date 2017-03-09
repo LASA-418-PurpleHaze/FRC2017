@@ -140,8 +140,6 @@ public class Hardware implements Runnable {
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
-        gearSolenoid.set(true);
-
     }
 
     /**

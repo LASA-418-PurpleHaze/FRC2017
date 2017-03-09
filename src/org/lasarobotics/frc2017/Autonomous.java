@@ -7,6 +7,7 @@ import org.lasarobotics.frc2017.command.DriveDistance;
 import org.lasarobotics.frc2017.command.DriveTurn;
 import org.lasarobotics.frc2017.command.EndAutoCommand;
 import org.lasarobotics.frc2017.command.StartAutoCommand;
+import org.lasarobotics.frc2017.command.WaitCommand;
 
 class Autonomous implements Runnable {
 
@@ -30,7 +31,7 @@ class Autonomous implements Runnable {
     @Override
     public void run() {
         mode = (int) SmartDashboard.getNumber("AutoMode", DO_NOTHING);
-
+      
         CommandManager.addCommand(new StartAutoCommand());
         
         switch (mode) {
@@ -43,16 +44,20 @@ class Autonomous implements Runnable {
             case TURN_RIGHT_GEAR:
                 CommandManager.addCommand(new DriveDistance("Drive Long Gear Distance", ConstantsList.A_long_gear_timeout.getValue(), 
                         ConstantsList.A_long_gear_distance.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Right)", ConstantsList.A_gear_angle_timeout.getValue(),
                         ConstantsList.A_gear_angle.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveDistance("Drive Short Gear Distance", ConstantsList.A_short_gear_timeout.getValue(),
                         ConstantsList.A_short_gear_distance.getValue()));
                 break;
             case TURN_LEFT_GEAR:
                 CommandManager.addCommand(new DriveDistance("Drive Long Gear Distance", ConstantsList.A_long_gear_timeout.getValue(),
                         ConstantsList.A_long_gear_distance.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(), 
                         -ConstantsList.A_gear_angle.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveDistance("Drive Short Gear Distance", ConstantsList.A_short_gear_timeout.getValue(),
                         ConstantsList.A_short_gear_distance.getValue()));
                 break;

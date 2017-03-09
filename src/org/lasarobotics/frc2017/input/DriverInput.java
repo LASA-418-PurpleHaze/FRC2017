@@ -10,22 +10,22 @@ import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 
 public class DriverInput implements Runnable {
-    
+
     private static DriverInput instance;
     private Hardware hardware;
     private final Drivetrain drivetrain;
     private Intake intake;
     private Shooter shooter;
     private Climber climber;
-    
+
     private final HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
     private final HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
-    
+
     private final CheesyDriveHelper cheesyDrive;
-    
+
     private double throttle, wheel;
     private boolean quickTurn;
-    
+
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
         cheesyDrive = new CheesyDriveHelper();
@@ -34,35 +34,41 @@ public class DriverInput implements Runnable {
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
     }
-    
+
     public static DriverInput getInstance() {
         return (instance == null) ? instance = new DriverInput() : instance;
     }
-    
+
     @Override
     public void run() {
         drivetrainControl();
         shooterControl();
         intakeControl();
-        
+
         if (!shooting && driverRight.getTrigger()) {
             climber.setMode(Climber.Mode.CLIMB);
         } else {
             climber.setMode(Climber.Mode.OFF);
         }
+
+        if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
+            hardware.actuateGear(false);
+        } else {
+            hardware.actuateGear(true);
+        }
     }
-    
+
     private void drivetrainControl() {
         throttle = -driverLeft.getYAxis();
         wheel = driverRight.getXAxis();
         quickTurn = driverLeft.getTrigger();
-        
+
         cheesyDrive.cheesyDrive(throttle, wheel, quickTurn);
         drivetrain.setDriveSpeeds(cheesyDrive.getLeftPWM(), cheesyDrive.getRightPWM());
     }
-    
+
     private boolean shooting;
-    
+
     private void shooterControl() {
         if (driverRight.getTopFrontButton()) {
             shooter.setMode(Shooter.Mode.SHOOTING);
@@ -77,7 +83,7 @@ public class DriverInput implements Runnable {
             shooter.setMode(Shooter.Mode.OFF);
         }
     }
-    
+
     private void intakeControl() {
         if (driverRight.getTrigger() && shooting) {
             intake.setMode(Intake.Mode.SHOOTING);
@@ -87,4 +93,5 @@ public class DriverInput implements Runnable {
             intake.setMode(Intake.Mode.OFF);
         }
     }
+
 }
