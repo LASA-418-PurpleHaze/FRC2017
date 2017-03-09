@@ -132,22 +132,26 @@ public class Drivetrain extends HazySubsystem {
         leftPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
         rightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
         turnPID.setMinCount((int) ConstantsList.D_done_cycles.getValue());
-        
+
         prevTime = Timer.getFPGATimestamp();
     }
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putNumber("leftspeed", leftSpeed);
-        SmartDashboard.putNumber("rightspeed", rightSpeed);
-        SmartDashboard.putNumber("distancetarget", targetPosition);
-        SmartDashboard.putNumber("angletarget", targetAngle);
-        SmartDashboard.putNumber("currentVelocity", motionProfiler.getCurrentVelocity());
-        SmartDashboard.putNumber("currentPosition", motionProfiler.getCurrentPosition());
-        SmartDashboard.putNumber("currentAcceleration", motionProfiler.getCurrentAcceleration());
-        SmartDashboard.putBoolean("isDistanceDone", isDistanceDone());
-        SmartDashboard.putBoolean("isTurnPID", isTurnPIDDone());
-        SmartDashboard.putString("mode", mode.toString());
+        SmartDashboard.putNumber("D_l_pos", hardware.getLeftDriveDistance());
+        SmartDashboard.putNumber("D_l_velocity", hardware.getLeftDriveVelocity());
+        SmartDashboard.putNumber("D_r_pos", hardware.getRightDriveDistance());
+        SmartDashboard.putNumber("D_r_velocity", hardware.getRightDriveVelocity());
+        SmartDashboard.putNumber("D_l_pviff_speed", leftSpeed);
+        SmartDashboard.putNumber("D_r_pviff_speed", rightSpeed);
+        SmartDashboard.putNumber("D_target_pos", targetPosition);
+        SmartDashboard.putNumber("D_target_angle", targetAngle);
+        SmartDashboard.putNumber("D_tmp_velocity", motionProfiler.getCurrentVelocity());
+        SmartDashboard.putNumber("D_tmp_pos", motionProfiler.getCurrentPosition());
+        SmartDashboard.putNumber("D_tmp_accel", motionProfiler.getCurrentAcceleration());
+        SmartDashboard.putBoolean("D_dist_done", isDistanceDone());
+        SmartDashboard.putBoolean("D_turn_done", isTurnPIDDone());
+        SmartDashboard.putString("D_mode", mode.toString());
     }
 
 }

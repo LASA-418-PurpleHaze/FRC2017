@@ -25,7 +25,7 @@ public class Hardware implements Runnable {
     private volatile double rightDriveEncoderPosition, rightDriveEncoderVelocity;
 
     private PowerDistributionPanel pdp;
-    
+
     private final AHRS navX;
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
@@ -51,7 +51,7 @@ public class Hardware implements Runnable {
         navX = new AHRS(SPI.Port.kMXP);
 
         pdp = new PowerDistributionPanel();
-        
+
         leftDriveMotorA = new VictorSP(Ports.LEFT_DRIVE_MOTOR_A);
         leftDriveMotorB = new VictorSP(Ports.LEFT_DRIVE_MOTOR_B);
         rightDriveMotorA = new VictorSP(Ports.RIGHT_DRIVE_MOTOR_A);
@@ -302,24 +302,19 @@ public class Hardware implements Runnable {
     public void actuateGear(boolean out) {
         gearSolenoid.set(out);
     }
-    
-    public double getClimberCurrent(){
+
+    public double getClimberCurrent() {
         return (pdp.getCurrent(Ports.CLIMBER_POWER_A) + pdp.getCurrent(Ports.CLIMBER_POWER_B)) * 0.5;
     }
 
     public void pushToDashboard() {
-        SmartDashboard.putNumber("NavX Angle", navXAngle);
-        SmartDashboard.putNumber("Robot Angle", robotAngle);
-        SmartDashboard.putNumber("Left Drive Position", getLeftDriveDistance());
-        SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveVelocity());
-        SmartDashboard.putNumber("Right Drive Position", getRightDriveDistance());
-        SmartDashboard.putNumber("Right Drive Velocity", getRightDriveVelocity());
-        SmartDashboard.putNumber("Left Shooter RPM", leftShooterMotor.getSpeed());
-        SmartDashboard.putNumber("Right Shooter RPM", rightShooterMotor.getSpeed());
-        SmartDashboard.putNumber("Left Shooter Motor Voltage", -leftShooterMotor.getOutputVoltage());
-        SmartDashboard.putNumber("Right Shooter Motor Voltage", rightShooterMotor.getOutputVoltage());
-        SmartDashboard.putNumber("Intake Current", leftIntakeMotor.getOutputCurrent());
-        SmartDashboard.putNumber("Climber Current", getClimberCurrent());
+        SmartDashboard.putNumber("H_n_angle", navXAngle);
+        SmartDashboard.putNumber("H_r_angle", robotAngle);
+        SmartDashboard.putNumber("S_l_rpm", leftShooterMotor.getSpeed());
+        SmartDashboard.putNumber("S_r_rpm", rightShooterMotor.getSpeed());
+        SmartDashboard.putNumber("S_l_voltage", -leftShooterMotor.getOutputVoltage());
+        SmartDashboard.putNumber("S_r_voltage", rightShooterMotor.getOutputVoltage());
+        SmartDashboard.putNumber("I_current", leftIntakeMotor.getOutputCurrent());
     }
 
 }

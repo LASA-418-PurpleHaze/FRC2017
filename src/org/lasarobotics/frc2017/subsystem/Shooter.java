@@ -57,7 +57,7 @@ public class Shooter extends HazySubsystem {
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putString("shooter_mode", mode.toString());
+        SmartDashboard.putString("S_mode", mode.toString());
     }
 
 }

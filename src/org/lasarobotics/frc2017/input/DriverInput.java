@@ -86,7 +86,7 @@ public class DriverInput implements Runnable {
 
     private void intakeControl() {
         if (driverRight.getTrigger() && shooting) {
-            intake.setMode(Intake.Mode.SHOOTING);
+            intake.setMode(Intake.Mode.FEEDING);
         } else if (driverLeft.getTopFrontButton()) {
             intake.setMode(Intake.Mode.INTAKING);
         } else {

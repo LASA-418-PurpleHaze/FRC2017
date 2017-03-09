@@ -31,18 +31,18 @@ class Autonomous implements Runnable {
     @Override
     public void run() {
         mode = (int) SmartDashboard.getNumber("AutoMode", DO_NOTHING);
-      
+
         CommandManager.addCommand(new StartAutoCommand());
-        
+
         switch (mode) {
             case DO_NOTHING:
                 break;
             case STRAIGHT_GEAR:
-                CommandManager.addCommand(new DriveDistance("Drive Center Gear Distance", ConstantsList.A_center_gear_timeout.getValue(), 
+                CommandManager.addCommand(new DriveDistance("Drive Center Gear Distance", ConstantsList.A_center_gear_timeout.getValue(),
                         ConstantsList.A_center_gear_distance.getValue()));
                 break;
             case TURN_RIGHT_GEAR:
-                CommandManager.addCommand(new DriveDistance("Drive Long Gear Distance", ConstantsList.A_long_gear_timeout.getValue(), 
+                CommandManager.addCommand(new DriveDistance("Drive Long Gear Distance", ConstantsList.A_long_gear_timeout.getValue(),
                         ConstantsList.A_long_gear_distance.getValue()));
                 CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Right)", ConstantsList.A_gear_angle_timeout.getValue(),
@@ -55,7 +55,7 @@ class Autonomous implements Runnable {
                 CommandManager.addCommand(new DriveDistance("Drive Long Gear Distance", ConstantsList.A_long_gear_timeout.getValue(),
                         ConstantsList.A_long_gear_distance.getValue()));
                 CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
-                CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(), 
+                CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(),
                         -ConstantsList.A_gear_angle.getValue()));
                 CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
                 CommandManager.addCommand(new DriveDistance("Drive Short Gear Distance", ConstantsList.A_short_gear_timeout.getValue(),
@@ -67,18 +67,18 @@ class Autonomous implements Runnable {
                 CommandManager.addCommand(new DriveDistance("Drive test", 10, 96.0));
                 break;
         }
-        
+
         CommandManager.addCommand(new EndAutoCommand());
     }
 
-    private void closeShot() {   
-        for(int i=0; i<ConstantsList.S_num_shots.getValue(); i++){
+    private void closeShot() {
+        for (int i = 0; i < ConstantsList.S_num_shots.getValue(); i++) {
             CommandManager.addCommand(new Shoot("Close Shot", 1.0));
         }
     }
 
     public void start() {
-        SmartDashboard.putNumber("AutoMode", mode);
+        SmartDashboard.putNumber("Auto Mode", mode);
     }
 
 }
