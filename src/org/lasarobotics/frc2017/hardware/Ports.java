@@ -20,9 +20,9 @@ public class Ports {
     public static final int GEARSOLENOID = 3;
     public static final int INTAKE_SOLENOID = 7;
 
-    public static final int CONVEYOR_ROLLER = 6;
-    public static final int CLIMBER_MOTOR_A = 5;
-    public static final int CLIMBER_MOTOR_B = 4;
+    public static final int CONVEYOR_ROLLER = 5;
+    public static final int CLIMBER_MOTOR_A = 4;
+    public static final int CLIMBER_MOTOR_B = 6;
     
     public static final int CLIMBER_POWER_A = 0;
     public static final int CLIMBER_POWER_B = 0;

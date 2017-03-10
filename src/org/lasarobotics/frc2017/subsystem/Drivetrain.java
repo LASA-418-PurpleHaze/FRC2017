@@ -49,7 +49,7 @@ public class Drivetrain extends HazySubsystem {
                 case OVERRIDE:
                     break;
                 case STRAIGHT:
-                    leftSpeed = rightSpeed = straightPVIff.calculate((hardware.getLeftDriveDistance() + hardware.getRightDriveDistance)*0.5,
+                    leftSpeed = rightSpeed = straightPVIff.calculate((hardware.getLeftDriveDistance() + hardware.getRightDriveDistance())*0.5,
                             (hardware.getRightDriveVelocity() + hardware.getLeftDriveVelocity()) * 0.5, motionProfiler.getCurrentPosition(),
                             motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
                     turn = turnPID.calculate(hardware.getRobotAngle(), dt);
@@ -106,10 +106,12 @@ public class Drivetrain extends HazySubsystem {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
                 ConstantsList.D_turn_doneBound.getValue());
-        //Should I make just one set of straight PID constants? I can't really average left and right (at least I don't think) 
-        straightPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
-                ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
-                ConstantsList.D_left_kFFA.getValue(), ConstantsList.D_left_doneBound.getValue());
+        straightPVIff.setPID((ConstantsList.D_left_kP.getValue() + ConstantsList.D_right_kP.getValue()) * 0.5,
+                (ConstantsList.D_left_kI.getValue() + ConstantsList.D_right_kI.getValue()) * 0.5,
+                (ConstantsList.D_left_kV.getValue() + ConstantsList.D_right_kV.getValue()) * 0.5,
+                (ConstantsList.D_left_kFFV.getValue() + ConstantsList.D_right_kFFV.getValue()) * 0.5,
+                (ConstantsList.D_left_kFFA.getValue() + ConstantsList.D_right_kFFA.getValue()) * 0.5, 
+                (ConstantsList.D_left_doneBound.getValue() + ConstantsList.D_right_doneBound.getValue()) * 0.5);
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
         straightPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());

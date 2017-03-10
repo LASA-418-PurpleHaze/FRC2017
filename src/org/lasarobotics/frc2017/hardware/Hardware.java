@@ -117,7 +117,7 @@ public class Hardware implements Runnable {
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
         climberMotorB = new VictorSP(Ports.CLIMBER_MOTOR_B);
-        climberMotorB.setInverted(true);
+        //climberMotorB.setInverted(true);
 
     }
 
@@ -217,8 +217,8 @@ public class Hardware implements Runnable {
     }
 
     public void setClimberSpeed(double speed) {
-        climberMotorA.set(speed);
-        climberMotorB.set(speed);
+        climberMotorA.set(-speed);
+        climberMotorB.set(-speed);
     }
 
     /**
