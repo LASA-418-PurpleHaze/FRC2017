@@ -1,5 +1,6 @@
 package org.lasarobotics.frc2017.dataLogging;
 
+import edu.wpi.first.wpilibj.Timer;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,19 +18,21 @@ public class Logger{
     private File logFile;
     private String fileName;
     private FileWriter writer;
+    private double startTime;
     
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Date date = new Date();
     
     
     
-    public void Logger(){
-        Logger l = new Logger();
+    public static void init(){
+        lines = new LinkedList();
+        loggedSystems = new ArrayList();
     }
     
     
-    static ArrayList<Loggable> loggedSystems = new ArrayList();
-    LinkedList<String> lines = new LinkedList(); //strings
+    static ArrayList<Loggable> loggedSystems;
+    static LinkedList<String> lines; //strings
     
     public static void addLog(Loggable l)
     {
@@ -39,10 +42,14 @@ public class Logger{
     Object lock = new Object();
     
     public void log() {
-        String line = "";
+        String line = Timer.getFPGATimestamp() - startTime +"";
         
-        for(Loggable o : loggedSystems)
-        {
+        if(startTime == Double.MAX_VALUE){
+            startTime = Timer.getFPGATimestamp();
+        }
+        
+        for(Loggable o : loggedSystems){
+            line = line.concat(", ");
             line = line.concat(o.getValues());
         }
         
@@ -56,6 +63,22 @@ public class Logger{
     
     public void makeFile(){
         date = new Date();
+        startTime = Double.MAX_VALUE;
+        
+       String line ="Time";
+
+        
+        try {
+            writer = new FileWriter(logFile);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        for(Loggable o : loggedSystems){
+            line = line.concat(", ");
+            line = line.concat(o.getNames());
+        }
+        
         
         fileName = "LOG_" + dateFormat.format(date); 
         
@@ -66,7 +89,7 @@ public class Logger{
         try {
             writer.close();
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Botched closing log file.");
         }
     }
     
@@ -81,7 +104,7 @@ public class Logger{
         try {
             writer.write(lineToWrite);
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Botched writing to log file.");
         }
         
     }
