@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Logger{
+    
+    private File logFile;
+    private String fileName;
+    
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    Date date = new Date();
+    
+    
     
     public void Logger(){
         Logger l = new Logger();
@@ -32,14 +43,21 @@ public class Logger{
         lines.add(line);
     }
     
-    public void writeToFile(){
-        File logFile = new File("logfile.cvs");
-        if(File.createNewFile();)
-
+    public void makeFile(){
+        fileName = "LOG_" + dateFormat.format(date); 
         
-        for(String line : lines){
-            
-        }
+        logFile = new File(fileName);
+    }
+    
+    public void closeFile(){
+        
+    }
+    
+    
+    
+    public void writeToFile(){        
+        
+        
     }
     
     
