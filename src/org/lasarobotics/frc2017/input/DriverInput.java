@@ -1,6 +1,7 @@
 package org.lasarobotics.frc2017.input;
 
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.dataLogging.Loggable;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.HazyJoystick;
@@ -9,7 +10,7 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 
-public class DriverInput implements Runnable {
+public class DriverInput implements Runnable, Loggable{
     
     private static DriverInput instance;
     private Hardware hardware;
@@ -25,6 +26,9 @@ public class DriverInput implements Runnable {
     
     private double throttle, wheel;
     private boolean quickTurn;
+    
+    private double leftOverrideSpeed;
+    private double rightOverrideSpeed;
     
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
@@ -58,7 +62,9 @@ public class DriverInput implements Runnable {
         quickTurn = driverLeft.getTrigger();
         
         cheesyDrive.cheesyDrive(throttle, wheel, quickTurn);
-        drivetrain.setDriveSpeeds(cheesyDrive.getLeftPWM(), cheesyDrive.getRightPWM());
+        leftOverrideSpeed = cheesyDrive.getLeftPWM();
+        rightOverrideSpeed = cheesyDrive.getRightPWM();
+        drivetrain.setDriveSpeeds(leftOverrideSpeed, rightOverrideSpeed);
     }
     
     private boolean shooting;
@@ -86,5 +92,15 @@ public class DriverInput implements Runnable {
         } else {
             intake.setMode(Intake.Mode.OFF);
         }
+    }
+
+    @Override
+    public String getNames() {
+        return "leftOverrideSpeed, rightOverrideSpeed";
+    }
+
+    @Override
+    public String getValues() {
+        return leftOverrideSpeed + ", " + rightOverrideSpeed;
     }
 }

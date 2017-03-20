@@ -43,6 +43,7 @@ public class Robot extends HazyIterative {
         Logger.addLog(shooter);
         Logger.addLog(drivetrain);
         Logger.addLog(climber);
+        Logger.addLog(driverInput);
     }
 
     private void initSubsystems() {
