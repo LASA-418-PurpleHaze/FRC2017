@@ -2,10 +2,12 @@ package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.dataLogging.Loggable;
 
-public class Shooter extends HazySubsystem {
+public class Shooter extends HazySubsystem implements Loggable{
 
     private static Shooter instance;
+    private double shooterSpeed;
 
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
@@ -13,6 +15,16 @@ public class Shooter extends HazySubsystem {
 
     public Shooter() {
         setMode(Mode.OVERRIDE);
+    }
+
+    @Override
+    public String getNames() {
+        return "shooterSpeed";
+    }
+
+    @Override
+    public String getValues() {
+        return shooterSpeed + "";
     }
 
     public static enum Mode {
@@ -35,16 +47,16 @@ public class Shooter extends HazySubsystem {
                 case OVERRIDE:
                     break;
                 case LOADING:
-                    hardware.setShooterRPM(ConstantsList.S_loading_speed.getValue());
+                    shooterSpeed = ConstantsList.S_loading_speed.getValue();
                     break;
                 case SHOOTING:
-                    hardware.setShooterRPM(ConstantsList.S_RPM.getValue());
+                    shooterSpeed = ConstantsList.S_RPM.getValue();
                     break;
                 case OFF:
-                    hardware.setShooterRPM(0.0);
+                    shooterSpeed = 0.0;
             }
         }
-
+        hardware.setShooterRPM(shooterSpeed);
     }
 
     public boolean isUpToRPM() {

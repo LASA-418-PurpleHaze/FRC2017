@@ -40,6 +40,7 @@ public class Robot extends HazyIterative {
         Constants.init();
         
         Logger.addLog(intake);
+        Logger.addLog(shooter);
     }
 
     private void initSubsystems() {
