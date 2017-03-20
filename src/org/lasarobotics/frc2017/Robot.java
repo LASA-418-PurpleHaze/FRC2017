@@ -55,6 +55,8 @@ public class Robot extends HazyIterative {
         climber.initSubsystem();
         hardware.reset();
         hardware.actuateGear(true);
+        
+        Logger.makeFile();
     }
 
     @Override
@@ -70,6 +72,8 @@ public class Robot extends HazyIterative {
         driverInput.run();
         drivetrain.run();
         pushToDashboard();
+        
+        Logger.writeToFile();
     }
 
     @Override
@@ -78,6 +82,8 @@ public class Robot extends HazyIterative {
         shooter.run();
         intake.run();
         climber.run();
+        
+        Logger.log();
     }
 
     @Override
@@ -91,17 +97,20 @@ public class Robot extends HazyIterative {
     @Override
     public void autonomousPeriodic() {
         pushToDashboard();
+        Logger.writeToFile();
     }
 
     @Override
     public void autonomousContinuous() {
         CommandManager.run();
         hardware.run();
-
         drivetrain.run();
         shooter.run();
         intake.run();
         climber.run();
+        
+        Logger.log();
+        
     }
 
     @Override
@@ -117,6 +126,7 @@ public class Robot extends HazyIterative {
 
     public void disableContinuous() {
         hardware.run();
+        Logger.closeFile();
     }
 
     private void pushToDashboard() {

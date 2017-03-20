@@ -15,13 +15,18 @@ import java.util.logging.Level;
 
 public class Logger{
     
-    private File logFile;
-    private String fileName;
-    private FileWriter writer;
-    private double startTime;
+    private static File logFile;
+    private static String fileName;
+    private static FileWriter writer;
+    private static double startTime;
     
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    Date date = new Date();
+    static Object lock = new Object();
+    
+    static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    static Date date = new Date();
+    
+    static ArrayList<Loggable> loggedSystems;
+    static LinkedList<String> lines; //strings
     
     
     
@@ -30,18 +35,11 @@ public class Logger{
         loggedSystems = new ArrayList();
     }
     
-    
-    static ArrayList<Loggable> loggedSystems;
-    static LinkedList<String> lines; //strings
-    
-    public static void addLog(Loggable l)
-    {
+    public static void addLog(Loggable l){
         loggedSystems.add(l);
     }
     
-    Object lock = new Object();
-    
-    public void log() {
+    public static void log() {
         String line = Timer.getFPGATimestamp() - startTime +"";
         
         if(startTime == Double.MAX_VALUE){
@@ -61,13 +59,12 @@ public class Logger{
         }
     }
     
-    public void makeFile(){
+    public static void makeFile(){
         date = new Date();
         startTime = Double.MAX_VALUE;
         
        String line ="Time";
-
-        
+       
         try {
             writer = new FileWriter(logFile);
         } catch (IOException ex) {
@@ -77,15 +74,13 @@ public class Logger{
         for(Loggable o : loggedSystems){
             line = line.concat(", ");
             line = line.concat(o.getNames());
-        }
-        
+        }        
         
         fileName = "LOG_" + dateFormat.format(date); 
-        
         logFile = new File(fileName);
     }
     
-    public void closeFile(){
+    public static void closeFile(){
         try {
             writer.close();
         } catch (IOException ex) {
@@ -95,7 +90,7 @@ public class Logger{
     
     
     
-    public void writeToFile(){ 
+    public static void writeToFile(){ 
         String lineToWrite;
         synchronized(lock){
             lineToWrite = lines.removeFirst();
@@ -105,10 +100,6 @@ public class Logger{
             writer.write(lineToWrite);
         } catch (IOException ex) {
             System.out.println("Botched writing to log file.");
-        }
-        
+        }      
     }
-    
-    
-    
 }
