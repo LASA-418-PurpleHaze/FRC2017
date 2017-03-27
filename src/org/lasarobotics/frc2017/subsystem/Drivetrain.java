@@ -11,7 +11,7 @@ public class Drivetrain extends HazySubsystem {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private final HazyPVIff leftPVIff, rightPVIff;
+    private final HazyPVIff straightPVIff;
     private final HazyPID turnPID;
     private HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
@@ -23,8 +23,7 @@ public class Drivetrain extends HazySubsystem {
     }
 
     private Drivetrain() {
-        leftPVIff = new HazyPVIff();
-        rightPVIff = new HazyPVIff();
+        straightPVIff = new HazyPVIff();
         turnPID = new HazyPID();
 
         this.setMode(Mode.OVERRIDE);
@@ -50,13 +49,9 @@ public class Drivetrain extends HazySubsystem {
                 case OVERRIDE:
                     break;
                 case STRAIGHT:
-                    leftSpeed = leftPVIff.calculate(hardware.getLeftDriveDistance(),
-                            hardware.getLeftDriveVelocity(), motionProfiler.getCurrentPosition(),
+                    leftSpeed = rightSpeed = straightPVIff.calculate((hardware.getLeftDriveDistance() + hardware.getRightDriveDistance)*0.5,
+                            (hardware.getRightDriveVelocity() + hardware.getLeftDriveVelocity()) * 0.5, motionProfiler.getCurrentPosition(),
                             motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-                    rightSpeed = rightPVIff.calculate(hardware.getRightDriveDistance(),
-                            hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
-                            motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-                    motionProfiler.calculateNextSituation(dt);
                     turn = turnPID.calculate(hardware.getRobotAngle(), dt);
                     leftSpeed += turn;
                     rightSpeed -= turn;
@@ -98,20 +93,12 @@ public class Drivetrain extends HazySubsystem {
         return targetAngle;
     }
 
-    public boolean isLeftPIDDone() {
-        return leftPVIff.onTarget();
-    }
-
-    public boolean isRightPIDDone() {
-        return rightPVIff.onTarget();
-    }
-
     public boolean isTurnPIDDone() {
         return turnPID.onTarget();
     }
 
     public boolean isDistanceDone() {
-        return isLeftPIDDone() && isRightPIDDone();
+        return straightPVIff.onTarget();
     }
 
     @Override
@@ -119,18 +106,14 @@ public class Drivetrain extends HazySubsystem {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
                 ConstantsList.D_turn_doneBound.getValue());
-        leftPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
+        //Should I make just one set of straight PID constants? I can't really average left and right (at least I don't think) 
+        straightPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
                 ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
                 ConstantsList.D_left_kFFA.getValue(), ConstantsList.D_left_doneBound.getValue());
-        rightPVIff.setPID(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
-                ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
-                ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
-        leftPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
-        rightPVIff.setMaxMin(ConstantsList.D_right_maxU.getValue(), -ConstantsList.D_right_maxU.getValue());
-        leftPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
-        rightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
+        straightPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
+        straightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
         turnPID.setMinCount((int) ConstantsList.D_done_cycles.getValue());
 
         prevTime = Timer.getFPGATimestamp();
