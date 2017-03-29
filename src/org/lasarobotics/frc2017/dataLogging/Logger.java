@@ -63,7 +63,10 @@ public class Logger{
         date = new Date();
         startTime = Double.MAX_VALUE;
         
-       String line ="Time";
+        fileName = "LOG_" + dateFormat.format(date); 
+        logFile = new File(fileName);
+        
+        String line ="Time";
        
         try {
             writer = new FileWriter(logFile);
@@ -76,8 +79,7 @@ public class Logger{
             line = line.concat(o.getNames());
         }        
         
-        fileName = "LOG_" + dateFormat.format(date); 
-        logFile = new File(fileName);
+        
     }
     
     public static void closeFile(){
