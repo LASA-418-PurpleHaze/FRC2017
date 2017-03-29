@@ -1,7 +1,6 @@
 package org.lasarobotics.frc2017.subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jdk.internal.instrumentation.Logger;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.frc2017.dataLogging.Loggable;
 
