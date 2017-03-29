@@ -48,14 +48,15 @@ public class Climber extends HazySubsystem implements Loggable{
         }
         hardware.setClimberSpeed(climberSpeed);
     }
-    
+
     @Override
     public void initSubsystem() {
     }
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putNumber("climberSpeed", climberSpeed);
+        SmartDashboard.putNumber("C_speed", climberSpeed);
+        SmartDashboard.putNumber("C_current", hardware.getClimberCurrent());
     }
 
 }

@@ -10,26 +10,35 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 
+<<<<<<< HEAD
 public class DriverInput implements Runnable, Loggable{
     
+=======
+public class DriverInput implements Runnable {
+
+>>>>>>> driverinput
     private static DriverInput instance;
     private Hardware hardware;
     private final Drivetrain drivetrain;
     private Intake intake;
     private Shooter shooter;
     private Climber climber;
-    
+
     private final HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
     private final HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
-    
+
     private final CheesyDriveHelper cheesyDrive;
-    
+
     private double throttle, wheel;
     private boolean quickTurn;
+<<<<<<< HEAD
     
     private double leftOverrideSpeed;
     private double rightOverrideSpeed;
     
+=======
+
+>>>>>>> driverinput
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
         cheesyDrive = new CheesyDriveHelper();
@@ -38,37 +47,43 @@ public class DriverInput implements Runnable, Loggable{
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
     }
-    
+
     public static DriverInput getInstance() {
         return (instance == null) ? instance = new DriverInput() : instance;
     }
-    
+
     @Override
     public void run() {
         drivetrainControl();
         shooterControl();
         intakeControl();
-        
+
         if (!shooting && driverRight.getTrigger()) {
             climber.setMode(Climber.Mode.CLIMB);
         } else {
             climber.setMode(Climber.Mode.OFF);
         }
+
+        if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
+            hardware.actuateGear(false);
+        } else {
+            hardware.actuateGear(true);
+        }
     }
-    
+
     private void drivetrainControl() {
         throttle = -driverLeft.getYAxis();
         wheel = driverRight.getXAxis();
         quickTurn = driverLeft.getTrigger();
-        
+
         cheesyDrive.cheesyDrive(throttle, wheel, quickTurn);
         leftOverrideSpeed = cheesyDrive.getLeftPWM();
         rightOverrideSpeed = cheesyDrive.getRightPWM();
         drivetrain.setDriveSpeeds(leftOverrideSpeed, rightOverrideSpeed);
     }
-    
+
     private boolean shooting;
-    
+
     private void shooterControl() {
         if (driverRight.getTopFrontButton()) {
             shooter.setMode(Shooter.Mode.SHOOTING);
@@ -83,10 +98,10 @@ public class DriverInput implements Runnable, Loggable{
             shooter.setMode(Shooter.Mode.OFF);
         }
     }
-    
+
     private void intakeControl() {
         if (driverRight.getTrigger() && shooting) {
-            intake.setMode(Intake.Mode.SHOOTING);
+            intake.setMode(Intake.Mode.FEEDING);
         } else if (driverLeft.getTopFrontButton()) {
             intake.setMode(Intake.Mode.INTAKING);
         } else {
@@ -94,6 +109,7 @@ public class DriverInput implements Runnable, Loggable{
         }
     }
 
+<<<<<<< HEAD
     @Override
     public String getNames() {
         return "leftOverrideSpeed, rightOverrideSpeed";
@@ -103,4 +119,6 @@ public class DriverInput implements Runnable, Loggable{
     public String getValues() {
         return leftOverrideSpeed + ", " + rightOverrideSpeed;
     }
+=======
+>>>>>>> driverinput
 }

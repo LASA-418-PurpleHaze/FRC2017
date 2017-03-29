@@ -54,20 +54,24 @@ public class Robot extends HazyIterative {
         shooter.initSubsystem();
         climber.initSubsystem();
         hardware.reset();
+<<<<<<< HEAD
         hardware.actuateGear(true);
         
         Logger.makeFile();
+=======
+>>>>>>> driverinput
     }
 
     @Override
     public void teleopInit() {
+        CommandManager.cancelAll();
+        drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
         initSubsystems();
         time = 0;
     }
 
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("bla", 4);
         CommandManager.run();
         driverInput.run();
         drivetrain.run();
@@ -92,6 +96,7 @@ public class Robot extends HazyIterative {
         CommandManager.cancelAll();
         autonomous.run();
         time = 0;
+        hardware.actuateGear(true);
     }
 
     @Override

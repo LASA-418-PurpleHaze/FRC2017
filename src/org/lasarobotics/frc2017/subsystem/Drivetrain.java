@@ -12,7 +12,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
 
     private double leftSpeed, rightSpeed;
     private double dt, prevTime;
-    private final HazyPVIff leftPVIff, rightPVIff;
+    private final HazyPVIff straightPVIff;
     private final HazyPID turnPID;
     private HazyTMP motionProfiler;
     private double targetPosition, targetAngle;
@@ -24,8 +24,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
     }
 
     private Drivetrain() {
-        leftPVIff = new HazyPVIff();
-        rightPVIff = new HazyPVIff();
+        straightPVIff = new HazyPVIff();
         turnPID = new HazyPID();
 
         this.setMode(Mode.OVERRIDE);
@@ -61,13 +60,9 @@ public class Drivetrain extends HazySubsystem implements Loggable {
                 case OVERRIDE:
                     break;
                 case STRAIGHT:
-                    leftSpeed = leftPVIff.calculate(hardware.getLeftDriveDistance(),
-                            hardware.getLeftDriveVelocity(), motionProfiler.getCurrentPosition(),
+                    leftSpeed = rightSpeed = straightPVIff.calculate((hardware.getLeftDriveDistance() + hardware.getRightDriveDistance())*0.5,
+                            (hardware.getRightDriveVelocity() + hardware.getLeftDriveVelocity()) * 0.5, motionProfiler.getCurrentPosition(),
                             motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-                    rightSpeed = rightPVIff.calculate(hardware.getRightDriveDistance(),
-                            hardware.getRightDriveVelocity(), motionProfiler.getCurrentPosition(),
-                            motionProfiler.getCurrentVelocity(), motionProfiler.getCurrentAcceleration(), dt);
-                    motionProfiler.calculateNextSituation(dt);
                     turn = turnPID.calculate(hardware.getRobotAngle(), dt);
                     leftSpeed += turn;
                     rightSpeed -= turn;
@@ -109,20 +104,12 @@ public class Drivetrain extends HazySubsystem implements Loggable {
         return targetAngle;
     }
 
-    public boolean isLeftPIDDone() {
-        return leftPVIff.onTarget();
-    }
-
-    public boolean isRightPIDDone() {
-        return rightPVIff.onTarget();
-    }
-
     public boolean isTurnPIDDone() {
         return turnPID.onTarget();
     }
 
     public boolean isDistanceDone() {
-        return isLeftPIDDone() && isRightPIDDone();
+        return straightPVIff.onTarget();
     }
 
     @Override
@@ -130,32 +117,37 @@ public class Drivetrain extends HazySubsystem implements Loggable {
         turnPID.setPID(ConstantsList.D_turn_kP.getValue(), ConstantsList.D_turn_kI.getValue(),
                 ConstantsList.D_turn_kD.getValue(), ConstantsList.D_turn_kFF.getValue(),
                 ConstantsList.D_turn_doneBound.getValue());
-        leftPVIff.setPID(ConstantsList.D_left_kP.getValue(), ConstantsList.D_left_kI.getValue(),
-                ConstantsList.D_left_kV.getValue(), ConstantsList.D_left_kFFV.getValue(),
-                ConstantsList.D_left_kFFA.getValue(), ConstantsList.D_left_doneBound.getValue());
-        rightPVIff.setPID(ConstantsList.D_right_kP.getValue(), ConstantsList.D_right_kI.getValue(),
-                ConstantsList.D_right_kV.getValue(), ConstantsList.D_right_kFFV.getValue(),
-                ConstantsList.D_right_kFFA.getValue(), ConstantsList.D_right_doneBound.getValue());
+        straightPVIff.setPID((ConstantsList.D_left_kP.getValue() + ConstantsList.D_right_kP.getValue()) * 0.5,
+                (ConstantsList.D_left_kI.getValue() + ConstantsList.D_right_kI.getValue()) * 0.5,
+                (ConstantsList.D_left_kV.getValue() + ConstantsList.D_right_kV.getValue()) * 0.5,
+                (ConstantsList.D_left_kFFV.getValue() + ConstantsList.D_right_kFFV.getValue()) * 0.5,
+                (ConstantsList.D_left_kFFA.getValue() + ConstantsList.D_right_kFFA.getValue()) * 0.5, 
+                (ConstantsList.D_left_doneBound.getValue() + ConstantsList.D_right_doneBound.getValue()) * 0.5);
         motionProfiler = new HazyTMP(ConstantsList.D_tmp_maxV.getValue(), ConstantsList.D_tmp_maxA.getValue());
 
-        leftPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
-        rightPVIff.setMaxMin(ConstantsList.D_right_maxU.getValue(), -ConstantsList.D_right_maxU.getValue());
+        straightPVIff.setMaxMin(ConstantsList.D_left_maxU.getValue(), -ConstantsList.D_left_maxU.getValue());
+        straightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
+        turnPID.setMinCount((int) ConstantsList.D_done_cycles.getValue());
 
         prevTime = Timer.getFPGATimestamp();
     }
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putNumber("leftspeed", leftSpeed);
-        SmartDashboard.putNumber("rightspeed", rightSpeed);
-        SmartDashboard.putNumber("distancetarget", targetPosition);
-        SmartDashboard.putNumber("angletarget", targetAngle);
-        SmartDashboard.putNumber("currentVelocity", motionProfiler.getCurrentVelocity());
-        SmartDashboard.putNumber("currentPosition", motionProfiler.getCurrentPosition());
-        SmartDashboard.putNumber("currentAcceleration", motionProfiler.getCurrentAcceleration());
-        SmartDashboard.putBoolean("isDistanceDone", isDistanceDone());
-        SmartDashboard.putBoolean("isTurnPID", isTurnPIDDone());
-        SmartDashboard.putString("mode", mode.toString());
+        SmartDashboard.putNumber("D_l_pos", hardware.getLeftDriveDistance());
+        SmartDashboard.putNumber("D_l_velocity", hardware.getLeftDriveVelocity());
+        SmartDashboard.putNumber("D_r_pos", hardware.getRightDriveDistance());
+        SmartDashboard.putNumber("D_r_velocity", hardware.getRightDriveVelocity());
+        SmartDashboard.putNumber("D_l_pviff_speed", leftSpeed);
+        SmartDashboard.putNumber("D_r_pviff_speed", rightSpeed);
+        SmartDashboard.putNumber("D_target_pos", targetPosition);
+        SmartDashboard.putNumber("D_target_angle", targetAngle);
+        SmartDashboard.putNumber("D_tmp_velocity", motionProfiler.getCurrentVelocity());
+        SmartDashboard.putNumber("D_tmp_pos", motionProfiler.getCurrentPosition());
+        SmartDashboard.putNumber("D_tmp_accel", motionProfiler.getCurrentAcceleration());
+        SmartDashboard.putBoolean("D_dist_done", isDistanceDone());
+        SmartDashboard.putBoolean("D_turn_done", isTurnPIDDone());
+        SmartDashboard.putString("D_mode", mode.toString());
     }
 
 }

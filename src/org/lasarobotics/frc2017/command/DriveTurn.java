@@ -32,7 +32,7 @@ public class DriveTurn extends Command {
         drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
         hardware.reset();
         drivetrain.setTurnSetpoint(0.0);
-        drivetrain.setDriveSpeeds(0, 0);
+        drivetrain.setDriveSpeeds(0,0);
     }
 
 }

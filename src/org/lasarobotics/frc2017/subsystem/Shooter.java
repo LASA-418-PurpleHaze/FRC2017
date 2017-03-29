@@ -12,7 +12,7 @@ public class Shooter extends HazySubsystem implements Loggable{
     public static Shooter getInstance() {
         return (instance == null) ? instance = new Shooter() : instance;
     }
-
+    
     public Shooter() {
         setMode(Mode.OVERRIDE);
     }
@@ -69,7 +69,7 @@ public class Shooter extends HazySubsystem implements Loggable{
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putString("shooter_mode", mode.toString());
+        SmartDashboard.putString("S_mode", mode.toString());
     }
 
 }
