@@ -38,7 +38,7 @@ public class Robot extends HazyIterative {
         autonomous = Autonomous.getInstance();
         autonomous.start();
         Constants.init();
-        
+        Logger.init();
         Logger.addLog(intake);
         Logger.addLog(shooter);
         Logger.addLog(drivetrain);
