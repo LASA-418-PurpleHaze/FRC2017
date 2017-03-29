@@ -70,6 +70,7 @@ public class Logger{
        
         try {
             writer = new FileWriter(logFile);
+            System.out.println("Writer made");
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
         }
