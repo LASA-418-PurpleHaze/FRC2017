@@ -10,13 +10,9 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 
-<<<<<<< HEAD
-public class DriverInput implements Runnable, Loggable{
-    
-=======
-public class DriverInput implements Runnable {
 
->>>>>>> driverinput
+public class DriverInput implements Runnable, Loggable {
+
     private static DriverInput instance;
     private Hardware hardware;
     private final Drivetrain drivetrain;
@@ -31,14 +27,9 @@ public class DriverInput implements Runnable {
 
     private double throttle, wheel;
     private boolean quickTurn;
-<<<<<<< HEAD
-    
     private double leftOverrideSpeed;
     private double rightOverrideSpeed;
-    
-=======
 
->>>>>>> driverinput
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
         cheesyDrive = new CheesyDriveHelper();
@@ -109,7 +100,6 @@ public class DriverInput implements Runnable {
         }
     }
 
-<<<<<<< HEAD
     @Override
     public String getNames() {
         return "leftOverrideSpeed, rightOverrideSpeed";
@@ -119,6 +109,5 @@ public class DriverInput implements Runnable {
     public String getValues() {
         return leftOverrideSpeed + ", " + rightOverrideSpeed;
     }
-=======
->>>>>>> driverinput
+
 }

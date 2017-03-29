@@ -54,12 +54,7 @@ public class Robot extends HazyIterative {
         shooter.initSubsystem();
         climber.initSubsystem();
         hardware.reset();
-<<<<<<< HEAD
-        hardware.actuateGear(true);
-        
         Logger.makeFile();
-=======
->>>>>>> driverinput
     }
 
     @Override
