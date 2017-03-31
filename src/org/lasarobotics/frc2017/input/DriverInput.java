@@ -54,7 +54,7 @@ public class DriverInput implements Runnable {
             climber.setMode(Climber.Mode.OFF);
         }
 
-        gearToggle.calc(driverRight.getTopleftButton());
+        gearToggle.calc(driverRight.getTopFrontButton());
         hardware.actuateGear(!gearToggle.get());
 
         /*if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
@@ -76,13 +76,15 @@ public class DriverInput implements Runnable {
     private boolean shooting;
 
     private void shooterControl() {
-        if (driverRight.getTopFrontButton()) {
-            shooter.setMode(Shooter.Mode.SHOOTING);
-            shooting = true;
-        } else if (driverLeft.getTopFrontButton()) {
+        //if (driverRight.getTopFrontButton()) {
+          //  shooter.setMode(Shooter.Mode.SHOOTING);
+           // shooting = true;
+        //} 
+        if (driverLeft.getTopFrontButton()) {
             shooter.setMode(Shooter.Mode.LOADING);
             shooting = false;
-        } else if (driverRight.getTopBackButton()) {
+        } 
+        else if (driverRight.getTopBackButton()) {
             shooter.setMode(Shooter.Mode.OFF);
             shooting = false;
         } else if (!shooting) {
