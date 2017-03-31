@@ -8,6 +8,7 @@ import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
+import org.lasarobotics.lib.TorqueToggle;
 
 public class DriverInput implements Runnable {
 
@@ -22,6 +23,7 @@ public class DriverInput implements Runnable {
     private final HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
 
     private final CheesyDriveHelper cheesyDrive;
+    private final TorqueToggle gearToggle;
 
     private double throttle, wheel;
     private boolean quickTurn;
@@ -29,6 +31,7 @@ public class DriverInput implements Runnable {
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
         cheesyDrive = new CheesyDriveHelper();
+        gearToggle = new TorqueToggle(true);
         hardware = Hardware.getInstance();
         intake = Intake.getInstance();
         shooter = Shooter.getInstance();
@@ -51,11 +54,14 @@ public class DriverInput implements Runnable {
             climber.setMode(Climber.Mode.OFF);
         }
 
-        if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
+        gearToggle.calc(driverRight.getTopleftButton());
+        hardware.actuateGear(gearToggle.get());
+
+        /*if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
             hardware.actuateGear(false);
         } else {
             hardware.actuateGear(true);
-        }
+        }*/
     }
 
     private void drivetrainControl() {
