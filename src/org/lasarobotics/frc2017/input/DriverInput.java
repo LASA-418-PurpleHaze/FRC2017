@@ -31,7 +31,7 @@ public class DriverInput implements Runnable {
     private DriverInput() {
         drivetrain = Drivetrain.getInstance();
         cheesyDrive = new CheesyDriveHelper();
-        gearToggle = new TorqueToggle(true);
+        gearToggle = new TorqueToggle();
         hardware = Hardware.getInstance();
         intake = Intake.getInstance();
         shooter = Shooter.getInstance();
@@ -55,7 +55,7 @@ public class DriverInput implements Runnable {
         }
 
         gearToggle.calc(driverRight.getTopleftButton());
-        hardware.actuateGear(gearToggle.get());
+        hardware.actuateGear(!gearToggle.get());
 
         /*if (driverLeft.getLeftBackButton() || driverRight.getBackRightButton()) {
             hardware.actuateGear(false);
