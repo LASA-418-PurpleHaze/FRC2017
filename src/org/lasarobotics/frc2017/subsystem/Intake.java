@@ -21,12 +21,12 @@ public class Intake extends HazySubsystem implements Loggable {
 
     @Override
     public String getNames() {
-        return "intakeDown, intakeSpeed";
+        return "intakeDown, intakeSpeed, conveyerSpeed";
     }
 
     @Override
     public String getValues() {
-        return intakeDown + "," + intakeSpeed;
+        return intakeDown + "," + intakeSpeed + ", " + conveyorSpeed;
     }
 
     public static enum Mode {

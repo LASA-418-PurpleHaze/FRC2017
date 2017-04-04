@@ -31,7 +31,6 @@ class Autonomous implements Runnable {
     @Override
     public void run() {
         mode = (int) SmartDashboard.getNumber("AutoMode", DO_NOTHING);
-
         CommandManager.addCommand(new StartAutoCommand());
 
         switch (mode) {
