@@ -1,4 +1,4 @@
-package org.lasarobotics.frc2017.dataLogging;
+package org.lasarobotics.lib.datalogging;
 
 import edu.wpi.first.wpilibj.Timer;
 import java.util.ArrayList;

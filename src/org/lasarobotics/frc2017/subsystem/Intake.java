@@ -3,7 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.frc2017.hardware.Hardware;
-import org.lasarobotics.frc2017.dataLogging.Loggable;
+import org.lasarobotics.lib.datalogging.Loggable;
 
 public class Intake extends HazySubsystem implements Loggable {
 

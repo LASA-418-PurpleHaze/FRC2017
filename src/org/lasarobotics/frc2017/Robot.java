@@ -10,7 +10,7 @@ import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.HazyIterative;
-import org.lasarobotics.frc2017.dataLogging.Logger;
+import org.lasarobotics.lib.datalogging.Logger;
 
 public class Robot extends HazyIterative {
 

@@ -1,7 +1,7 @@
 package org.lasarobotics.frc2017.input;
 
 import org.lasarobotics.frc2017.ConstantsList;
-import org.lasarobotics.frc2017.dataLogging.Loggable;
+import org.lasarobotics.lib.datalogging.Loggable;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.HazyJoystick;
