@@ -1,0 +1,64 @@
+<project name="hazy-sim-build">
+    <!-- Move the robot source and the fake simulated files into a temporary
+    directory for compilation    -->
+    <target name="move">
+        <mkdir dir="simsrc"/>
+        <copy todir="simsrc">
+            <fileset dir="sim"/>
+        </copy>
+        <copy todir="simsrc">
+            <fileset dir="src">
+                <exclude name="**/hardware/**"/>
+                <exclude name="**/HazyJoystick.java"/>
+                <exclude name="**/HazyIterative.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="simcompile" depends="move">
+        <mkdir dir="simbuild"/>
+        <path id="simclasspath.path">
+            <fileset file="${networktables.jar}"/>
+            <!-- add in the .jar for the joystick -->
+        </path>
+        <!--
+        <javac srcdir="simsrc"
+               destdir="simbuild"
+               includeAntRuntime="no"
+               includeJavaRuntime="no"
+               classpathref="simclasspath.path"
+               target="${ant.java.version}"
+               source="${ant.java.version}"
+               compiler="javac${ant.java.version}"
+               debug="true">
+        </javac>
+        -->
+        <delete dir="simsrc"/>
+        
+        
+    </target>
+    
+    <target name="simjar" depends="simcompile">
+        <mkdir dir="simbuild/jars"/>
+        <mkdir dir="simdist"/>
+        
+        <copy todir="simbuild/jars" flatten="true">
+            <path refid="simclasspath.path"/>
+        </copy>
+        
+        <jar destfile="simdist/HazySim.jar" update="false">
+            <manifest>
+                <attribute name="Main-Class" value="org/lasarobotics/lib/HazyIterative.java"/>
+                <attribute name="Robot-Class" value="${robot.class}"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            
+            <fileset dir="simbuild" includes="**/*.class"/>
+            <zipgroupfileset dir="simbuild/jars"/>
+        </jar>
+    </target>
+    
+    <target name="simulate" depends="simjar">
+        <echo> Now we just gotta run it</echo>
+    </target>
+</project>

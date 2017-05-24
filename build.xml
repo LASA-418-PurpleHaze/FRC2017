@@ -25,5 +25,6 @@
   <property file="hazybuild/build.properties"/>
 
   <import file="hazybuild/build.xml"/>
+  <import file="hazybuild/simbuild.xml"/>
 
 </project>
