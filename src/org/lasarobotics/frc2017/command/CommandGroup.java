@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.command;
 import edu.wpi.first.wpilibj.Timer;
 import java.util.Iterator;
 import java.util.LinkedList;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class CommandGroup extends Command {
 
@@ -18,9 +19,9 @@ public class CommandGroup extends Command {
 
     @Override
     public void start() {
-        startTime = Timer.getFPGATimestamp();
+        startTime = Hardware.getCurrentTime();
         for (Command c : commands) {
-            c.startTime = Timer.getFPGATimestamp();
+            c.startTime = Hardware.getCurrentTime();
             c.start();
         }
     }

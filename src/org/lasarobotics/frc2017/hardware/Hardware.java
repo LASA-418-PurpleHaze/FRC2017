@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
@@ -306,7 +307,11 @@ public class Hardware implements Runnable {
     public double getClimberCurrent() {
         return (pdp.getCurrent(Ports.CLIMBER_POWER_A) + pdp.getCurrent(Ports.CLIMBER_POWER_B)) * 0.5;
     }
-
+    
+    public static double getCurrentTime(){
+        return Timer.getFPGATimestamp();
+    }
+   
     public void pushToDashboard() {
         SmartDashboard.putNumber("H_n_angle", navXAngle);
         SmartDashboard.putNumber("H_r_angle", robotAngle);

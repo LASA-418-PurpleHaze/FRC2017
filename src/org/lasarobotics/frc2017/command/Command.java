@@ -48,7 +48,7 @@ public abstract class Command {
     public abstract void stop();
 
     public boolean isTimedOut() {
-        return (Timer.getFPGATimestamp() - startTime) > timeOut;
+        return (Hardware.getCurrentTime() - startTime) > timeOut;
     }
 
     public void cancel() {

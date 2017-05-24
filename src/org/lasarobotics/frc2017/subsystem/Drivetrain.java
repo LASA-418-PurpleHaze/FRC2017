@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.lib.datalogging.Loggable;
 import org.lasarobotics.lib.controlloop.HazyPID;
 import org.lasarobotics.lib.controlloop.HazyPVIff;
@@ -55,7 +56,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
 
     @Override
     public void run() {
-        dt = Timer.getFPGATimestamp() - prevTime;
+        dt = Hardware.getCurrentTime()- prevTime;
         double turn;
         if (null != mode) {
             switch (mode) {
@@ -77,7 +78,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
                     break;
             }
         }
-        prevTime = Timer.getFPGATimestamp();
+        prevTime = Hardware.getCurrentTime();
         hardware.setDriveSpeeds(leftSpeed, rightSpeed);
     }
 
@@ -137,7 +138,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
         straightPVIff.setMinCount((int) ConstantsList.D_done_cycles.getValue());
         turnPID.setMinCount((int) ConstantsList.D_done_cycles.getValue());
 
-        prevTime = Timer.getFPGATimestamp();
+        prevTime = Hardware.getCurrentTime();
     }
 
     @Override

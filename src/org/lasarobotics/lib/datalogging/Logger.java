@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class Logger{
     private static String fileName;
@@ -35,10 +36,10 @@ public class Logger{
     }
     
     public static void log() {
-        String line = Timer.getFPGATimestamp() - startTime +"";
+        String line = Hardware.getCurrentTime()- startTime +"";
         
         if(startTime == Double.MAX_VALUE){
-            startTime = Timer.getFPGATimestamp();
+            startTime = Hardware.getCurrentTime();
         }
         
         for(Loggable o : loggedSystems){
