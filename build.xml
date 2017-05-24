@@ -21,10 +21,9 @@
 
   <!-- Any other property in build.properties can also be overridden. -->
 
-  <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>
-  <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
+  <property file="hazybuild/build.properties"/>
 
-  <import file="${wpilib.ant.dir}/lasabuild.xml"/>
+  <import file="hazybuild/build.xml"/>
 
 </project>
