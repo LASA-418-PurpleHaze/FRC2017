@@ -30,7 +30,7 @@ class Autonomous implements Runnable {
 
     @Override
     public void run() {
-        mode = (int) SmartDashboard.getNumber("Auto Mode", DO_NOTHING);
+        mode = (int) Hardware.getDashNum("Auto Mode", DO_NOTHING);
 
         switch (mode) {
             case DO_NOTHING:
