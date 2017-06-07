@@ -108,8 +108,8 @@ public class Hardware {
     }
     
     public static double getCurrentTime(){
-        return 0.0;
-        //dunno how this'll work in a sim, maybe current computer time? Probably.
+        return System.currentTimeMillis() / 1000;
+        //returns current time in seconds
     }
     
     public void pushToDashboard(){
