@@ -116,19 +116,27 @@ public class Hardware {
         //pushes stuff to the dashboard, which idk if we'll implement into the sim
     }
     
-    public void putDash(String label, double num){
+    public static void putDash(String label, double num){
         System.out.println(label + " : " + num);
     }
     
-    public void putDash(String label, boolean bool){
+    public static void putDash(String label, boolean bool){
         System.out.println(label + " : " + bool);
     }
     
-    public double getDashNum(String label, double def){
+    public static void putDash(String label, String str){
+        System.out.println(label + " : " + str);
+    }
+    
+    public static double getDashNum(String label, double def){
         return def;
     }
     
-    public boolean getDashBool(String label, boolean def){
+    public static boolean getDashBool(String label, boolean def){
+        return def;
+    }
+    
+    public static String getDashString(String label, String def){
         return def;
     }
 }
