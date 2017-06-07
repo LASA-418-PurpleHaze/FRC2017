@@ -313,30 +313,30 @@ public class Hardware implements Runnable {
     }
    
     public void pushToDashboard() {
-        SmartDashboard.putNumber("H_n_angle", navXAngle);
-        SmartDashboard.putNumber("H_r_angle", robotAngle);
-        SmartDashboard.putNumber("S_l_rpm", leftShooterMotor.getSpeed());
-        SmartDashboard.putNumber("S_r_rpm", rightShooterMotor.getSpeed());
-        SmartDashboard.putNumber("S_l_voltage", -leftShooterMotor.getOutputVoltage());
-        SmartDashboard.putNumber("S_r_voltage", rightShooterMotor.getOutputVoltage());
-        SmartDashboard.putNumber("I_current", leftIntakeMotor.getOutputCurrent());
-        SmartDashboard.putNumber("D_test", leftDriveEncoderPosition);
+        putDash("H_n_angle", navXAngle);
+        putDash("H_r_angle", robotAngle);
+        putDash("S_l_rpm", leftShooterMotor.getSpeed());
+        putDash("S_r_rpm", rightShooterMotor.getSpeed());
+        putDash("S_l_voltage", -leftShooterMotor.getOutputVoltage());
+        putDash("S_r_voltage", rightShooterMotor.getOutputVoltage());
+        putDash("I_current", leftIntakeMotor.getOutputCurrent());
+        putDash("D_test", leftDriveEncoderPosition);
     }
     
-    public void putDash(String label, double num){
+    public static void putDash(String label, double num){
         SmartDashboard.putNumber(label, num);
     }
     
-    public void putDash(String label, boolean bool){
+    public static void putDash(String label, boolean bool){
         SmartDashboard.putBoolean(label, bool);
     }
     
-    public double getDashNum(String label, double def){
+    public static double getDashNum(String label, double def){
         //returns "label" from smartdashboard, and if it can't find it it returns default "def"
         return SmartDashboard.getNumber(label, def);
     }
     
-    public boolean getDashBool(String label, boolean def){
+    public static boolean getDashBool(String label, boolean def){
         return SmartDashboard.getBoolean(label, def);
     }
 

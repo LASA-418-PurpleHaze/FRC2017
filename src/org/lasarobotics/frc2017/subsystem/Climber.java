@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.lib.datalogging.Loggable;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class Climber extends HazySubsystem implements Loggable{
 
@@ -54,8 +55,8 @@ public class Climber extends HazySubsystem implements Loggable{
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putNumber("C_speed", climberSpeed);
-        SmartDashboard.putNumber("C_current", hardware.getClimberCurrent());
+        Hardware.putDash("C_speed", climberSpeed);
+        Hardware.putDash("C_current", hardware.getClimberCurrent());
     }
 
 }

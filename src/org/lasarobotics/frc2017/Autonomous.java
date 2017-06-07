@@ -7,6 +7,7 @@ import org.lasarobotics.frc2017.command.DriveDistance;
 import org.lasarobotics.frc2017.command.DriveTurn;
 import org.lasarobotics.frc2017.command.EndAutoCommand;
 import org.lasarobotics.frc2017.command.WaitCommand;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 class Autonomous implements Runnable {
 
@@ -75,7 +76,7 @@ class Autonomous implements Runnable {
     }
 
     public void start() {
-        SmartDashboard.putNumber("Auto Mode", mode);
+        Hardware.putDash("Auto Mode", mode);
     }
 
 }

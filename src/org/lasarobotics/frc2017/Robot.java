@@ -131,7 +131,7 @@ public class Robot extends HazyIterative {
     }
 
     private void pushToDashboard() {
-        SmartDashboard.putNumber("Time", time++);
+        Hardware.putDash("Time", time++);
         hardware.pushToDashboard();
         drivetrain.pushToDashboard();
         shooter.pushToDashboard();

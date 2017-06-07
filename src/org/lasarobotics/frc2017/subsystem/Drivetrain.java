@@ -142,23 +142,23 @@ public class Drivetrain extends HazySubsystem implements Loggable {
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putNumber("D_l_pos", hardware.getLeftDriveDistance());
-        SmartDashboard.putNumber("D_l_velocity", hardware.getLeftDriveVelocity());
-        SmartDashboard.putNumber("D_r_pos", hardware.getRightDriveDistance());
-        SmartDashboard.putNumber("D_r_velocity", hardware.getRightDriveVelocity());
-        SmartDashboard.putNumber("D_l_pviff_speed", leftSpeed);
-        SmartDashboard.putNumber("D_r_pviff_speed", rightSpeed);
-        SmartDashboard.putNumber("D_target_pos", targetPosition);
-        SmartDashboard.putNumber("D_target_angle", targetAngle);
-        SmartDashboard.putNumber("D_tmp_velocity", motionProfiler.getCurrentVelocity());
-        SmartDashboard.putNumber("D_tmp_pos", motionProfiler.getCurrentPosition());
-        SmartDashboard.putNumber("D_tmp_accel", motionProfiler.getCurrentAcceleration());
+        Hardware.putDash("D_l_pos", hardware.getLeftDriveDistance());
+        Hardware.putDash("D_l_velocity", hardware.getLeftDriveVelocity());
+        Hardware.putDash("D_r_pos", hardware.getRightDriveDistance());
+        Hardware.putDash("D_r_velocity", hardware.getRightDriveVelocity());
+        Hardware.putDash("D_l_pviff_speed", leftSpeed);
+        Hardware.putDash("D_r_pviff_speed", rightSpeed);
+        Hardware.putDash("D_target_pos", targetPosition);
+        Hardware.putDash("D_target_angle", targetAngle);
+        Hardware.putDash("D_tmp_velocity", motionProfiler.getCurrentVelocity());
+        Hardware.putDash("D_tmp_pos", motionProfiler.getCurrentPosition());
+        Hardware.putDash("D_tmp_accel", motionProfiler.getCurrentAcceleration());
         SmartDashboard.putBoolean("D_dist_done", isDistanceDone());
         SmartDashboard.putBoolean("D_tur_mode\"n_done", isTurnPIDDone());
         SmartDashboard.putString("D_mode", mode.toString());
-        SmartDashboard.putNumber("D_avg_v", 0.5* (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()));
-        SmartDashboard.putNumber("D_avg_p", 0.5 * (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance()));
-        SmartDashboard.putNumber("D_avg_pviff_speed", 0.5*(leftSpeed + rightSpeed));
+        Hardware.putDash("D_avg_v", 0.5* (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()));
+        Hardware.putDash("D_avg_p", 0.5 * (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance()));
+        Hardware.putDash("D_avg_pviff_speed", 0.5*(leftSpeed + rightSpeed));
         
     }
 

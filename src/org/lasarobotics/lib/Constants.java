@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class Constants {
 
@@ -16,7 +17,7 @@ public class Constants {
 
         try {
             constantsFile.createNewFile();
-            SmartDashboard.putNumber("yes", 1);
+            Hardware.putDash("yes", 1);
         } catch (Exception e) {
 
         }
@@ -29,7 +30,7 @@ public class Constants {
                 int pos = line.indexOf(" ");
                 if (pos != -1) {
                     for (Constant c : ConstantsList) {
-                        SmartDashboard.putNumber("key", c.value);
+                        Hardware.putDash("key", c.value);
                         if (c.getName().equals(line.substring(0, pos))) {
                             c.value = Double.parseDouble(line.substring(pos));
 
