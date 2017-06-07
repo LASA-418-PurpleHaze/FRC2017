@@ -1,6 +1,5 @@
 package org.lasarobotics.lib.datalogging;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
