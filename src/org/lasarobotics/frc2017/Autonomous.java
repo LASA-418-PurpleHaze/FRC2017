@@ -6,7 +6,6 @@ import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.command.DriveDistance;
 import org.lasarobotics.frc2017.command.DriveTurn;
 import org.lasarobotics.frc2017.command.EndAutoCommand;
-import org.lasarobotics.frc2017.command.StartAutoCommand;
 import org.lasarobotics.frc2017.command.WaitCommand;
 
 class Autonomous implements Runnable {

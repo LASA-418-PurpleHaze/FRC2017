@@ -1,6 +1,5 @@
 package org.lasarobotics.frc2017.command;
 
-import edu.wpi.first.wpilibj.Timer;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
 import org.lasarobotics.frc2017.subsystem.Intake;

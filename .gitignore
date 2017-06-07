@@ -13,6 +13,10 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
+#sim crap
+simsrc/*
+simdist/*
+
 # Package Files
 #*.jar
 *.war

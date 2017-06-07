@@ -1,6 +1,5 @@
 package org.lasarobotics.frc2017.command;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.lasarobotics.frc2017.hardware.Hardware;
