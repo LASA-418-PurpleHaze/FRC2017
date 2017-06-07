@@ -322,5 +322,22 @@ public class Hardware implements Runnable {
         SmartDashboard.putNumber("I_current", leftIntakeMotor.getOutputCurrent());
         SmartDashboard.putNumber("D_test", leftDriveEncoderPosition);
     }
+    
+    public void putDash(String label, double num){
+        SmartDashboard.putNumber(label, num);
+    }
+    
+    public void putDash(String label, boolean bool){
+        SmartDashboard.putBoolean(label, bool);
+    }
+    
+    public double getDashNum(String label, double def){
+        //returns "label" from smartdashboard, and if it can't find it it returns default "def"
+        return SmartDashboard.getNumber(label, def);
+    }
+    
+    public boolean getDashBool(String label, boolean def){
+        return SmartDashboard.getBoolean(label, def);
+    }
 
 }
