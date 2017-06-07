@@ -1,6 +1,6 @@
 package org.lasarobotics.frc2017;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.lasarobotics.frc2017.command.Shoot;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.command.DriveDistance;
