@@ -89,7 +89,7 @@ public class Intake extends HazySubsystem implements Loggable {
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putString("I_mode", mode.toString());
+        Hardware.putDash("I_mode", mode.toString());
         Hardware.putDash("I_down", intakeDown);
         Hardware.putDash("I_conveyor_speed", conveyorSpeed);
 

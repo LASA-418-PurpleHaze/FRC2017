@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017.subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.lib.datalogging.Loggable;
+import org.lasarobotics.frc2017.hardware.Hardware;
 
 public class Shooter extends HazySubsystem implements Loggable{
 
@@ -69,7 +70,7 @@ public class Shooter extends HazySubsystem implements Loggable{
 
     @Override
     public void pushToDashboard() {
-        SmartDashboard.putString("S_mode", mode.toString());
+        Hardware.putDash("S_mode", mode.toString());
     }
 
 }

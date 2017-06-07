@@ -124,11 +124,11 @@ public class Hardware {
         System.out.println(label + " : " + bool);
     }
     
-    public double getDashNum(String label){
-        return 0.0;
+    public double getDashNum(String label, double def){
+        return def;
     }
     
-    public boolean getDashBool(String label){
-        return false;
+    public boolean getDashBool(String label, boolean def){
+        return def;
     }
 }

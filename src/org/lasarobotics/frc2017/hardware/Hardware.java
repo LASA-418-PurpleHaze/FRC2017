@@ -331,6 +331,10 @@ public class Hardware implements Runnable {
         SmartDashboard.putBoolean(label, bool);
     }
     
+    public static void putDash(String label, String str){
+        SmartDashboard.putString(label, str);
+    }
+    
     public static double getDashNum(String label, double def){
         //returns "label" from smartdashboard, and if it can't find it it returns default "def"
         return SmartDashboard.getNumber(label, def);
@@ -338,6 +342,10 @@ public class Hardware implements Runnable {
     
     public static boolean getDashBool(String label, boolean def){
         return SmartDashboard.getBoolean(label, def);
+    }
+    
+    public static String getDashString(String label, String def){
+        return SmartDashboard.getString(label, def);
     }
 
 }
