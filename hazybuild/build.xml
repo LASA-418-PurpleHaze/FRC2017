@@ -15,6 +15,9 @@
   <target name="clean" description="Clean up all build and distribution artifacts.">
     <delete dir="${build.dir}"/>
     <delete dir="${dist.dir}"/>
+    <delete dir="simbuild"/>
+    <delete dir="simsrc"/>
+    <delete dir="simdist"/>
   </target>
 
   <!-- Targets -->

@@ -103,7 +103,7 @@ public class Logger{
         try {
             if (lineToWrite != null)
             writer.write(lineToWrite);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Botched writing to log file.");
         }      
     }

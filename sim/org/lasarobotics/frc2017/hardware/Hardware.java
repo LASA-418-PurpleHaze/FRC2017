@@ -24,7 +24,7 @@ public class Hardware {
     
     public static Hardware getInstance(){
         //Will return an instance of the hardware sim
-        return instance;
+        return (instance == null) ? instance = new Hardware() : instance;
     }
     
     private IntakeMode intakeMode;

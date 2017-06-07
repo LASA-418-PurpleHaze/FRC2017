@@ -19,7 +19,7 @@
         <mkdir dir="simbuild"/>
         <path id="simclasspath.path">
             <fileset file="${networktables.jar}"/>
-            <fileset dir="jinput"/>
+            <fileset file="jinput/jinput.jar"/>
         </path>
        
         <javac srcdir="simsrc"
@@ -33,7 +33,7 @@
                debug="true">
         </javac>
         
-        <delete dir="simsrc"/>
+        <!--<delete dir="simsrc"/>-->
         
         
     </target>
@@ -48,17 +48,23 @@
         
         <jar destfile="simdist/HazySim.jar" update="false">
             <manifest>
-                <attribute name="Main-Class" value="org/lasarobotics/lib/HazyIterative.java"/>
-                <attribute name="Robot-Class" value="${robot.class}"/>
+                <attribute name="Main-Class" value="org/lasarobotics/frc2017/simrunner"/>
+                <!-- <attribute name="Robot-Class" value="${robot.class}"/> -->
                 <attribute name="Class-Path" value="."/>
             </manifest>
             
             <fileset dir="simbuild" includes="**/*.class"/>
             <zipgroupfileset dir="simbuild/jars"/>
         </jar>
+        
+         <copy todir="simdist">
+            <fileset dir="jinput"/>
+        </copy>
+        
     </target>
     
     <target name="simulate" depends="simjar">
         <echo> Now we just gotta run it</echo>
     </target>
+    
 </project>
