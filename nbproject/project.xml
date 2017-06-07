@@ -16,6 +16,11 @@ auxiliary.show.customizer.message=<message>
             <properties/>
             <folders>
                 <source-folder>
+                    <label>FRC2017</label>
+                    <location>.</location>
+                    <encoding>windows-1252</encoding>
+                </source-folder>
+                <source-folder>
                     <label>src</label>
                     <type>java</type>
                     <location>src</location>
@@ -25,11 +30,6 @@ auxiliary.show.customizer.message=<message>
                     <label>sim</label>
                     <type>java</type>
                     <location>sim</location>
-                    <encoding>windows-1252</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>FRC2017</label>
-                    <location>.</location>
                     <encoding>windows-1252</encoding>
                 </source-folder>
             </folders>
@@ -78,11 +78,12 @@ auxiliary.show.customizer.message=<message>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar</classpath>
+                <classpath mode="compile">lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar;jinput/jinput-test.jar;jinput/jinput.jar</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>sim</package-root>
+                <classpath mode="compile">jinput/jinput-test.jar;jinput/jinput.jar</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>

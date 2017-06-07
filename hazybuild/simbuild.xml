@@ -19,9 +19,9 @@
         <mkdir dir="simbuild"/>
         <path id="simclasspath.path">
             <fileset file="${networktables.jar}"/>
-            <!-- add in the .jar for the joystick -->
+            <fileset dir="jinput"/>
         </path>
-        <!--
+       
         <javac srcdir="simsrc"
                destdir="simbuild"
                includeAntRuntime="no"
@@ -32,7 +32,7 @@
                compiler="javac${ant.java.version}"
                debug="true">
         </javac>
-        -->
+        
         <delete dir="simsrc"/>
         
         
