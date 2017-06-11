@@ -5,8 +5,6 @@
  */
 package org.lasarobotics.frc2017;
 
-import org.lasarobotics.frc2017.Robot;
-
 /**
  *
  * @author Gijs Landwehr

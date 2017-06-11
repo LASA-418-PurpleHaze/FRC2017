@@ -20,6 +20,7 @@
         <path id="simclasspath.path">
             <fileset file="${networktables.jar}"/>
             <fileset file="jinput/jinput.jar"/>
+            <fileset file="lib/SmartDashboard.jar"/>
         </path>
        
         <javac srcdir="simsrc"
@@ -33,7 +34,7 @@
                debug="true">
         </javac>
         
-        <!--<delete dir="simsrc"/>-->
+        <delete dir="simsrc"/>
         
         
     </target>
@@ -59,12 +60,18 @@
         
          <copy todir="simdist">
             <fileset dir="jinput"/>
+            <fileset dir="lib"/>
         </copy>
+        
+        <delete dir="simbuild"/>
         
     </target>
     
     <target name="simulate" depends="simjar">
         <echo> Now we just gotta run it</echo>
+        <java dir="simdist" jar="simdist/HazySim.jar" fork="true">
+            
+        </java>
     </target>
     
 </project>

@@ -154,7 +154,7 @@ public class Drivetrain extends HazySubsystem implements Loggable {
         Hardware.putDash("D_tmp_pos", motionProfiler.getCurrentPosition());
         Hardware.putDash("D_tmp_accel", motionProfiler.getCurrentAcceleration());
         Hardware.putDash("D_dist_done", isDistanceDone());
-        Hardware.putDash("D_tur_mode\"n_done", isTurnPIDDone());
+        Hardware.putDash("D_turn_done", isTurnPIDDone());
         Hardware.putDash("D_mode", mode.toString());
         Hardware.putDash("D_avg_v", 0.5* (hardware.getLeftDriveVelocity() + hardware.getRightDriveVelocity()));
         Hardware.putDash("D_avg_p", 0.5 * (hardware.getLeftDriveDistance() + hardware.getRightDriveDistance()));

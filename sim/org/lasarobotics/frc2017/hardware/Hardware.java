@@ -1,5 +1,9 @@
 package org.lasarobotics.frc2017.hardware;
 
+import edu.wpi.first.smartdashboard.robot.Robot;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
+
 public class Hardware {
     //This is the fake hardware class.
     //Comments are Zayan's hypothesis of what various methods will do, probably wrong
@@ -116,16 +120,27 @@ public class Hardware {
         //pushes stuff to the dashboard, which idk if we'll implement into the sim
     }
     
+    static NetworkTable y;
+    static ITable x;
+    
+    static {
+        Robot.setTeam(418);
+        x = Robot.getTable();
+    }
+    
     public static void putDash(String label, double num){
-        System.out.println(label + " : " + num);
+        //System.out.println(label + " : " + num);
+        x.putNumber(label, num);
     }
     
     public static void putDash(String label, boolean bool){
-        System.out.println(label + " : " + bool);
+        //System.out.println(label + " : " + bool);
+        x.putBoolean(label, bool);
     }
     
     public static void putDash(String label, String str){
-        System.out.println(label + " : " + str);
+        //System.out.println(label + " : " + str);
+        x.putString(label, str);
     }
     
     public static double getDashNum(String label, double def){

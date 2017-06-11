@@ -83,7 +83,7 @@ auxiliary.show.customizer.message=<message>
             </compilation-unit>
             <compilation-unit>
                 <package-root>sim</package-root>
-                <classpath mode="compile">jinput/jinput-test.jar;jinput/jinput.jar</classpath>
+                <classpath mode="compile">lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>

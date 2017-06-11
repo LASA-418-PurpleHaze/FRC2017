@@ -15,9 +15,11 @@ public class HazyJoystick {
     Component[] components;
 
     public HazyJoystick(int joystickPort, double deadband) {
+        
         Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
         joystick = ca[joystickPort];
         components = joystick.getComponents();
+
         this.deadband = deadband;
     }
 
