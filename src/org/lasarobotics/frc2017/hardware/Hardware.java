@@ -2,6 +2,7 @@ package org.lasarobotics.frc2017.hardware;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
@@ -20,6 +21,11 @@ public class Hardware implements Runnable {
     private final VictorSP rightDriveMotorA, rightDriveMotorB;
     private final VictorSP climberMotorA, climberMotorB;
     private final VictorSP conveyorRoller;
+    
+    //Gear Intake
+    private final VictorSP gearRoller;
+    private final CANTalon gearTilt;
+    private final DigitalInput gearSensor;
 
     private final Encoder leftDriveEncoder, rightDriveEncoder;
     private volatile double leftDriveEncoderPosition, leftDriveEncoderVelocity;
@@ -114,6 +120,19 @@ public class Hardware implements Runnable {
 
         // Gear
         gearSolenoid = new Solenoid(Ports.GEARSOLENOID);
+        
+        gearSensor = new DigitalInput(Ports.GEAR_SENSOR_PORT);
+        
+        gearRoller = new VictorSP(Ports.GEAR_ROLLER_MOTOR);
+        
+        gearTilt = new CANTalon(Ports.GEAR_TILT_MOTOR);
+        gearTilt.changeControlMode(CANTalon.TalonControlMode.Position);
+        gearTilt.EnableCurrentLimit(true);
+        gearTilt.setCurrentLimit(ConstantsList.G_tilt_max_current.getDouble());
+        gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        gearTilt.configNominalOutputVoltage(0, 0);
+        gearTilt.configPeakOutputVoltage(ConstantsList.G_TILT_PEAK_VOLTAGE.getDouble(), ConstantsList.G_TILT_PEAK_VOLTAGE.getDouble());
+        
 
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
@@ -168,6 +187,26 @@ public class Hardware implements Runnable {
         rightDriveEncoderVelocity = 0;
     }
 
+    public void setGearIntakeAngle(double degrees)
+    {
+        gearTilt.set(degrees / 360.0);
+    }
+    
+    public double getGearIntakeAngle()
+    {
+        return gearTilt.getPosition() * 360.0;
+    }
+    
+    public void setGearRollerSpeed(double speed)
+    {
+        gearRoller.set(speed);
+    }
+    
+    public boolean hasGear()
+    {
+        return gearSensor.get();
+    }
+    
     /**
      * Two modes are needed to control the intake. Current control is used when
      * grabbing balls to prevent excess power usage, and voltage control is used

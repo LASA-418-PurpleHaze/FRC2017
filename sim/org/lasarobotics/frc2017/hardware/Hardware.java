@@ -111,8 +111,27 @@ public class Hardware {
         //returns the current running through climber to see it's power output
     }
     
+    public void setGearIntakeAngle(double degrees)
+    {
+    }
+    
+    public double getGearIntakeAngle()
+    {
+        return 0;
+    }
+    
+    public void setGearRollerSpeed(double speed)
+    {
+        
+    }
+    
+    public boolean hasGear()
+    {
+        return true;
+    }
+    
     public static double getCurrentTime(){
-        return System.currentTimeMillis() / 1000;
+        return ((double) System.currentTimeMillis()) / 1000.0;
         //returns current time in seconds
     }
     
@@ -124,8 +143,9 @@ public class Hardware {
     static ITable x;
     
     static {
-        Robot.setTeam(418);
-        x = Robot.getTable();
+        //Robot.setTeam(418);
+        //x = Robot.getTable();
+        x = NetworkTable.getTable("SmartDashboard");
     }
     
     public static void putDash(String label, double num){
@@ -144,7 +164,7 @@ public class Hardware {
     }
     
     public static double getDashNum(String label, double def){
-        return def;
+        return x.getNumber(label, def);
     }
     
     public static boolean getDashBool(String label, boolean def){

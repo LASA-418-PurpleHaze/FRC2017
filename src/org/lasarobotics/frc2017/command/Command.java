@@ -2,6 +2,7 @@ package org.lasarobotics.frc2017.command;
 
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
+import org.lasarobotics.frc2017.subsystem.GearIntake;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 
@@ -11,6 +12,7 @@ public abstract class Command {
     protected Drivetrain drivetrain;
     protected Shooter shooter;
     protected Intake intake;
+    protected GearIntake gearIntake;
 
     String name;
 
@@ -28,6 +30,7 @@ public abstract class Command {
         drivetrain = Drivetrain.getInstance();
         shooter = Shooter.getInstance();
         intake = Intake.getInstance();
+        gearIntake = GearIntake.getInstance();
 
         this.name = name;
         this.timeOut = timeOut;
