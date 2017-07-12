@@ -2,6 +2,8 @@ package org.lasarobotics.lib;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*----------------------------------------------------------------------------*/
  /* Copyright (c) FIRST 2008-2016. All Rights Reserved.                        */
@@ -44,6 +46,10 @@ public class HazyIterative {
     private volatile boolean m_teleopInitialized;
     private volatile boolean m_testInitialized;
 
+    public boolean isDisabled = true;
+    public boolean isTest = false;
+    public boolean isAutonomous = false;
+    
     /**
      * Constructor for RobotIterativeBase
      *
@@ -69,12 +75,17 @@ public class HazyIterative {
         robotInit();
 
         Timer t = new Timer();
-        t.scheduleAtFixedRate(new ContinuousRunner(), 0, (long) (continuousPeriod*1000));
+        t.scheduleAtFixedRate(new ContinuousRunner(), 0, 10);
 
         // loop forever, calling the appropriate mode-dependent function
         while (true) {
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException ex) {
+            }
+            
             // Call the appropriate function depending upon the current robot mode
-            if (isDisabled()) {
+            if (isDisabled) {
                 // call DisabledInit() if we are now just entering disabled mode from
                 // either a different mode or from power-on
                 if (!m_disabledInitialized) {
@@ -85,7 +96,7 @@ public class HazyIterative {
                     m_disabledInitialized = true;
                 }
                 disabledPeriodic();
-            } else if (isTest()) {
+            } else if (isTest) {
                 // call TestInit() if we are now just entering test mode from either
                 // a different mode or from power-on
                 if (!m_testInitialized) {
@@ -96,7 +107,7 @@ public class HazyIterative {
                     m_disabledInitialized = false;
                 }
                 testPeriodic();
-            } else if (isAutonomous()) {
+            } else if (isAutonomous) {
                 // call Autonomous_Init() if this is the first time
                 // we've entered autonomous_mode
                 if (!m_autonomousInitialized) {
@@ -130,15 +141,15 @@ public class HazyIterative {
 
         @Override
         public void run() {
-            if (isTest()) {
+            if (isTest) {
                 if (m_testInitialized) {
                     testContinuous();
                 }
-            } else if (isDisabled()) {
+            } else if (isDisabled) {
                 if (m_disabledInitialized) {
                     teleopContinuous();
                 }
-            } else if (isAutonomous()) {
+            } else if (isAutonomous) {
                 if (m_autonomousInitialized) {
                     autonomousContinuous();
                 }
@@ -146,21 +157,6 @@ public class HazyIterative {
                 teleopContinuous();
             }
         }
-    }
-
-    private boolean isTest()
-    {
-        return false;
-    }
-    
-    private boolean isDisabled()
-    {
-        return false;
-    }
-    
-    private boolean isAutonomous()
-    {
-        return false;
     }
     
     boolean disabledContinuousFirstRun = true;

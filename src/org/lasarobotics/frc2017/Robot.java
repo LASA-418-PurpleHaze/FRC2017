@@ -59,6 +59,7 @@ public class Robot extends HazyIterative {
 
     @Override
     public void teleopInit() {
+        System.out.println("teleop init");
         CommandManager.cancelAll();
         drivetrain.setMode(Drivetrain.Mode.OVERRIDE);
         initSubsystems();
@@ -88,6 +89,7 @@ public class Robot extends HazyIterative {
 
     @Override
     public void autonomousInit() {
+        System.out.println("autonomous init");
         initSubsystems();
         CommandManager.cancelAll();
         autonomous.run();
@@ -97,7 +99,7 @@ public class Robot extends HazyIterative {
 
     @Override
     public void autonomousPeriodic() {
-        pushToDashboard();
+        
         Logger.writeToFile();
     }
 
@@ -109,13 +111,13 @@ public class Robot extends HazyIterative {
         shooter.run();
         intake.run();
         climber.run();
-        
+        pushToDashboard();
         Logger.log();
-        
     }
 
     @Override
     public void disabledInit() {
+        System.out.println("disabled init");
         CommandManager.cancelAll();
         time = 0;
     }
