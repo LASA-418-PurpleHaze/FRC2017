@@ -5,35 +5,58 @@
  */
 package org.lasarobotics.frc2017.command;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import org.lasarobotics.frc2017.hardware.Hardware;
+
 /**
  *
  * @author Gijs Landwehr
  */
 public class CommandSequence extends Command {
 
-    public CommandSequence()
-    {
-        super("afaf", 5);
+    private LinkedList <Command> commands = new LinkedList();
+    
+    public CommandSequence(String name, double t){
+        super(name, t);
+    }
+    
+    public void addCommand(Command c){
+        commands.add(c);
     }
     
     @Override
     public void start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        startTime = Hardware.getCurrentTime();
     }
 
     @Override
     public boolean isDone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean done = true;
+        for (Command c : commands) {
+            done &= c.isDone();
+        }
+
+        return done;
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterator it = commands.iterator();
+        while (it.hasNext()) {
+            Command temp = (Command) it.next();
+            if (temp.isDone()) {
+                temp.stop();
+                it.remove();
+            } else {
+                temp.start();
+                temp.run();
+            }
+        }
     }
 
     @Override
     public void stop() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
