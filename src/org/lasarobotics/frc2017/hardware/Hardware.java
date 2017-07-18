@@ -26,6 +26,8 @@ public class Hardware implements Runnable {
     private final VictorSP gearRoller;
     private final CANTalon gearTilt;
     private final DigitalInput gearSensor;
+    private double gearStartAngle;
+    private double gearCurrentAngle;
 
     private final Encoder leftDriveEncoder, rightDriveEncoder;
     private volatile double leftDriveEncoderPosition, leftDriveEncoderVelocity;
@@ -126,12 +128,15 @@ public class Hardware implements Runnable {
         gearRoller = new VictorSP(Ports.GEAR_ROLLER_MOTOR);
         
         gearTilt = new CANTalon(Ports.GEAR_TILT_MOTOR);
-        gearTilt.changeControlMode(CANTalon.TalonControlMode.Position);
+        gearTilt.changeControlMode(CANTalon.TalonControlMode.MotionMagic);
         gearTilt.EnableCurrentLimit(true);
-        gearTilt.setCurrentLimit(ConstantsList.G_tilt_max_current.getDouble());
+        gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
         gearTilt.configNominalOutputVoltage(0, 0);
-        gearTilt.configPeakOutputVoltage(ConstantsList.G_TILT_PEAK_VOLTAGE.getDouble(), ConstantsList.G_TILT_PEAK_VOLTAGE.getDouble());
+        gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), ConstantsList.G_tilt_peak_voltage.getValue());
+        gearTilt.setMotionMagicAcceleration(1.0);
+        gearTilt.setMotionMagicCruiseVelocity(1.0);
+        gearTilt.setPosition(0);
         
 
         // Climber
@@ -349,6 +354,20 @@ public class Hardware implements Runnable {
     
     public static double getCurrentTime(){
         return Timer.getFPGATimestamp();
+    }
+    
+    public void setGearAngle(double angle){
+        double gearRotations;
+        gearRotations = angle/360;
+        gearTilt.set(gearRotations);
+    }
+    
+    public void setGearSpeed(double speed){
+        gearRoller.set(speed);
+    }
+    
+    public boolean getGearSensor(){
+        return true;
     }
    
     public void pushToDashboard() {

@@ -78,6 +78,10 @@ public class ConstantsList {
     public static final Constant A_gear_angle_timeout = new Constant("A_gear_angle_timeout", 0.0);
     public static final Constant A_wait = new Constant("A_wait", 0.0);
     
+    //Gear Intake
+    public static final Constant G_tilt_max_current = new Constant("G_tilt_max_current", 0.0);
+    public static final Constant G_tilt_peak_voltage = new Constant("G_tilt_peak_voltage", 0.0);
+    
     public static void init() {
         init();
         Constants.load();

@@ -26,5 +26,9 @@ public class Ports {
     
     public static final int CLIMBER_POWER_A = 7;
     public static final int CLIMBER_POWER_B = 8;
+    
+    public static final int GEAR_ROLLER_MOTOR = -1;
+    public static final int GEAR_TILT_MOTOR = -1;
+    public static final int GEAR_SENSOR_PORT = -1;
 
 }

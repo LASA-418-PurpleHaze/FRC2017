@@ -13,9 +13,9 @@ public class SetGearIntakeRollerSpeed extends Command {
 
     double speed;
     
-    public SetGearIntakeRollerSpeed(double speed)
+    public SetGearIntakeRollerSpeed(/*String name, double t, */double speed)
     {
-        super("bla", 5);
+        super("blah", 5);
         this.speed = speed;
     }
     

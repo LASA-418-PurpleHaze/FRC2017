@@ -1,5 +1,7 @@
 package org.lasarobotics.frc2017.subsystem;
 
+import org.lasarobotics.frc2017.hardware.Hardware;
+
 public class GearIntake extends HazySubsystem {
 
     private double targetAngle;
@@ -23,14 +25,19 @@ public class GearIntake extends HazySubsystem {
     
     @Override
     public void run() {
+        
     }
 
     public void setAngle(double angle)
     {
+        targetAngle = angle;
+        hardware.setGearAngle(angle);
     }
     
     public void setRollerSpeed(double speed)
     {
+        rollerSpeed = speed;
+        hardware.setGearSpeed(speed);
     }
     
     @Override
