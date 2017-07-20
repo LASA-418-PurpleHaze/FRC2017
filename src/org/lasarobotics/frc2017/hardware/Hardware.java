@@ -134,9 +134,9 @@ public class Hardware implements Runnable {
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
         gearTilt.configNominalOutputVoltage(0, 0);
         gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), ConstantsList.G_tilt_peak_voltage.getValue());
-        gearTilt.setMotionMagicAcceleration(1.0);
-        gearTilt.setMotionMagicCruiseVelocity(1.0);
-        gearTilt.setPosition(0);
+        gearTilt.setMotionMagicAcceleration(ConstantsList.G_magic_accel.getValue());
+        gearTilt.setMotionMagicCruiseVelocity(ConstantsList.G_magic_velocity.getValue());
+        gearTilt.setPosition(ConstantsList.G_base_angle.getValue());
         
 
         // Climber
@@ -358,7 +358,7 @@ public class Hardware implements Runnable {
     
     public void setGearAngle(double angle){
         double gearRotations;
-        gearRotations = angle/360;
+        gearRotations = (angle/360) * 6;//converts from angle of arm to rotations of arm, then multiplied by 6 because of the gear ratio
         gearTilt.set(gearRotations);
     }
     
@@ -366,8 +366,12 @@ public class Hardware implements Runnable {
         gearRoller.set(speed);
     }
     
-    public boolean getGearSensor(){
-        return true;
+    public DigitalInput getGearSensor(){
+        return gearSensor;
+    }
+    
+    public boolean haveGear(){
+        return gearSensor.get();
     }
    
     public void pushToDashboard() {

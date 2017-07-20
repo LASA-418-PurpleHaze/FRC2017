@@ -81,6 +81,9 @@ public class ConstantsList {
     //Gear Intake
     public static final Constant G_tilt_max_current = new Constant("G_tilt_max_current", 0.0);
     public static final Constant G_tilt_peak_voltage = new Constant("G_tilt_peak_voltage", 0.0);
+    public static final Constant G_base_angle = new Constant("G_base_angle", 0.0);
+    public static final Constant G_magic_accel = new Constant("G_magic_accel", 1.0);
+    public static final Constant G_magic_velocity = new Constant("G_magic_velocity", 1.0);
     
     public static void init() {
         init();
