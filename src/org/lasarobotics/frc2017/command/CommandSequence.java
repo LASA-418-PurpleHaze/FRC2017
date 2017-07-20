@@ -32,26 +32,19 @@ public class CommandSequence extends Command {
 
     @Override
     public boolean isDone() {
-        boolean done = true;
-        for (Command c : commands) {
-            done &= c.isDone();
-        }
-
-        return done;
+        Command c = commands.getLast();
+        return c.isDone;
     }
 
     @Override
     public void run() {
-        Iterator it = commands.iterator();
-        while (it.hasNext()) {
-            Command temp = (Command) it.next();
-            if (temp.isDone()) {
-                temp.stop();
-                it.remove();
-            } else {
-                temp.start();
-                temp.run();
-            }
+        Command c = commands.getFirst();
+        if(!c.isStarted()){
+            c.start();
+            c.run();
+        }else if(c.isDone()){
+            c.stop();
+            commands.removeFirst();
         }
     }
 
