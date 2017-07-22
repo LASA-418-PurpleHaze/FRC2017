@@ -1,12 +1,15 @@
 package org.lasarobotics.frc2017.input;
 
 import org.lasarobotics.frc2017.ConstantsList;
+import org.lasarobotics.frc2017.command.CommandManager;
+import org.lasarobotics.frc2017.command.GrabGear;
 import org.lasarobotics.lib.datalogging.Loggable;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.HazyJoystick;
 import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
+import org.lasarobotics.frc2017.subsystem.GearIntake;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.TorqueToggle;
@@ -20,6 +23,7 @@ public class DriverInput implements Runnable, Loggable {
     private Intake intake;
     private Shooter shooter;
     private Climber climber;
+    private GearIntake gearintake;
 
     private final HazyJoystick driverLeft = new HazyJoystick(0, ConstantsList.J_deadband.getValue());
     private final HazyJoystick driverRight = new HazyJoystick(1, ConstantsList.J_deadband.getValue());
@@ -40,6 +44,8 @@ public class DriverInput implements Runnable, Loggable {
         intake = Intake.getInstance();
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
+        gearintake = GearIntake.getInstance();
+        
     }
 
     public static DriverInput getInstance() {
@@ -51,6 +57,7 @@ public class DriverInput implements Runnable, Loggable {
         drivetrainControl();
         shooterControl();
         intakeControl();
+        gearControl();
 
         if (!shooting && driverRight.getTrigger()) {
             climber.setMode(Climber.Mode.CLIMB);
@@ -102,7 +109,16 @@ public class DriverInput implements Runnable, Loggable {
             intake.setMode(Intake.Mode.OFF);
         }
     }
-
+    
+    private void gearControl(){
+        if(driverRight.getBackLeftButton()){
+            CommandManager.addCommand(new GrabGear());
+        }else if(driverRight.getBackRightButton()){
+            gearintake.setAngle(ConstantsList.G_release_angle.getValue());
+            gearintake.setRollerSpeed(ConstantsList.G_release_speed.getValue());
+        }
+    }
+    
     @Override
     public String getNames() {
         return "leftOverrideSpeed, rightOverrideSpeed";

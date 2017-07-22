@@ -84,6 +84,8 @@ public class ConstantsList {
     public static final Constant G_base_angle = new Constant("G_base_angle", 0.0);
     public static final Constant G_magic_accel = new Constant("G_magic_accel", 1.0);
     public static final Constant G_magic_velocity = new Constant("G_magic_velocity", 1.0);
+    public static final Constant G_release_angle = new Constant("G_release_angle", 80.0);
+    public static final Constant G_release_speed = new Constant("G_release_speed", 1.0);
     
     public static void init() {
         init();

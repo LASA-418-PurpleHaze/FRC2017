@@ -7,6 +7,7 @@ import org.lasarobotics.frc2017.input.DriverInput;
 import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.Constants;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
+import org.lasarobotics.frc2017.subsystem.GearIntake;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.HazyIterative;
@@ -24,6 +25,7 @@ public class Robot extends HazyIterative {
     private Shooter shooter;
     private Intake intake;
     private Climber climber;
+    private GearIntake gearintake;
 
     @Override
     public void robotInit() {
@@ -31,6 +33,7 @@ public class Robot extends HazyIterative {
         shooter = Shooter.getInstance();
         intake = Intake.getInstance();
         climber = Climber.getInstance();
+        gearintake = GearIntake.getInstance();
 
         driverInput = DriverInput.getInstance();
         hardware = Hardware.getInstance();
@@ -53,6 +56,7 @@ public class Robot extends HazyIterative {
         intake.initSubsystem();
         shooter.initSubsystem();
         climber.initSubsystem();
+        gearintake.initSubsystem();
         hardware.reset();
         Logger.makeFile();
     }
@@ -83,6 +87,7 @@ public class Robot extends HazyIterative {
         shooter.run();
         intake.run();
         climber.run();
+        gearintake.run();
         
 
     }
