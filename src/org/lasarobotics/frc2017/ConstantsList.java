@@ -65,7 +65,7 @@ public class ConstantsList {
     public static final Constant I_shooting_voltage = new Constant("I_shooting_voltage", 12);
     public static final Constant I_conveyor_speed = new Constant("I_conveyor_speed", 0.0);
 
-    public static final Constant C_climber_speed = new Constant("C_climber_speed", 1.0);
+    public static final Constant C_climber_multiplier = new Constant("C_climber_speed", 1.0);
     public static final Constant C_climber_max_current = new Constant("C_climber_max_current", 0.0);
     
     public static final Constant A_long_gear_distance = new Constant("A_long_gear_distance", 0.0);

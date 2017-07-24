@@ -2,6 +2,7 @@ package org.lasarobotics.frc2017.hardware;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.ADXL345_SPI;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -36,6 +37,7 @@ public class Hardware implements Runnable {
     private PowerDistributionPanel pdp;
 
     private final AHRS navX;
+    private final ADXL345_SPI second_gyro;
     private volatile double navXAngle, robotAngle;
     private volatile int rotations;
 

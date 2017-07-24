@@ -14,7 +14,6 @@ import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.TorqueToggle;
 
-
 public class DriverInput implements Runnable, Loggable {
 
     private static DriverInput instance;
@@ -45,7 +44,7 @@ public class DriverInput implements Runnable, Loggable {
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
         gearintake = GearIntake.getInstance();
-        
+
     }
 
     public static DriverInput getInstance() {
@@ -59,11 +58,7 @@ public class DriverInput implements Runnable, Loggable {
         intakeControl();
         gearControl();
 
-        if (!shooting && driverRight.getTrigger()) {
-            climber.setMode(Climber.Mode.CLIMB);
-        } else {
-            climber.setMode(Climber.Mode.OFF);
-        }
+        climber.setClimberSpeed(driverRight.getZAxis());
 
         gearToggle.calc(driverRight.getTopFrontButton());
         hardware.actuateGear(!gearToggle.get());
@@ -85,14 +80,13 @@ public class DriverInput implements Runnable, Loggable {
 
     private void shooterControl() {
         //if (driverRight.getTopFrontButton()) {
-          //  shooter.setMode(Shooter.Mode.SHOOTING);
-           // shooting = true;
+        //  shooter.setMode(Shooter.Mode.SHOOTING);
+        // shooting = true;
         //} 
         if (driverLeft.getTopFrontButton()) {
             shooter.setMode(Shooter.Mode.LOADING);
             shooting = false;
-        } 
-        else if (driverRight.getTopBackButton()) {
+        } else if (driverRight.getTopBackButton()) {
             shooter.setMode(Shooter.Mode.OFF);
             shooting = false;
         } else if (!shooting) {
@@ -109,16 +103,20 @@ public class DriverInput implements Runnable, Loggable {
             intake.setMode(Intake.Mode.OFF);
         }
     }
-    
-    private void gearControl(){
-        if(driverRight.getBackLeftButton()){
+
+    boolean lastBackLeftButtonPressed;
+
+    private void gearControl() {
+        if (driverRight.getBackLeftButton() && !lastBackLeftButtonPressed) {
             CommandManager.addCommand(new GrabGear());
-        }else if(driverRight.getBackRightButton()){
+        } else if (driverRight.getBackRightButton()) {
             gearintake.setAngle(ConstantsList.G_release_angle.getValue());
             gearintake.setRollerSpeed(ConstantsList.G_release_speed.getValue());
         }
+
+        lastBackLeftButtonPressed = driverRight.getBackLeftButton();
     }
-    
+
     @Override
     public String getNames() {
         return "leftOverrideSpeed, rightOverrideSpeed";
@@ -128,5 +126,4 @@ public class DriverInput implements Runnable, Loggable {
     public String getValues() {
         return leftOverrideSpeed + ", " + rightOverrideSpeed;
     }
-
 }
