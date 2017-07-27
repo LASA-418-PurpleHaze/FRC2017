@@ -136,6 +136,10 @@ public class Drivetrain extends HazySubsystem implements Loggable {
     public boolean isDistanceDone() {
         return straightPVIff.onTarget();
     }
+    
+    public boolean isArcDone(){
+        return straightPVIff.onTarget() && turnPID.onTarget();
+    }
 
     @Override
     public void initSubsystem() {
