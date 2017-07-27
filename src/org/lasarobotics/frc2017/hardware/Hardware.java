@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.lasarobotics.frc2017.ConstantsList;
 
@@ -60,6 +61,7 @@ public class Hardware implements Runnable {
     public Hardware() {
         // Drivetrain
         navX = new AHRS(SPI.Port.kMXP);
+        second_gyro = new ADXL345_SPI(SPI.Port.kMXP, Accelerometer.Range.k2G); //dunno what to do w these constructors
 
         pdp = new PowerDistributionPanel();
 

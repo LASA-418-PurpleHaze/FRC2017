@@ -15,8 +15,8 @@ public class SetGearIntakePosition extends Command {
 
     double targetAngle;
     
-    public SetGearIntakePosition(double angle) {
-        super("bla", 5);
+    public SetGearIntakePosition(double angle, String name, double t) {
+        super(name, t);
         this.targetAngle = angle;
     }
 

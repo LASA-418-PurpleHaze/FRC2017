@@ -3,13 +3,15 @@ package org.lasarobotics.frc2017.input;
 import org.lasarobotics.frc2017.ConstantsList;
 import org.lasarobotics.frc2017.command.CommandManager;
 import org.lasarobotics.frc2017.command.GrabGear;
+import org.lasarobotics.frc2017.command.SetGearIntakePosition;
+import org.lasarobotics.frc2017.command.SetGearIntakeRollerSpeed;
 import org.lasarobotics.lib.datalogging.Loggable;
 import org.lasarobotics.frc2017.hardware.Hardware;
 import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.HazyJoystick;
 import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
-import org.lasarobotics.frc2017.subsystem.GearIntake;
+import org.lasarobotics.frc2017.subsystem.GearIntake; 
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.TorqueToggle;
@@ -105,16 +107,19 @@ public class DriverInput implements Runnable, Loggable {
     }
 
     boolean lastBackLeftButtonPressed;
+    boolean lastBackRightButtonPressed;
 
     private void gearControl() {
-        if (driverRight.getBackLeftButton() && !lastBackLeftButtonPressed) {
+        if (driverRight.getBackLeftButton() != lastBackLeftButtonPressed) {
             CommandManager.addCommand(new GrabGear());
-        } else if (driverRight.getBackRightButton()) {
-            gearintake.setAngle(ConstantsList.G_release_angle.getValue());
-            gearintake.setRollerSpeed(ConstantsList.G_release_speed.getValue());
-        }
+        }else if (driverRight.getBackRightButton() != lastBackRightButtonPressed) {
+            CommandManager.addCommand(new SetGearIntakePosition(ConstantsList.G_release_angle.getValue(), "Releasing Gear Angle", 5));
+            CommandManager.addCommand(new SetGearIntakeRollerSpeed(ConstantsList.G_release_speed.getValue(), "Releasing Gear Speed", 5));
 
+        }
+        
         lastBackLeftButtonPressed = driverRight.getBackLeftButton();
+        lastBackRightButtonPressed = driverRight.getBackRightButton();
     }
 
     @Override

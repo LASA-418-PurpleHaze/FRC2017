@@ -20,11 +20,11 @@ public class GrabGear extends Command {
     public GrabGear() {
         super("afddsaf", 4323);
 
-        lower.addCommand(new SetGearIntakePosition(0));
-        lower.addCommand(new SetGearIntakeRollerSpeed(1));
+        lower.addCommand(new SetGearIntakePosition(0, "Lowering Intake", 5));
+        lower.addCommand(new SetGearIntakeRollerSpeed(1, "Intaking Speed", 5));
         
-        raise.addCommand(new SetGearIntakePosition(90));
-        raise.addCommand(new SetGearIntakeRollerSpeed(0));
+        raise.addCommand(new SetGearIntakePosition(90, "Raising Intake", 5));
+        raise.addCommand(new SetGearIntakeRollerSpeed(0, "Turning Off Intake", 5));
     }
 
     @Override
