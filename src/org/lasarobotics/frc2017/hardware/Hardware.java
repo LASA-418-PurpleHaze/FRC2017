@@ -130,23 +130,27 @@ public class Hardware implements Runnable {
         gearSensor = new DigitalInput(Ports.GEAR_SENSOR_PORT);
         
         gearRoller = new VictorSP(Ports.GEAR_ROLLER_MOTOR);
+        gearRoller.setInverted(true);
         
         gearTilt = new CANTalon(Ports.GEAR_TILT_MOTOR);
-        gearTilt.changeControlMode(CANTalon.TalonControlMode.MotionMagic);
-        gearTilt.EnableCurrentLimit(true);
-        gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
+        gearTilt.changeControlMode(CANTalon.TalonControlMode.Position);
+        //gearTilt.EnableCurrentLimit(true);
+        //gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        gearTilt.configNominalOutputVoltage(0, 0);
-        gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), ConstantsList.G_tilt_peak_voltage.getValue());
-        gearTilt.setMotionMagicAcceleration(ConstantsList.G_magic_accel.getValue());
-        gearTilt.setMotionMagicCruiseVelocity(ConstantsList.G_magic_velocity.getValue());
-        gearTilt.setPosition(ConstantsList.G_base_angle.getValue());
+        //gearTilt.configNominalOutputVoltage(0, 0);
+        //gearTilt.configPeakOutputVoltage(-ConstantsList.G_tilt_peak_voltage.getValue(), ConstantsList.G_tilt_peak_voltage.getValue());
+        //gearTilt.setMotionMagicAcceleration(4);
+        //gearTilt.setMotionMagicCruiseVelocity(10);
+        gearTilt.setInverted(true);
+        gearTilt.reverseOutput(true);
+        gearTilt.setPosition(90.0 / 360.0 * 6);
         
 
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
         climberMotorB = new VictorSP(Ports.CLIMBER_MOTOR_B);
-        climberMotorB.setInverted(true);
+        climberMotorB.setInverted(true);//?
+        climberMotorA.setInverted(true);//?
 
     }
 
@@ -198,12 +202,12 @@ public class Hardware implements Runnable {
 
     public void setGearIntakeAngle(double degrees)
     {
-        gearTilt.set(degrees / 360.0);
+        gearTilt.set(degrees / 360.0 / 6);
     }
     
     public double getGearIntakeAngle()
     {
-        return gearTilt.getPosition() * 360.0;
+        return gearTilt.getPosition() * 360.0 / 6;
     }
     
     public void setGearRollerSpeed(double speed)
@@ -387,6 +391,7 @@ public class Hardware implements Runnable {
         putDash("S_r_voltage", rightShooterMotor.getOutputVoltage());
         putDash("I_current", leftIntakeMotor.getOutputCurrent());
         putDash("D_test", leftDriveEncoderPosition);
+        putDash("G_tilt_output", gearTilt.getOutputVoltage());
     }
     
     public static void putDash(String label, double num){

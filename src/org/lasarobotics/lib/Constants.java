@@ -13,7 +13,7 @@ public class Constants {
     private static File constantsFile;
 
     public static void init() {
-        constantsFile = new File("constants.txt");
+        constantsFile = new File("/LasaRobotics/constants.txt");
 
         try {
             constantsFile.createNewFile();

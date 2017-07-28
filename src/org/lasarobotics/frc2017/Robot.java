@@ -144,6 +144,8 @@ public class Robot extends HazyIterative {
         shooter.pushToDashboard();
         intake.pushToDashboard();
         climber.pushToDashboard();
+        gearintake.pushToDashboard();
+        
     }
 
 }

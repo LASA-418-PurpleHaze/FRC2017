@@ -49,7 +49,7 @@ public class GearIntake extends HazySubsystem implements Loggable {
         rollerSpeed = speed;
         hardware.setGearSpeed(speed);
     }
-    
+     
     @Override
     public void initSubsystem() {
     }
@@ -58,6 +58,7 @@ public class GearIntake extends HazySubsystem implements Loggable {
     public void pushToDashboard() {
         Hardware.putDash("G_Roller_Speed", rollerSpeed);
         Hardware.putDash("G_Intake_Angle", targetAngle);
+        Hardware.putDash("G_tilt_angle", hardware.getGearIntakeAngle());
     }
     
 }

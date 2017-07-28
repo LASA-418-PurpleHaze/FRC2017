@@ -11,7 +11,7 @@ import org.lasarobotics.frc2017.subsystem.Climber;
 import org.lasarobotics.lib.HazyJoystick;
 import org.lasarobotics.lib.CheesyDriveHelper;
 import org.lasarobotics.frc2017.subsystem.Drivetrain;
-import org.lasarobotics.frc2017.subsystem.GearIntake; 
+import org.lasarobotics.frc2017.subsystem.GearIntake;
 import org.lasarobotics.frc2017.subsystem.Intake;
 import org.lasarobotics.frc2017.subsystem.Shooter;
 import org.lasarobotics.lib.TorqueToggle;
@@ -60,7 +60,7 @@ public class DriverInput implements Runnable, Loggable {
         intakeControl();
         gearControl();
 
-        climber.setClimberSpeed(driverRight.getZAxis());
+        climber.setClimberSpeed((driverRight.getZAxis() - 1) / -2);
 
         gearToggle.calc(driverRight.getTopFrontButton());
         hardware.actuateGear(!gearToggle.get());
@@ -108,17 +108,26 @@ public class DriverInput implements Runnable, Loggable {
 
     boolean lastBackLeftButtonPressed;
     boolean lastBackRightButtonPressed;
+    boolean lastTriggerPressed;
 
     private void gearControl() {
-        if (driverRight.getBackLeftButton() != lastBackLeftButtonPressed) {
-            CommandManager.addCommand(new GrabGear());
-        }else if (driverRight.getBackRightButton() != lastBackRightButtonPressed) {
-            CommandManager.addCommand(new SetGearIntakePosition(ConstantsList.G_release_angle.getValue(), "Releasing Gear Angle", 5));
-            CommandManager.addCommand(new SetGearIntakeRollerSpeed(ConstantsList.G_release_speed.getValue(), "Releasing Gear Speed", 5));
-
+        if (driverRight.getTopBackButton() && !lastBackLeftButtonPressed) {
+            //CommandManager.addCommand(new GrabGear());
+            gearintake.setAngle(ConstantsList.G_intake_angle.getValue());
+            gearintake.setRollerSpeed(ConstantsList.G_intake_speed.getValue());
+        } else if (!driverRight.getTopBackButton() && lastBackLeftButtonPressed) {
+            //CommandManager.addCommand(new GrabGear());
+            gearintake.setAngle(ConstantsList.G_carry_angle.getValue());
+            gearintake.setRollerSpeed(0.0);
+        } else if (driverRight.getTrigger() && !lastTriggerPressed) {
+            gearintake.setAngle(ConstantsList.G_release_angle.getValue());
+            gearintake.setRollerSpeed(ConstantsList.G_release_speed.getValue());
+        } else if (!driverRight.getTrigger() && lastTriggerPressed) {
+            gearintake.setRollerSpeed(0);
         }
-        
-        lastBackLeftButtonPressed = driverRight.getBackLeftButton();
+
+        lastTriggerPressed = driverRight.getTrigger();
+        lastBackLeftButtonPressed = driverRight.getTopBackButton();
         lastBackRightButtonPressed = driverRight.getBackRightButton();
     }
 

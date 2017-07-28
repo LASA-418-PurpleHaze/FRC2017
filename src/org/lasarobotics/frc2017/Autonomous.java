@@ -3,6 +3,7 @@ package org.lasarobotics.frc2017;
 
 import org.lasarobotics.frc2017.command.Shoot;
 import org.lasarobotics.frc2017.command.CommandManager;
+import org.lasarobotics.frc2017.command.DriveArc;
 import org.lasarobotics.frc2017.command.DriveDistance;
 import org.lasarobotics.frc2017.command.DriveTurn;
 import org.lasarobotics.frc2017.command.EndAutoCommand;
@@ -61,11 +62,14 @@ class Autonomous implements Runnable {
                         ConstantsList.A_short_gear_distance.getValue()));
                 break;
             case ARC_LEFT_SIDE_GEAR:
-                //command to arc drive onto peg
-                //place gear
-                //back up from airship
-                //turn so intake faces driver
-                //drive across field
+                CommandManager.addCommand(new DriveArc("Swerve To Right", ConstantsList.G_left_arc_timeout.getValue(), ConstantsList.G_left_arc_radius.getValue(), ConstantsList.G_left_arc_angle.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
+                CommandManager.addCommand(new DriveDistance("Drive Back", ConstantsList.G_drive_back_distance.getValue(), ConstantsList.G_drive_back_timeout.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
+                CommandManager.addCommand(new DriveTurn("Turn towardsfield", ConstantsList.G_turn_angle.getValue(), ConstantsList.G_turn_angle_timeout.getValue()));
+                CommandManager.addCommand(new WaitCommand("wait a second", ConstantsList.A_wait.getValue()));
+                CommandManager.addCommand(new DriveDistance("Drive to gear pickup", 8*12, 0));
+                break;
             case TEST:
                 //CommandManager.addCommand(new DriveTurn("Drive Turn Gear (Left)", ConstantsList.A_gear_angle_timeout.getValue(), 
                 //        -ConstantsList.A_gear_angle.getValue()));
