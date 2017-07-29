@@ -144,7 +144,7 @@ public class Hardware implements Runnable {
         //gearTilt.setMotionMagicCruiseVelocity(10);
         gearTilt.setInverted(true);
         gearTilt.reverseOutput(true);
-        gearTilt.setPosition(90.0 / 360.0 * 6);
+        gearTilt.setPosition(gearTiltAngle / 360.0 * 6);
         
         currentPulseWidthPosition = gearTilt.getPulseWidthPosition();
         gearTiltAngle = currentPulseWidthPosition * ((ConstantsList.G_top_real.getValue() - 
