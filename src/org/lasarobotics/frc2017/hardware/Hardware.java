@@ -138,20 +138,18 @@ public class Hardware implements Runnable {
         //gearTilt.EnableCurrentLimit(true);
         //gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        //gearTilt.configNominalOutputVoltage(0, 0);
+        gearTilt.configNominalOutputVoltage(0, 0);
         gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), -ConstantsList.G_tilt_peak_voltage.getValue());
-        //gearTilt.setMotionMagicAcceleration(4);
-        //gearTilt.setMotionMagicCruiseVelocity(10);
         gearTilt.setInverted(true);
         gearTilt.reverseOutput(true);
-        gearTilt.setPosition(gearTiltAngle / 360.0 * 6);
         
         currentPulseWidthPosition = gearTilt.getPulseWidthPosition();
         gearTiltAngle = currentPulseWidthPosition * ((ConstantsList.G_top_real.getValue() - 
                 ConstantsList.G_bottom_real.getValue())/(ConstantsList.G_top_raw.getValue() - 
                 ConstantsList.G_bottom_raw.getValue()));
         
-        
+        gearTilt.setPosition(gearTiltAngle / 360.0 * 6);
+
 
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
