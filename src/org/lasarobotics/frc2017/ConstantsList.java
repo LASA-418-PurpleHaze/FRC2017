@@ -81,23 +81,35 @@ public class ConstantsList {
     //Gear Intake
     public static final Constant G_tilt_max_current = new Constant("G_tilt_max_current", 20.0);
     public static final Constant G_tilt_peak_voltage = new Constant("G_tilt_peak_voltage", 0.0);
+    
     public static final Constant G_base_angle = new Constant("G_base_angle", 0.0);
     public static final Constant G_intake_angle = new Constant("G_intake_angle", 0.0);
     public static final Constant G_carry_angle = new Constant("G_carry_angle", 70.0);
     public static final Constant G_magic_accel = new Constant("G_magic_accel", 1.0);
     public static final Constant G_intake_speed = new Constant("G_intake_speed", 0.4);
     public static final Constant G_magic_velocity = new Constant("G_magic_velocity", 1.0);
+    
     public static final Constant G_release_angle = new Constant("G_release_angle", 80.0);
     public static final Constant G_release_speed = new Constant("G_release_speed", -0.5);
+    
     public static final Constant G_left_arc_timeout = new Constant("G_left_arc_timeout", 0.0);
     public static final Constant G_left_arc_radius = new Constant("G_left_arc_radius", 0.0);
     public static final Constant G_left_arc_angle = new Constant("G_left_arc_angle", 0.0);
+    
     public static final Constant G_drive_back_distance = new Constant("G_drive_back_distance", 0.0);
     public static final Constant G_drive_back_timeout = new Constant("G_drive_back_timeout", 0.0);
+    
     public static final Constant G_turn_angle = new Constant("G_turn_angle", 0.0);
     public static final Constant G_turn_angle_timeout = new Constant("G_turn_angle_timeout", 0.0);
+    
     public static final Constant G_drive_angle = new Constant("G_drive_angle", 0.0);
     public static final Constant G_drive_angle_timeout = new Constant("G_drive_angle_timeout", 0.0);
+    
+    //Gear Positioning
+    public static final Constant G_top_raw = new Constant("G_top_raw", 0.0);
+    public static final Constant G_bottom_raw = new Constant("G_bottom_raw", 0.0);
+    public static final Constant G_top_real = new Constant("G_top_real", 0.0);
+    public static final Constant G_bottom_real = new Constant("G_bottom_real", 0.0);
 
     
     

@@ -29,7 +29,8 @@ public class Hardware implements Runnable {
     private final CANTalon gearTilt;
     private final DigitalInput gearSensor;
     private double gearStartAngle;
-    private double gearCurrentAngle;
+    private double currentPulseWidthPosition;
+    private double gearTiltAngle;
 
     private final Encoder leftDriveEncoder, rightDriveEncoder;
     private volatile double leftDriveEncoderPosition, leftDriveEncoderVelocity;
@@ -138,12 +139,18 @@ public class Hardware implements Runnable {
         //gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
         //gearTilt.configNominalOutputVoltage(0, 0);
-        //gearTilt.configPeakOutputVoltage(-ConstantsList.G_tilt_peak_voltage.getValue(), ConstantsList.G_tilt_peak_voltage.getValue());
+        gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), -ConstantsList.G_tilt_peak_voltage.getValue());
         //gearTilt.setMotionMagicAcceleration(4);
         //gearTilt.setMotionMagicCruiseVelocity(10);
         gearTilt.setInverted(true);
         gearTilt.reverseOutput(true);
         gearTilt.setPosition(90.0 / 360.0 * 6);
+        
+        currentPulseWidthPosition = gearTilt.getPulseWidthPosition();
+        gearTiltAngle = currentPulseWidthPosition * ((ConstantsList.G_top_real.getValue() - 
+                ConstantsList.G_bottom_real.getValue())/(ConstantsList.G_top_raw.getValue() - 
+                ConstantsList.G_bottom_raw.getValue()));
+        
         
 
         // Climber
@@ -392,6 +399,8 @@ public class Hardware implements Runnable {
         putDash("I_current", leftIntakeMotor.getOutputCurrent());
         putDash("D_test", leftDriveEncoderPosition);
         putDash("G_tilt_output", gearTilt.getOutputVoltage());
+        putDash("G_pulse_width_position", gearTilt.getPulseWidthPosition());
+        putDash("G_current_angle", gearTiltAngle);
     }
     
     public static void putDash(String label, double num){
