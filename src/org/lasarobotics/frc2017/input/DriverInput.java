@@ -60,7 +60,7 @@ public class DriverInput implements Runnable, Loggable {
         intakeControl();
         gearControl();
 
-        climber.setClimberSpeed((driverRight.getZAxis() - 1) / -2);
+        climber.setClimberSpeed((driverLeft.getTopBackButton()) ? 0.7 : 0.0);
 
         gearToggle.calc(driverRight.getTopFrontButton());
         hardware.actuateGear(!gearToggle.get());
@@ -124,6 +124,7 @@ public class DriverInput implements Runnable, Loggable {
             gearintake.setRollerSpeed(ConstantsList.G_release_speed.getValue());
         } else if (!driverRight.getTrigger() && lastTriggerPressed) {
             gearintake.setRollerSpeed(0);
+            gearintake.setAngle(ConstantsList.G_carry_angle.getValue());
         }
 
         lastTriggerPressed = driverRight.getTrigger();

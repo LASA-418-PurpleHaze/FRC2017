@@ -37,6 +37,7 @@ public class Climber extends HazySubsystem implements Loggable {
     @Override
     public void initSubsystem() {
         multiplier = ConstantsList.C_climber_multiplier.getValue();
+        climberSpeed = 0.0;
     }
 
     @Override

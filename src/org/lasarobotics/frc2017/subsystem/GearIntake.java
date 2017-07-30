@@ -52,6 +52,7 @@ public class GearIntake extends HazySubsystem implements Loggable {
      
     @Override
     public void initSubsystem() {
+        setAngle(90.0);
     }
 
     @Override

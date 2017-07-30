@@ -29,6 +29,8 @@ public class Robot extends HazyIterative {
 
     @Override
     public void robotInit() {
+        //Constants.init();
+        //Constants.load();
         drivetrain = Drivetrain.getInstance();
         shooter = Shooter.getInstance();
         intake = Intake.getInstance();
@@ -40,7 +42,7 @@ public class Robot extends HazyIterative {
 
         autonomous = Autonomous.getInstance();
         autonomous.start();
-        Constants.init();
+        
         Logger.init();
         Logger.addLog(intake);
         Logger.addLog(shooter);
@@ -124,17 +126,19 @@ public class Robot extends HazyIterative {
     public void disabledInit() {
         System.out.println("disabled init");
         CommandManager.cancelAll();
+        initSubsystems();
         time = 0;
     }
 
     @Override
     public void disabledPeriodic() {
-        //pushToDashboard();
+        pushToDashboard();
     }
 
     public void disableContinuous() {
         hardware.run();
-        Logger.closeFile();
+        pushToDashboard();
+        //Logger.closeFile();
     }
 
     private void pushToDashboard() {

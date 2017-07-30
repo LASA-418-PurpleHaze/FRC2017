@@ -105,17 +105,18 @@ public class ConstantsList {
     public static final Constant G_drive_angle = new Constant("G_drive_angle", 0.0);
     public static final Constant G_drive_angle_timeout = new Constant("G_drive_angle_timeout", 0.0);
     
+    public static final Constant G_p = new Constant("G_p", 0);
+    public static final Constant G_i = new Constant("G_i", 0);
+    public static final Constant G_d = new Constant("G_d", 0);
+    
     //Gear Positioning
     public static final Constant G_top_raw = new Constant("G_top_raw", 0.0);
     public static final Constant G_bottom_raw = new Constant("G_bottom_raw", 0.0);
     public static final Constant G_top_real = new Constant("G_top_real", 0.0);
     public static final Constant G_bottom_real = new Constant("G_bottom_real", 0.0);
 
-    
-    
-    
-    public static void init() {
-        init();
+    static {
+        Constants.init();
         Constants.load();
     }
 }

@@ -62,7 +62,7 @@ public class Hardware implements Runnable {
     public Hardware() {
         // Drivetrain
         navX = new AHRS(SPI.Port.kMXP);
-        second_gyro = new ADXL345_SPI(SPI.Port.kMXP, Accelerometer.Range.k2G); //dunno what to do w these constructors
+        second_gyro = new ADXL345_SPI(SPI.Port.kOnboardCS0, Accelerometer.Range.k2G); //dunno what to do w these constructors
 
         pdp = new PowerDistributionPanel();
 
@@ -135,8 +135,6 @@ public class Hardware implements Runnable {
         
         gearTilt = new CANTalon(Ports.GEAR_TILT_MOTOR);
         gearTilt.changeControlMode(CANTalon.TalonControlMode.Position);
-        //gearTilt.EnableCurrentLimit(true);
-        //gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
         gearTilt.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
         gearTilt.configNominalOutputVoltage(0, 0);
         gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), -ConstantsList.G_tilt_peak_voltage.getValue());
@@ -144,12 +142,16 @@ public class Hardware implements Runnable {
         gearTilt.reverseOutput(true);
         
         currentPulseWidthPosition = gearTilt.getPulseWidthPosition();
-        gearTiltAngle = currentPulseWidthPosition * ((ConstantsList.G_top_real.getValue() - 
-                ConstantsList.G_bottom_real.getValue())/(ConstantsList.G_top_raw.getValue() - 
-                ConstantsList.G_bottom_raw.getValue()));
+        System.out.println(ConstantsList.G_bottom_raw.getValue());
+        gearTiltAngle = (currentPulseWidthPosition - ConstantsList.G_bottom_raw.getValue()) / (ConstantsList.G_top_raw.getValue() - ConstantsList.G_bottom_raw.getValue());
+        System.out.println(gearTiltAngle);
+        gearTiltAngle = gearTiltAngle * (ConstantsList.G_top_real.getValue() - ConstantsList.G_bottom_real.getValue()) + ConstantsList.G_bottom_real.getValue();
+        System.out.println(gearTiltAngle);
         
         gearTilt.setPosition(gearTiltAngle / 360.0 * 6);
 
+        gearTilt.setCurrentLimit((int) ConstantsList.G_tilt_max_current.getValue());
+        gearTilt.EnableCurrentLimit(true);
 
         // Climber
         climberMotorA = new VictorSP(Ports.CLIMBER_MOTOR_A);
@@ -178,6 +180,8 @@ public class Hardware implements Runnable {
         rightDriveEncoderPosition = rightDriveEncoder.get();
         leftDriveEncoderVelocity = leftDriveEncoder.getRate();
         rightDriveEncoderVelocity = rightDriveEncoder.getRate();
+        
+        currentPulseWidthPosition = gearTilt.getPulseWidthPosition();
     }
 
     /**
@@ -196,6 +200,11 @@ public class Hardware implements Runnable {
                 ConstantsList.S_kD.getValue());
         rightShooterMotor.setF(ConstantsList.S_kFF.getValue());
 
+        gearTilt.configNominalOutputVoltage(0, 0);
+        gearTilt.configPeakOutputVoltage(ConstantsList.G_tilt_peak_voltage.getValue(), -ConstantsList.G_tilt_peak_voltage.getValue());
+        gearTilt.setPID(ConstantsList.G_p.getValue(), ConstantsList.G_i.getValue(),
+                ConstantsList.G_d.getValue());
+        
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
 
@@ -316,30 +325,30 @@ public class Hardware implements Runnable {
      * encoderpos / 250 * 3.5 * pi * (36/48)
      */
     public double getLeftDriveDistance() {
-        return leftDriveEncoderPosition * 0.032987;
+        return leftDriveEncoderPosition / 100 / 48 * 36 * 3.5 * 3.14159;
     }
 
     /**
      * @return The position of the right side of the drivetrain in inches.
      */
     public double getRightDriveDistance() {
-        return rightDriveEncoderPosition * 0.032987;
+        return rightDriveEncoderPosition / 100 / 48 * 36 * 3.5 * 3.14159;
     }
 
     /**
      * @return The velocity of the left side of the drivetrain in inches/sec.
      */
     public double getLeftDriveVelocity() {
-        return leftDriveEncoderVelocity * 0.032987;
+        return leftDriveEncoderVelocity / 100 / 48 * 36 * 3.5 * 3.14159;
     }
 
     /**
      * @return The velocity of the right side of the drivetrain in inches/sec.
      */
     public double getRightDriveVelocity() {
-        return rightDriveEncoderVelocity * 0.032987;
+        return rightDriveEncoderVelocity / 100 / 48 * 36 * 3.5 * 3.14159;
     }
-
+    
     /**
      * @return The angle (in degrees) being reported by the gyro. This resets
      * every rotation.
