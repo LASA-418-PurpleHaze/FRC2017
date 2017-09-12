@@ -2,6 +2,6 @@
 
 # FRC 2017
 
-Repo for 2017 FRC Robotics Challenge Code
+Repo for 2017 First Robotics Competition code
 
 [First Steamworks](https://en.wikipedia.org/wiki/FIRST_Steamworks)
