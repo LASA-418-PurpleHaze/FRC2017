@@ -3,7 +3,7 @@ package org.lasarobotics.frc2017;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class FakeTalon {
-   public FakeTalon(int deviceNumber) {
+    public FakeTalon(int deviceNumber) {
 
     }
 
@@ -12,23 +12,6 @@ public class FakeTalon {
     }
 
     public FakeTalon(int deviceNumber, int controlPeriodMs, int enablePeriodMs) {
-        
-    }
-
-    public void pidWrite(double output) {
-
-    }
-
-    public void setPIDSourceType(PIDSourceType pidSource) {
-        
-    }
-
-    public PIDSourceType getPIDSourceType() {
-       PIDSourceType PIDSourceType = null;
-        return PIDSourceType;
-    }
-
-    public void delete() {
         
     }
 
@@ -205,13 +188,7 @@ public class FakeTalon {
     }
 
     public double getTemperature() {
-        // <editor-fold defaultstate="collapsed" desc="Compiled Code">
-        /* 0: aload_0
-         * 1: getfield      com/ctre/CANTalon.j:J
-         * 4: invokestatic  com/ctre/CanTalonJNI.GetTemp:(J)D
-         * 7: dreturn
-         *  */
-        // </editor-fold>
+        return 418;
     }
 
     public double getOutputCurrent() {
@@ -981,16 +958,6 @@ public class FakeTalon {
          * 9: getstatic     com/ctre/CANTalon$UsageFlags.k:Lcom/ctre/CANTalon$UsageFlags;
          * 12: invokespecial com/ctre/CANTalon.a:(Lcom/ctre/CANTalon$UsageFlags;)V
          * 15: return
-         *  */
-        // </editor-fold>
-    }
-
-    public boolean isAlive() {
-        // <editor-fold defaultstate="collapsed" desc="Compiled Code">
-        /* 0: aload_0
-         * 1: getfield      com/ctre/CANTalon.e:Ledu/wpi/first/wpilibj/MotorSafetyHelper;
-         * 4: invokevirtual edu/wpi/first/wpilibj/MotorSafetyHelper.isAlive:()Z
-         * 7: ireturn
          *  */
         // </editor-fold>
     }
