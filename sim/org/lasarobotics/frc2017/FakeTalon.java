@@ -17,23 +17,6 @@ public class FakeTalon {
         
     }
 
-    public void pidWrite(double output) {
-
-    }
-
-    public void setPIDSourceType(PIDSourceType pidSource) {
-        
-    }
-
-    public PIDSourceType getPIDSourceType() {
-       PIDSourceType PIDSourceType = null;
-        return PIDSourceType;
-    }
-
-    public void delete() {
-        
-    }
-
     public void set(double outputValue) {
         
     }
@@ -103,7 +86,7 @@ public class FakeTalon {
     }
 
     public double getTemperature() {
-        return 0;
+        return 418;
     }
 
     public double getOutputCurrent() {
