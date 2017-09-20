@@ -4,23 +4,19 @@ package org.lasarobotics.frc2017;
 //import com.ctre.CANTalon.TrajectoryPoint;
 //import edu.wpi.first.wpilibj.PIDSourceType;
 
-
+//What Z-Money just realized : The modes are actually important and need to be implemented bc depending on the mode, set() does different things
 
 public class FakeTalon {
+    
+    int portNumber;
+    double target;
+    
     public FakeTalon(int deviceNumber) {
-
-    }
-
-    public FakeTalon(int deviceNumber, int controlPeriodMs) {
-        
-    }
-
-    public FakeTalon(int deviceNumber, int controlPeriodMs, int enablePeriodMs) {
-        
+        portNumber = deviceNumber;
     }
 
     public void set(double outputValue) {
-        
+        target = outputValue;
     }
 
     public void setInverted(boolean isInverted) {
