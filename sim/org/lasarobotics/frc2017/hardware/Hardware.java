@@ -111,8 +111,8 @@ public class Hardware {
         //returns the current running through climber to see it's power output
     }
     
-    public void setGearIntakeAngle(double degrees)
-    {
+    public void setGearIntakeAngle(double degrees){
+        
     }
     
     public double getGearIntakeAngle()
@@ -120,13 +120,11 @@ public class Hardware {
         return 0;
     }
     
-    public void setGearRollerSpeed(double speed)
-    {
+    public void setGearRollerSpeed(double speed){
         
     }
     
-    public boolean hasGear()
-    {
+    public boolean hasGear(){
         return true;
     }
     
@@ -137,6 +135,14 @@ public class Hardware {
     
     public void pushToDashboard(){
         //pushes stuff to the dashboard, which idk if we'll implement into the sim
+    }
+    
+    public void setGearSpeed(double speed){
+        
+    }
+    
+    public void setGearAngle(double angle){
+        
     }
     
     static NetworkTable y;

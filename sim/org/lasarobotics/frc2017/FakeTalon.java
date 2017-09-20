@@ -1,8 +1,10 @@
 package org.lasarobotics.frc2017;
 
-import com.ctre.CANTalon.MotionProfileStatus;
-import com.ctre.CANTalon.TrajectoryPoint;
-import edu.wpi.first.wpilibj.PIDSourceType;
+//import com.ctre.CANTalon.MotionProfileStatus;
+//import com.ctre.CANTalon.TrajectoryPoint;
+//import edu.wpi.first.wpilibj.PIDSourceType;
+
+
 
 public class FakeTalon {
     public FakeTalon(int deviceNumber) {
@@ -199,9 +201,9 @@ public class FakeTalon {
         return 0;
     }
 
-    public boolean pushMotionProfileTrajectory(TrajectoryPoint trajPt) {
-        return false;
-    }
+//    public boolean pushMotionProfileTrajectory(TrajectoryPoint trajPt) {
+//        return false;
+//    }
 
     public boolean isMotionProfileTopLevelBufferFull() {
         return false;
@@ -211,13 +213,13 @@ public class FakeTalon {
         
     }
 
-    public void getMotionProfileStatus(MotionProfileStatus motionProfileStatus) {
-        
-    }
+//    public void getMotionProfileStatus(MotionProfileStatus motionProfileStatus) {
+//        
+//    }
 
-    protected void setMotionProfileStatusFromJNI(MotionProfileStatus motionProfileStatus, int flags, int profileSlotSelect, int targPos, int targVel, int topBufferRem, int topBufferCnt, int btmBufferCnt, int outputEnable) {
-        
-    }
+//    protected void setMotionProfileStatusFromJNI(MotionProfileStatus motionProfileStatus, int flags, int profileSlotSelect, int targPos, int targVel, int topBufferRem, int topBufferCnt, int btmBufferCnt, int outputEnable) {
+//        
+//    }
 
     public void clearMotionProfileHasUnderrun() {
         
