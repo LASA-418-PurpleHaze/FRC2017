@@ -66,6 +66,25 @@
         <delete dir="simbuild"/>
         
     </target>
+
+    <target name="simtest" depends="simcompile">
+        <path id="simtestclasspath.path">
+            <fileset file="${networktables.jar}"/>
+            <fileset file="jinput/jinput.jar"/>
+            <fileset file="lib/SmartDashboard.jar"/>
+            <fileset file="lib/junit.jar"/>
+            <fileset file="lib/ant-junit.jar"/>
+        </path>
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath refid="simtestclasspath.path"/>
+
+            <batchtest fork="yes" todir="report">
+                <fileset dir="sim/test/org/lasarobotics/frc2017">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
     
     <target name="simulate" depends="simjar">
         <echo> Now we just gotta run it</echo>
