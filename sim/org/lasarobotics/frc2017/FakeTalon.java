@@ -1,6 +1,10 @@
 package org.lasarobotics.frc2017;
 
 //import com.ctre.CANTalon.MotionProfileStatus;
+
+import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
+import java.util.TimerTask;
+
 //import com.ctre.CANTalon.TrajectoryPoint;
 //import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -8,20 +12,84 @@ package org.lasarobotics.frc2017;
 
 public class FakeTalon {
     
-    int portNumber;
-    double target;
+    private int portNumber;
+    private double target;
+    private double current;
     
-    double p;
-    double i;
-    double d;
-    double f;
+    private double p;
+    private double i;
+    private double d;
+    private double f;
+    private int profile;
+    private int izone;
+    private double closeLoopRampRate;
+    
+    private double position;
+    private double velocity;
+    
+    private boolean notFirst = false;
+    
+    
+    private TalonControlMode m;
+    
+    
+    public enum TalonControlMode /*implements ControlMode*/ {
+
+        PercentVbus, Position, Speed, Current, Voltage, Follower, MotionProfile, MotionMagic, Disabled;
+        public int value;
+
+        //@Override
+        public boolean isPID() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        //@Override
+        public int getValue() {
+            return this.value;
+        }
+
+        public static TalonControlMode valueOf(int value) {
+            return TalonControlMode.values()[value];
+        }
+
+        private TalonControlMode() {
+        }
+        
+        public void setControlMode(int value){
+            this.value = value;
+        }
+    }
+    
     
     public FakeTalon(int deviceNumber) {
         portNumber = deviceNumber;
     }
 
     public void set(double outputValue) {
+        //based on mode, should set outputValue to target and do a closed control loop based on that target
+    }
+    
+    public class closeLoopControl extends TimerTask{
+        /*Alright so this is the big money right here. Ultimately, AFAIK, this should be able
+        to take some input that I put in, and based on the mode the motor controller is in,
+        get there. The problem, I have no idea what I'm doing. */
+        
+        int outputValue;
+        
+        public void setOutputValue(){
+            this.outputValue = outputValue;
+        }
+
+        @Override
+        public void run() {
         target = outputValue;
+        double error = target - current;
+        double absError = error;
+        if(error < 0){
+            absError = -error;
+        }        }
+        
+        
     }
 
     public void setInverted(boolean isInverted) {
@@ -162,11 +230,19 @@ public class FakeTalon {
     }
 
     public void setPID(double p, double i, double d, double f, int izone, double closeLoopRampRate, int profile) {
-        
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.izone = izone;
+        this.closeLoopRampRate = closeLoopRampRate;
+        this.profile = profile;
     }
 
     public void setPID(double p, double i, double d) {
-        
+        this.p = p;
+        this.i = i;
+        this.d = d;
     }
 
     public double getSetpoint() {
