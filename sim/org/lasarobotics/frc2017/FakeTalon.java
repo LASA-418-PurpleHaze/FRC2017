@@ -11,6 +11,11 @@ public class FakeTalon {
     int portNumber;
     double target;
     
+    double p;
+    double i;
+    double d;
+    double f;
+    
     public FakeTalon(int deviceNumber) {
         portNumber = deviceNumber;
     }
@@ -125,35 +130,35 @@ public class FakeTalon {
     }
 
     public double getP() {
-        return 0;
+        return p;
     }
 
     public double getI() {
-        return 0;
+        return i;
     }
 
     public double getD() {
-        return 0;
+        return d;
     }
 
     public double getF() {
-        return 0;
+        return f;
     }
 
     public void setP(double p) {
-        
+        this.p = p;
     }
 
     public void setI(double i) {
-        
+        this.i = i;
     }
 
     public void setD(double d) {
-        
+        this.d = d;
     }
 
     public void setF(double f) {
-        
+        this.f = f;
     }
 
     public void setPID(double p, double i, double d, double f, int izone, double closeLoopRampRate, int profile) {
