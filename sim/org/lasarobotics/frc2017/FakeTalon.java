@@ -3,7 +3,9 @@ package org.lasarobotics.frc2017;
 //import com.ctre.CANTalon.MotionProfileStatus;
 
 import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
+import java.util.Timer;
 import java.util.TimerTask;
+import java.lang.Math.*;
 
 //import com.ctre.CANTalon.TrajectoryPoint;
 //import edu.wpi.first.wpilibj.PIDSourceType;
@@ -13,8 +15,8 @@ import java.util.TimerTask;
 public class FakeTalon {
     
     private int portNumber;
-    private double target;
     private double current;
+    private double currentMotorSpeed;
     
     private double p;
     private double i;
@@ -23,7 +25,8 @@ public class FakeTalon {
     private int profile;
     private int izone;
     private double closeLoopRampRate;
-    
+    boolean oneDirection;
+    boolean motorsReversed;
     private double position;
     private double velocity;
     
@@ -67,14 +70,28 @@ public class FakeTalon {
 
     public void set(double outputValue) {
         //based on mode, should set outputValue to target and do a closed control loop based on that target
+        Timer timer = new Timer();
+        timer.schedule(new closeLoopControl(), 0, 1);//makes closeloopcontrol repeat after 0 delay every 1 ms
     }
     
     public class closeLoopControl extends TimerTask{
         /*Alright so this is the big money right here. Ultimately, AFAIK, this should be able
         to take some input that I put in, and based on the mode the motor controller is in,
-        get there. The problem, I have no idea what I'm doing. */
+        get there. The problem? I have no idea what I'm doing. */
         
         int outputValue;
+        boolean firstRun = false;
+        double target;
+        double iAccum;
+        double pidOutput;
+        double err;
+        double dErr;
+        double previousErr;
+        double iZone;
+        boolean oneDirection;
+        boolean motorsReversed;
+        
+        
         
         public void setOutputValue(){
             this.outputValue = outputValue;
@@ -82,18 +99,59 @@ public class FakeTalon {
 
         @Override
         public void run() {
-        target = outputValue;
-        double error = target - current;
-        double absError = error;
-        if(error < 0){
-            absError = -error;
-        }        }
+            target = outputValue;
+            err = target - current;
+            double absErr = Math.abs(err);
+            double tempPidOutput;
+            double dUp;
+            double dDown;
         
-        
+            if(firstRun){
+                iAccum = 0; //I feel like this is kinda weird because if you set the i, this shouldn't have to be reset, right? 
+                pidOutput = currentMotorSpeed;
+                dErr = 0;
+            }else{
+                if(iZone == 0 || absErr < iZone){
+                    iAccum += err;
+                }else{
+                    iAccum = 0;
+                }
+                dErr = previousErr - err;
+            }
+            tempPidOutput = err * p;
+            if(iAccum > 0 && i > 0)
+                tempPidOutput += iAccum * i;
+            
+            tempPidOutput += dErr * d;
+            tempPidOutput += target * f;
+            previousErr = err;
+            
+            firstRun = false;
+            
+            if(oneDirection)
+                tempPidOutput = Math.max(tempPidOutput, 0);
+            if(motorsReversed)
+                tempPidOutput = - tempPidOutput;
+            
+            if(closeLoopRampRate != 0){
+                if(tempPidOutput >= pidOutput){
+                    dUp = tempPidOutput - pidOutput;
+                    dUp = Math.min(dUp, closeLoopRampRate);
+                    pidOutput = tempPidOutput + dUp;
+                }else{
+                    dDown = pidOutput - tempPidOutput;
+                    dDown = Math.min(dDown, closeLoopRampRate);
+                    pidOutput = tempPidOutput - dDown;
+                }
+            }else{
+                pidOutput = tempPidOutput;
+            }
+            
+        }
     }
 
     public void setInverted(boolean isInverted) {
-
+        
     }
 
     public boolean getInverted() {
