@@ -58,9 +58,14 @@
             <zipgroupfileset dir="simbuild/jars"/>
         </jar>
         
-         <copy todir="simdist">
+        <copy todir="simdist">
             <fileset dir="jinput"/>
-            <fileset dir="lib"/>
+            <fileset dir="lib">
+                <exclude name="**/CTRLib/**"/>
+                <exclude name="**/CTRLib-javadoc/**"/>
+                <exclude name="**/CTRLib.jar"/>
+                <exclude name="**/CTRLib-javadoc.jar"/>
+            </fileset>
         </copy>
         
         <delete dir="simbuild"/>
@@ -72,6 +77,10 @@
         <java dir="simdist" jar="simdist/HazySim.jar" fork="true">
             
         </java>
+        <echo> Clean up after ourselves a bit </echo>
+        <delete dir="simbuild"/>
+        <delete dir="simsrc"/>
+        <delete dir="simdist"/>
     </target>
     
 </project>

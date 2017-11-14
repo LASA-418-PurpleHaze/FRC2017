@@ -1,11 +1,9 @@
-package org.lasarobotics.frc2017;
+package org.lasarobotics.lib;
 
 //import com.ctre.CANTalon.MotionProfileStatus;
 
-import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.lang.Math.*;
 
 //import com.ctre.CANTalon.TrajectoryPoint;
 //import edu.wpi.first.wpilibj.PIDSourceType;

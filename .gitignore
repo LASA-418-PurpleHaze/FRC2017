@@ -41,3 +41,6 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
+
+#jinput binaries for linux
+!jinput/*.so

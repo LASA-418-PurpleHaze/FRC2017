@@ -167,15 +167,15 @@
                failonerror="false"
                command="killall -q netconsole-host || :"/>
 
-    <deploy-libs libs.name="netconsole-host" libs.basedir="${wpilib.ant.dir}" libs.deployDir="/usr/local/frc/bin">
+    <deploy-libs libs.name="netconsole-host" libs.basedir="hazybuild" libs.deployDir="/usr/local/frc/bin">
       <libs.local>
-        <fileset id="netconsole.local" dir="${wpilib.ant.dir}">
+        <fileset id="netconsole.local" dir="hazybuild">
           <include name="netconsole-host"/>
         </fileset>
       </libs.local>
     </deploy-libs>
 
-      <scp file="${wpilib.ant.dir}/robotCommand" todir="${username}@${target}:${command.dir}" password="${password}" trust="true"/>
+      <scp file="hazybuild/robotCommand" todir="${username}@${target}:${command.dir}" password="${password}" trust="true"/>
 
     <echo>[athena-deploy] Starting program.</echo>
     <sshexec host="${target}"
