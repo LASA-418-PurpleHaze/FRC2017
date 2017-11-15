@@ -74,7 +74,7 @@
     
     <target name="simulate" depends="simjar">
         <echo> Now we just gotta run it</echo>
-        <java dir="simdist" jar="simdist/HazySim.jar" fork="true">
+        <java dir="simdist" jar="simdist/HazySim.jar" fork="true" jvmargs="-Djava.library.path=.">
             
         </java>
         <echo> Clean up after ourselves a bit </echo>
