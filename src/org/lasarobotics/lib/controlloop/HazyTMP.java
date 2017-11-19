@@ -114,7 +114,7 @@ public class HazyTMP {
      * @param dt
      */
     public void calculateNextSituation(double dt) {
-        System.out.println(dt);
+        //System.out.println(dt);
         if (accelerationTime > dt) {
             accelerate(dt);
             accelerationTime -= dt;

@@ -1,8 +1,8 @@
 package org.lasarobotics.frc2017.hardware;
 
-import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
+import org.lasarobotics.lib.FakeTalon;
 
 public class Hardware {
     //This is the fake hardware class.
@@ -10,16 +10,45 @@ public class Hardware {
     
     public static Hardware instance;
     
+    private double leftDriveSpeed, rightDriveSpeed;
+    private double leftDriveVelocity, rightDriveVelocity;
+    private double leftDrivePosition, rightDrivePosition;
+    FakeTalon tilt;
     public Hardware(){
+        prevTime = getCurrentTime();
         //Initialize all the fake hardware counters
         
         //Fake Motors
-        
+        tilt = new FakeTalon(0);
+        System.out.println(tilt.m);
+        tilt.setP(1);
         //Fake Sensors
     }
     
+    double prevTime, dt;
+    
     public void run(){
         //simulate running the robot and assign values to all the numbers
+        
+        double newTime = getCurrentTime();
+        dt = newTime - prevTime;
+        prevTime = newTime;
+        
+        if (dt < 0.0001) {
+            //return;
+        }
+        //System.out.println(tilt.getOutputVoltage());
+        //dt = 0.01;
+        //System.out.println(dt);
+        //Assume drive motor velocity is perfectly linear with requested output
+        //speed. Too annoying to model it properly. Going with 14 fps top speed.
+        leftDriveVelocity = leftDriveSpeed * 14 * 12;
+        rightDriveVelocity = rightDriveSpeed * 14 * 12;
+        
+        //Ignoring the fact that the left and right side of the robot affect
+        //each other...
+        leftDrivePosition += leftDriveVelocity * dt;
+        rightDrivePosition += rightDriveVelocity * dt;
     }
     
     public void reset(){
@@ -71,25 +100,27 @@ public class Hardware {
     }
     
     public void setDriveSpeeds(double left, double right){
+        leftDriveSpeed = left;
+        rightDriveSpeed = right;
         //uses left and right to set sim drive speeds
     }
     
     public double getLeftDriveDistance(){
-        return 0;
+        return leftDrivePosition;
         //take sim drive distance and give it back
         //originally took encoder value and multiplied by gear ratio
     }
     
     public double getRightDriveDistance(){
-        return 0;
+        return rightDrivePosition;
     }
     
     public double getLeftDriveVelocity(){
-        return 0;
+        return leftDriveVelocity;
     }
     
     public double getRightDriveVelocity(){
-        return 0;
+        return rightDriveVelocity;
     }
     
     public double getNavXAngle(){

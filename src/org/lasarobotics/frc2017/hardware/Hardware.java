@@ -59,6 +59,10 @@ public class Hardware implements Runnable {
         return (instance == null) ? instance = new Hardware() : instance;
     }
 
+    public double getDT() {
+        return 0;
+    }
+    
     public Hardware() {
         // Drivetrain
         navX = new AHRS(SPI.Port.kMXP);

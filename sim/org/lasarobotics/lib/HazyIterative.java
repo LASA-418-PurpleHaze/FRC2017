@@ -2,8 +2,6 @@ package org.lasarobotics.lib;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*----------------------------------------------------------------------------*/
  /* Copyright (c) FIRST 2008-2016. All Rights Reserved.                        */

@@ -55,6 +55,8 @@ public class Drivetrain extends HazySubsystem implements Loggable {
     @Override
     public void run() {
         dt = Hardware.getCurrentTime() - prevTime;
+        //dt = 0.01;
+        //System.out.println(dt);
         double turn;
         if (null != mode) {
             switch (mode) {

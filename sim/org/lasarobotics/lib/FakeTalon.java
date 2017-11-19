@@ -31,7 +31,7 @@ public class FakeTalon {
     private boolean notFirst = false;
     
     
-    private TalonControlMode m;
+    public TalonControlMode m;
     
     
     public enum TalonControlMode /*implements ControlMode*/ {
@@ -61,15 +61,19 @@ public class FakeTalon {
         }
     }
     
-    
+    closeLoopControl c;
     public FakeTalon(int deviceNumber) {
         portNumber = deviceNumber;
+        
+        Timer timer = new Timer();
+        timer.schedule(c = new closeLoopControl(), 0, 1);//makes closeloopcontrol repeat after 0 delay every 1 ms
+        
+        m = TalonControlMode.Position;
     }
 
     public void set(double outputValue) {
         //based on mode, should set outputValue to target and do a closed control loop based on that target
-        Timer timer = new Timer();
-        timer.schedule(new closeLoopControl(), 0, 1);//makes closeloopcontrol repeat after 0 delay every 1 ms
+        
     }
     
     public class closeLoopControl extends TimerTask{
@@ -97,7 +101,7 @@ public class FakeTalon {
 
         @Override
         public void run() {
-            target = outputValue;
+            target = 90.0 / 360.0 * 4096.0;
             err = target - current;
             double absErr = Math.abs(err);
             double tempPidOutput;
@@ -221,7 +225,7 @@ public class FakeTalon {
     }
 
     public double getOutputVoltage() {
-        return 0;
+        return c.pidOutput;
     }
 
     public double getBusVoltage() {
@@ -350,7 +354,8 @@ public class FakeTalon {
 //        
 //    }
 
-//    protected void setMotionProfileStatusFromJNI(MotionProfileStatus motionProfileStatus, int flags, int profileSlotSelect, int targPos, int targVel, int topBufferRem, int topBufferCnt, int btmBufferCnt, int outputEnable) {
+//    protected void setMotionProfileStatusFromJNI(MotionProfileStatus motionProfileStatus, int flags, int profileSlotSelect,
+//    int targPos, int targVel, int topBufferRem, int topBufferCnt, int btmBufferCnt, int outputEnable) {
 //        
 //    }
 

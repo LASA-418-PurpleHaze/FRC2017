@@ -9,10 +9,10 @@ public class ConstantsList {
     public static final Constant D_left_kP = new Constant("D_l_kP", 0.0);
     public static final Constant D_left_kI = new Constant("D_l_kI", 0.0);
     public static final Constant D_left_kV = new Constant("D_l_kV", 0.0);
-    public static final Constant D_left_kFFV = new Constant("D_l_kFFV", 0.0);
+    public static final Constant D_left_kFFV = new Constant("D_l_kFFV", 0.005952380952);
     public static final Constant D_left_kFFA = new Constant("D_l_kFFA", 0.0);
     public static final Constant D_left_doneBound = new Constant("D_l_doneBound", 0.0);
-    public static final Constant D_left_maxU = new Constant("D_l_maxU", 0.0);
+    public static final Constant D_left_maxU = new Constant("D_l_maxU", 1.0);
     
     //rightPVIff
     public static final Constant D_right_kP = new Constant("D_r_kP", 0.0);
@@ -21,7 +21,7 @@ public class ConstantsList {
     public static final Constant D_right_kFFV = new Constant("D_r_kFFV", 0.0);
     public static final Constant D_right_kFFA = new Constant("D_r_kFFA", 0.0);
     public static final Constant D_right_doneBound = new Constant("D_r_doneBound", 0.0);
-    public static final Constant D_right_maxU = new Constant("D_r_maxU", 0.0);
+    public static final Constant D_right_maxU = new Constant("D_r_maxU", 1.0);
 
     //turnPID
     public static final Constant D_turn_kP = new Constant("D_t_kP", 0.0);
@@ -49,8 +49,8 @@ public class ConstantsList {
     public static final Constant S_loading_speed = new Constant("S_loading_speed", 0);
 
     //TMP
-    public static final Constant D_tmp_maxV = new Constant("D_maxV", 0.0);
-    public static final Constant D_tmp_maxA = new Constant("D_maxA", 0.0);
+    public static final Constant D_tmp_maxV = new Constant("D_maxV", 10.0);
+    public static final Constant D_tmp_maxA = new Constant("D_maxA", 20.0);
 
     public static final Constant D_drive_sensitivity = new Constant("D_drive_sensitivity", 0.0);
 
@@ -70,11 +70,11 @@ public class ConstantsList {
     
     public static final Constant A_long_gear_distance = new Constant("A_long_gear_distance", 0.0);
     public static final Constant A_short_gear_distance = new Constant("A_short_gear_distance", 0.0);
-    public static final Constant A_center_gear_distance = new Constant("A_center_gear_distance", 0.0);
+    public static final Constant A_center_gear_distance = new Constant("A_center_gear_distance", 100.0);
     public static final Constant A_gear_angle = new Constant("A_gear_angle", 0.0);
     public static final Constant A_long_gear_timeout = new Constant("A_long_gear_timeout", 0.0);
     public static final Constant A_short_gear_timeout = new Constant("A_short_gear_timeout", 0.0);
-    public static final Constant A_center_gear_timeout = new Constant("A_center_gear_timeout", 0.0);
+    public static final Constant A_center_gear_timeout = new Constant("A_center_gear_timeout", 50.0);
     public static final Constant A_gear_angle_timeout = new Constant("A_gear_angle_timeout", 0.0);
     public static final Constant A_wait = new Constant("A_wait", 0.0);
     
