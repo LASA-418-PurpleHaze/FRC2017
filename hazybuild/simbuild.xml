@@ -36,7 +36,6 @@
         
         <delete dir="simsrc"/>
         
-        
     </target>
     
     <target name="simjar" depends="simcompile">
@@ -58,7 +57,7 @@
             <zipgroupfileset dir="simbuild/jars"/>
         </jar>
         
-         <copy todir="simdist">
+        <copy todir="simdist">
             <fileset dir="jinput"/>
             <fileset dir="lib"/>
         </copy>
@@ -67,7 +66,7 @@
         
     </target>
 
-    <target name="simtest" depends="simcompile">
+    <target name="simtest">
         <path id="simtestclasspath.path">
             <fileset file="${networktables.jar}"/>
             <fileset file="jinput/jinput.jar"/>
@@ -78,10 +77,40 @@
         <junit printsummary="yes" haltonfailure="no">
             <classpath refid="simtestclasspath.path"/>
 
-            <batchtest fork="yes" todir="report">
-                <fileset dir="sim/test/org/lasarobotics/frc2017">
+            <batchtest fork="yes">
+                <fileset dir=".">
                     <include name="**/*Test*.java"/>
                 </fileset>
+            </batchtest>
+        </junit>
+    </target>
+    
+    <path id="classpath.test">
+        <fileset file="${networktables.jar}"/>
+        <fileset file="jinput/jinput.jar"/>
+        <fileset file="lib/SmartDashboard.jar"/>
+        <fileset file="lib/junit.jar"/>
+        <fileset file="lib/ant-junit.jar"/>
+        <pathelement location="simbuild"/>
+    </path>
+    
+    <target name="testcompile" depends="simcompile">
+        <mkdir dir="simbuild/test"/>
+        <javac srcdir="test" destdir="simbuild/test" includeantruntime="false">
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
+    
+    <target name="testboi" depends="testcompile">
+        <junit printsummary="on" haltonfailure="no" fork="yes">
+            <classpath>
+                <path refid="classpath.test"/>
+                <pathelement location="simbuild/test"/>
+            </classpath>
+            
+            <batchtest>
+                <formatter type="xml" usefile="true" />
+                <fileset dir="simbuild/test" includes="**/*Test*.class" />
             </batchtest>
         </junit>
     </target>

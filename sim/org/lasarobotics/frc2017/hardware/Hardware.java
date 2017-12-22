@@ -1,6 +1,5 @@
 package org.lasarobotics.frc2017.hardware;
 
-import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 

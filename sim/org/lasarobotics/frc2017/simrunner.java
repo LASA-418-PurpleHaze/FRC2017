@@ -6,7 +6,6 @@
 package org.lasarobotics.frc2017;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.tables.ITable;
 import static org.lasarobotics.frc2017.fake_ds.runGUI;
 
 /**

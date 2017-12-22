@@ -32,6 +32,12 @@ auxiliary.show.customizer.message=<message>
                     <location>sim</location>
                     <encoding>windows-1252</encoding>
                 </source-folder>
+                <source-folder>
+                    <label>test</label>
+                    <type>java</type>
+                    <location>test</location>
+                    <encoding>windows-1252</encoding>
+                </source-folder>
             </folders>
             <ide-actions>
                 <action name="build">
@@ -44,11 +50,11 @@ auxiliary.show.customizer.message=<message>
                     <target>deploy</target>
                 </action>
                 <action name="test">
-                    <target>simulate</target>
+                    <target>testboi</target>
                 </action>
                 <action name="rebuild">
                     <target>clean</target>
-                    <target>compile</target>
+                    <target>simulate</target>
                 </action>
             </ide-actions>
             <view>
@@ -60,6 +66,10 @@ auxiliary.show.customizer.message=<message>
                     <source-folder style="packages">
                         <label>sim</label>
                         <location>sim</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>test</label>
+                        <location>test</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -83,7 +93,13 @@ auxiliary.show.customizer.message=<message>
             </compilation-unit>
             <compilation-unit>
                 <package-root>sim</package-root>
-                <classpath mode="compile">lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar;jinput/jinput.jar</classpath>
+                <classpath mode="compile">lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar;jinput/jinput.jar;src</classpath>
+                <source-level>1.8</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>test</package-root>
+                <unit-tests/>
+                <classpath mode="compile">lib/CTRLib;lib/CTRLib-javadoc;lib/CTRLib-javadoc.jar;lib/CTRLib.jar;lib/NetworkTables-sources.jar;lib/NetworkTables.jar;lib/SmartDashboard.jar;lib/WPILib-sources.jar;lib/WPILib.jar;lib/ant-junit.jar;lib/cscore-sources.jar;lib/cscore.jar;lib/junit.jar;lib/native;lib/navx_frc.jar;lib/opencv-sources.jar;lib/opencv.jar;sim;src</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>
